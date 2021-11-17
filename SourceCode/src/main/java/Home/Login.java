@@ -5,9 +5,13 @@
  */
 package Home;
 
+import static DAO.UserDAO.getLogin;
 import java.awt.Color;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -79,7 +83,6 @@ public class Login extends javax.swing.JFrame {
 
         txtPass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPass.setText("Password");
         txtPass.setBorder(null);
         txtPass.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -294,6 +297,33 @@ public class Login extends javax.swing.JFrame {
 
     private void signInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInActionPerformed
         // TODO add your handling code here:
+        String username = txtUserName.getText();
+        String password = new String(txtPass.getPassword());
+        Pattern p = Pattern.compile("\\b[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}\\b");
+        Matcher usernameMatcher = p.matcher(username);
+        StringBuilder sb = new StringBuilder();
+        if(username.equals("")) {
+            sb.append("User name is empty \n");
+        } else if(!usernameMatcher.find()) {
+            sb.append("user name must be abc@gmail.com \n");
+        }
+        if(password.equals("")) {
+            sb.append("Password is empty \n"); 
+        }
+        if(sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            if(getLogin(username, password)) {
+                dispose();//close login
+                Register register = new Register();
+                register.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "email or password dose not match", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+        
     }//GEN-LAST:event_signInActionPerformed
 
     private void jLabel1AncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jLabel1AncestorResized

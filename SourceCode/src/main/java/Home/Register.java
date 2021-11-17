@@ -5,9 +5,16 @@
  */
 package Home;
 
+import DAO.UserDAO;
+import Model.User;
 import java.awt.Color;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -204,6 +211,11 @@ public class Register extends javax.swing.JFrame {
 
         registerBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         registerBtn.setText("Register");
+        registerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerBtnActionPerformed(evt);
+            }
+        });
 
         alreadyAccount.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         alreadyAccount.setForeground(new java.awt.Color(0, 153, 0));
@@ -457,6 +469,57 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
         changeColor(CloseBtn, new Color(255,255,255));
     }//GEN-LAST:event_BtnCloseMouseExited
+
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        // TODO add your handling code here:
+        String fullName = fullNameTxt.getText();
+        String email = emailTxt.getText();
+        String address = addressTxt.getText();
+        String phone = phoneTxt.getText();
+        String gender = genderBox.getSelectedItem().toString();
+        String password =new String(passwordTxt.getPassword());
+        String confirmPassword = new String(confirmPasswordTxt.getPassword());
+        StringBuilder sb = new StringBuilder();
+        java.util.Date dateCreateAccout=new java.util.Date();
+        java.util.Date dateUpaDateAccout=new java.util.Date(); 
+        
+        if(fullName.equals("")) {
+            sb.append("full name is empty \n");
+        }
+        Pattern p = Pattern.compile("\\b[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}\\b");
+        Matcher usernameMatcher = p.matcher(email);
+        if(email.equals("")) {
+            sb.append("Email is empty \n");
+        } else if(!usernameMatcher.find()) {
+            sb.append("user name must be abc@gmail.com \n");
+        }
+        Pattern phonePattern = Pattern.compile("[0-9]{10}");
+        Matcher phoneMatcher = phonePattern.matcher(phone);
+        if(phone.equals("")) {
+            sb.append("phone is empty \n");
+        } else if(!phoneMatcher.find()) {
+            sb.append("Phone must be 0-9 at least 10 \n");
+        }
+        Pattern passwordPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
+        Matcher passwordMatcher = passwordPattern.matcher(password);
+        if(password.equals("")) {
+            sb.append("password is empty \n");
+        } else if(!passwordMatcher.find()) {
+            sb.append("Password must be at least once a digit, a lower case, an upper case, no whitespace,  at least eight character");
+        }
+        if(!confirmPassword.equals(password)) {
+            sb.append("Confirm Password dose not match");
+        }
+        
+        if(sb.length()>0) {
+            JOptionPane.showMessageDialog(this, sb.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            User user = new User(fullName,email,phone,password,3,gender,dateCreateAccout,dateUpaDateAccout,address);
+            UserDAO.Insert(user);
+            dispose();
+        }
+        
+    }//GEN-LAST:event_registerBtnActionPerformed
 
     /**
      * @param args the command line arguments

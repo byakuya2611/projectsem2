@@ -9,6 +9,9 @@ package DAO;
  *
  * @author ngomi
  */
-public class Config {
-    
+public interface Config {
+    String DATANAME = "movie_ticket_group1_prjsem2";
+    String DB_URL = "jdbc:mysql://localhost:3306/" + DATANAME;
+    String USERNAME = "root";
+    String PASSWORD = "";
 }
