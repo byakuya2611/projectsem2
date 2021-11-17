@@ -10,5 +10,7 @@ package Model;
  * @author ngomi
  */
 public class User {
+    private Integer id;
+    private 
     
 }
