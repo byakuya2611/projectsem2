@@ -514,9 +514,16 @@ public class Register extends javax.swing.JFrame {
         if(sb.length()>0) {
             JOptionPane.showMessageDialog(this, sb.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            User user = new User(fullName,email,phone,password,3,gender,dateCreateAccout,dateUpaDateAccout,address);
-            UserDAO.Insert(user);
-            dispose();
+            if(check.isSelected()) {
+                User user = new User(fullName,email,phone,password,3,gender,dateCreateAccout,dateUpaDateAccout,address);
+                UserDAO.Insert(user);
+                dispose();
+                Login login = new Login();
+                login.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "You must be argee!!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
         }
         
     }//GEN-LAST:event_registerBtnActionPerformed
