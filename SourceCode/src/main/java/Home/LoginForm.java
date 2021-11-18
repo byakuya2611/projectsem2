@@ -52,7 +52,7 @@ public class LoginForm extends javax.swing.JFrame {
         rememberCheck = new java.awt.Checkbox();
         forgotPassword = new javax.swing.JLabel();
         signInBtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        signUpBtn = new javax.swing.JButton();
         closeBtn = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -131,11 +131,17 @@ public class LoginForm extends javax.swing.JFrame {
         signInBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         signInBtn.setText("Sign In");
         signInBtn.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-        signInBtn.setContentAreaFilled(false);
+        signInBtn.setBorderPainted(false);
         signInBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         signInBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 signInBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                signInBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signInBtnMouseExited(evt);
             }
         });
         signInBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -145,18 +151,26 @@ public class LoginForm extends javax.swing.JFrame {
         });
         jPanel2.add(signInBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 150, 40));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton1.setText("Sign Up");
-        jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-        jButton1.setContentAreaFilled(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        signUpBtn.setBackground(new java.awt.Color(255, 255, 255));
+        signUpBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        signUpBtn.setText("Sign Up");
+        signUpBtn.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        signUpBtn.setBorderPainted(false);
+        signUpBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signUpBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                signUpBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signUpBtnMouseExited(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, 150, 40));
+        signUpBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signUpBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(signUpBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, 150, 40));
 
         closeBtn.setBackground(new java.awt.Color(255, 255, 255));
         closeBtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -242,29 +256,54 @@ public class LoginForm extends javax.swing.JFrame {
         StringBuilder sb = new StringBuilder();
         
         if(email.equals("")) {
-            sb.append("Email is empty");
+            sb.append("Email is empty\n");
         } else if(emailMatcher.find()) {
             sb.append("email must be abc@gmail.com");
         }
         if(password.equals("")) {
-            sb.append("Password is empty");
+            sb.append("Password is empty\n");
         }
         if(sb.length() >0) {
             JOptionPane.showMessageDialog(this, sb.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             if(UserDAO.getLogin(email, password)) {
                 dispose();
-                new Register().setVisible(true);
+                new RegisterForm().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Email or Password dose not exits!!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_signInBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed
         // TODO add your handling code here:
-        new Register().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        dispose();
+        new RegisterForm().setVisible(true);
+    }//GEN-LAST:event_signUpBtnActionPerformed
+
+    private void signInBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signInBtnMouseEntered
+        // TODO add your handling code here:
+        signInBtn.setBackground(Color.BLACK);
+        signInBtn.setForeground(Color.WHITE);
+    }//GEN-LAST:event_signInBtnMouseEntered
+
+    private void signInBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signInBtnMouseExited
+        // TODO add your handling code here:
+        signInBtn.setBackground(Color.WHITE);
+        signInBtn.setForeground(Color.BLACK);
+    }//GEN-LAST:event_signInBtnMouseExited
+
+    private void signUpBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpBtnMouseEntered
+        // TODO add your handling code here:
+        signUpBtn.setBackground(Color.BLACK);
+        signUpBtn.setForeground(Color.WHITE);
+    }//GEN-LAST:event_signUpBtnMouseEntered
+
+    private void signUpBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpBtnMouseExited
+        // TODO add your handling code here:
+        signUpBtn.setBackground(Color.WHITE);
+        signUpBtn.setForeground(Color.BLACK);
+    }//GEN-LAST:event_signUpBtnMouseExited
     
     public void changeColor(JPanel hover, Color rand) {
         hover.setBackground(rand);
@@ -308,7 +347,6 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JPanel closeBtn;
     private javax.swing.JTextField emailTxt;
     private javax.swing.JLabel forgotPassword;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -321,5 +359,6 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JPasswordField passwordTxt;
     private java.awt.Checkbox rememberCheck;
     private javax.swing.JButton signInBtn;
+    private javax.swing.JButton signUpBtn;
     // End of variables declaration//GEN-END:variables
 }
