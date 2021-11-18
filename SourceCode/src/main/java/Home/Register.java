@@ -418,7 +418,7 @@ public class Register extends javax.swing.JFrame {
 
     private void alreadyAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alreadyAccountMouseClicked
         // TODO add your handling code here:
-        Login login = new Login();
+        LoginForm login = new LoginForm();
         login.setVisible(true);
         login.pack();
         login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -518,8 +518,7 @@ public class Register extends javax.swing.JFrame {
                 User user = new User(fullName,email,phone,password,3,gender,dateCreateAccout,dateUpaDateAccout,address);
                 UserDAO.Insert(user);
                 dispose();
-                Login login = new Login();
-                login.setVisible(true);
+                new LoginForm().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "You must be argee!!", "Error", JOptionPane.ERROR_MESSAGE);
             }
