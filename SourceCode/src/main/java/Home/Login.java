@@ -66,7 +66,7 @@ public class Login extends javax.swing.JFrame {
 
         txtUserName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtUserName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtUserName.setText("User name");
+        txtUserName.setText("Email");
         txtUserName.setBorder(null);
         txtUserName.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         txtUserName.setName(""); // NOI18N
@@ -83,6 +83,7 @@ public class Login extends javax.swing.JFrame {
 
         txtPass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPass.setText("Password");
         txtPass.setBorder(null);
         txtPass.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
