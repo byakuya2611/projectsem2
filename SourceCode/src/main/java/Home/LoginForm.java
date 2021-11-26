@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -22,6 +23,7 @@ import javax.swing.border.Border;
  */
 public class LoginForm extends javax.swing.JFrame {
 
+    private JFrame frame;
     /**
      * Creates new form LoginForm
      */
@@ -54,16 +56,16 @@ public class LoginForm extends javax.swing.JFrame {
         signInBtn = new javax.swing.JButton();
         signUpBtn = new javax.swing.JButton();
         closeBtn = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        ExitBtn = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED), "Movie Ticket", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -74,7 +76,7 @@ public class LoginForm extends javax.swing.JFrame {
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 210, -1));
 
         emailTxt.setFont(new java.awt.Font("Berlin Sans FB", 0, 16)); // NOI18N
-        emailTxt.setForeground(new java.awt.Color(204, 204, 204));
+        emailTxt.setForeground(new java.awt.Color(102, 102, 102));
         emailTxt.setText("Enter Email");
         emailTxt.setBorder(null);
         emailTxt.setOpaque(false);
@@ -95,7 +97,7 @@ public class LoginForm extends javax.swing.JFrame {
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, -1));
 
         passwordTxt.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        passwordTxt.setForeground(new java.awt.Color(204, 204, 204));
+        passwordTxt.setForeground(new java.awt.Color(102, 102, 102));
         passwordTxt.setText("Password");
         passwordTxt.setBorder(null);
         passwordTxt.setPreferredSize(new java.awt.Dimension(120, 30));
@@ -175,52 +177,52 @@ public class LoginForm extends javax.swing.JFrame {
         closeBtn.setBackground(new java.awt.Color(255, 255, 255));
         closeBtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/close.png"))); // NOI18N
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel5.setPreferredSize(new java.awt.Dimension(50, 50));
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        ExitBtn.setBackground(new java.awt.Color(255, 255, 255));
+        ExitBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ExitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/close.png"))); // NOI18N
+        ExitBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        ExitBtn.setPreferredSize(new java.awt.Dimension(50, 50));
+        ExitBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                ExitBtnMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel5MouseEntered(evt);
+                ExitBtnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel5MouseExited(evt);
+                ExitBtnMouseExited(evt);
             }
         });
-        closeBtn.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        closeBtn.add(ExitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPanel2.add(closeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 0, 50, 50));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 0, 480, 540));
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/10415d2d0accbbd6ae2ce6018fea86b9.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 540));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1210, 540));
 
-        setSize(new java.awt.Dimension(1211, 541));
+        setSize(new java.awt.Dimension(481, 541));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    private void ExitBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitBtnMouseClicked
         // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jLabel5MouseClicked
+        frame = new JFrame("Exit");
+        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_ExitBtnMouseClicked
 
-    private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
+    private void ExitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitBtnMouseEntered
         // TODO add your handling code here:
         changeColor(closeBtn, new Color(255,0,0));
-    }//GEN-LAST:event_jLabel5MouseEntered
+    }//GEN-LAST:event_ExitBtnMouseEntered
 
-    private void jLabel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseExited
+    private void ExitBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitBtnMouseExited
         // TODO add your handling code here:
         changeColor(closeBtn, new Color(255,255,255));
-    }//GEN-LAST:event_jLabel5MouseExited
+    }//GEN-LAST:event_ExitBtnMouseExited
 
     private void emailTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTxtFocusGained
         // TODO add your handling code here:
@@ -258,7 +260,7 @@ public class LoginForm extends javax.swing.JFrame {
         if(email.equals("")) {
             sb.append("Email is empty\n");
         } else if(emailMatcher.find()) {
-            sb.append("email must be abc@gmail.com");
+            sb.append("Login success!!!");
         }
         if(password.equals("")) {
             sb.append("Password is empty\n");
@@ -272,6 +274,10 @@ public class LoginForm extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Email or Password dose not exits!!", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        }
+        if(email.equals("admin@gmail.com") && password.equals("123456")) {
+            dispose();
+            new AdminDashboard().setVisible(true);
         }
     }//GEN-LAST:event_signInBtnActionPerformed
 
@@ -344,14 +350,13 @@ public class LoginForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ExitBtn;
     private javax.swing.JPanel closeBtn;
     private javax.swing.JTextField emailTxt;
     private javax.swing.JLabel forgotPassword;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;

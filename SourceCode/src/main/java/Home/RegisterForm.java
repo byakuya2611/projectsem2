@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -21,6 +22,7 @@ import javax.swing.border.Border;
  */
 public class RegisterForm extends javax.swing.JFrame {
 
+    private JFrame frame;
     /**
      * Creates new form RegisterForm
      */
@@ -66,10 +68,10 @@ public class RegisterForm extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         loginForm = new javax.swing.JLabel();
         closetBtn = new javax.swing.JPanel();
-        BtnClose = new javax.swing.JLabel();
+        ExitBtn = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -93,7 +95,7 @@ public class RegisterForm extends javax.swing.JFrame {
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 100, 40));
 
         fullNameTxt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        fullNameTxt.setForeground(new java.awt.Color(204, 204, 204));
+        fullNameTxt.setForeground(new java.awt.Color(102, 102, 102));
         fullNameTxt.setText("Enter Full Name");
         fullNameTxt.setBorder(null);
         fullNameTxt.setOpaque(false);
@@ -118,7 +120,7 @@ public class RegisterForm extends javax.swing.JFrame {
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 100, 30));
 
         emailTxt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        emailTxt.setForeground(new java.awt.Color(204, 204, 204));
+        emailTxt.setForeground(new java.awt.Color(102, 102, 102));
         emailTxt.setText("Enter Email");
         emailTxt.setBorder(null);
         emailTxt.setOpaque(false);
@@ -138,7 +140,7 @@ public class RegisterForm extends javax.swing.JFrame {
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 100, 40));
 
         addressTxt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        addressTxt.setForeground(new java.awt.Color(204, 204, 204));
+        addressTxt.setForeground(new java.awt.Color(102, 102, 102));
         addressTxt.setText("Enter Address");
         addressTxt.setBorder(null);
         addressTxt.setOpaque(false);
@@ -158,7 +160,7 @@ public class RegisterForm extends javax.swing.JFrame {
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 70, 30));
 
         phoneTxt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        phoneTxt.setForeground(new java.awt.Color(204, 204, 204));
+        phoneTxt.setForeground(new java.awt.Color(102, 102, 102));
         phoneTxt.setText("Enter Phone Number");
         phoneTxt.setBorder(null);
         phoneTxt.setOpaque(false);
@@ -190,7 +192,7 @@ public class RegisterForm extends javax.swing.JFrame {
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 410, 140, -1));
 
         passwordTxt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        passwordTxt.setForeground(new java.awt.Color(204, 204, 204));
+        passwordTxt.setForeground(new java.awt.Color(102, 102, 102));
         passwordTxt.setText("Password");
         passwordTxt.setBorder(null);
         passwordTxt.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -205,7 +207,7 @@ public class RegisterForm extends javax.swing.JFrame {
         jPanel2.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 240, -1));
 
         confirmPasswordTxt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        confirmPasswordTxt.setForeground(new java.awt.Color(204, 204, 204));
+        confirmPasswordTxt.setForeground(new java.awt.Color(102, 102, 102));
         confirmPasswordTxt.setText("Password");
         confirmPasswordTxt.setBorder(null);
         confirmPasswordTxt.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -287,33 +289,32 @@ public class RegisterForm extends javax.swing.JFrame {
         closetBtn.setBackground(new java.awt.Color(255, 255, 255));
         closetBtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BtnClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BtnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/close.png"))); // NOI18N
-        BtnClose.setPreferredSize(new java.awt.Dimension(50, 50));
-        BtnClose.addMouseListener(new java.awt.event.MouseAdapter() {
+        ExitBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ExitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/close.png"))); // NOI18N
+        ExitBtn.setPreferredSize(new java.awt.Dimension(50, 50));
+        ExitBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnCloseMouseClicked(evt);
+                ExitBtnMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                BtnCloseMouseEntered(evt);
+                ExitBtnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                BtnCloseMouseExited(evt);
+                ExitBtnMouseExited(evt);
             }
         });
-        closetBtn.add(BtnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        closetBtn.add(ExitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPanel2.add(closetBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 50, 50));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, 560, 590));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 590));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\projectsem2\\projectsem2\\SourceCode\\src\\main\\resources\\logo\\10415d2d0accbbd6ae2ce6018fea86b9.png")); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 590));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1330, 590));
 
-        setSize(new java.awt.Dimension(1331, 589));
+        setSize(new java.awt.Dimension(560, 589));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -342,20 +343,24 @@ public class RegisterForm extends javax.swing.JFrame {
         new LoginForm().setVisible(true);
     }//GEN-LAST:event_loginFormMouseClicked
 
-    private void BtnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCloseMouseClicked
+    private void ExitBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitBtnMouseClicked
         // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_BtnCloseMouseClicked
+        frame = new JFrame("Exit");
+        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_ExitBtnMouseClicked
 
-    private void BtnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCloseMouseEntered
+    private void ExitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitBtnMouseEntered
         // TODO add your handling code here:
         changeColor(closetBtn, Color.red);
-    }//GEN-LAST:event_BtnCloseMouseEntered
+    }//GEN-LAST:event_ExitBtnMouseEntered
 
-    private void BtnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCloseMouseExited
+    private void ExitBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitBtnMouseExited
         // TODO add your handling code here:
         changeColor(closetBtn, Color.WHITE);
-    }//GEN-LAST:event_BtnCloseMouseExited
+    }//GEN-LAST:event_ExitBtnMouseExited
 
     private void fullNameTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fullNameTxtFocusGained
         // TODO add your handling code here:
@@ -567,7 +572,7 @@ public class RegisterForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel BtnClose;
+    private javax.swing.JLabel ExitBtn;
     private javax.swing.JTextField addressTxt;
     private javax.swing.JCheckBox check;
     private javax.swing.JPanel closetBtn;
