@@ -168,7 +168,6 @@ public class UserManage extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(153, 0, 204));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton3.setText("Add");
-        jButton3.setActionCommand("Add");
 
         javax.swing.GroupLayout toppanel2Layout = new javax.swing.GroupLayout(toppanel2);
         toppanel2.setLayout(toppanel2Layout);
@@ -306,50 +305,20 @@ public class UserManage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DeleteBtn;
-    private javax.swing.JButton DeleteBtn1;
     private javax.swing.JButton DeleteBtn2;
-    private javax.swing.JButton EditBtn;
-    private javax.swing.JButton EditBtn1;
     private javax.swing.JButton EditBtn2;
-    private javax.swing.JButton ExitBtn;
-    private javax.swing.JButton ExitBtn1;
     private javax.swing.JButton ExitBtn2;
-    private javax.swing.JButton MovieManageBtn;
-    private javax.swing.JButton MovieManageBtn1;
     private javax.swing.JButton MovieManageBtn2;
-    private javax.swing.JButton RevenueBtn;
-    private javax.swing.JButton RevenueBtn1;
     private javax.swing.JButton RevenueBtn2;
-    private javax.swing.JButton SearchBtn;
-    private javax.swing.JButton SearchBtn1;
     private javax.swing.JButton SearchBtn2;
-    private javax.swing.JButton TicketManageBtn;
-    private javax.swing.JButton TicketManageBtn1;
     private javax.swing.JButton TicketManageBtn2;
-    private javax.swing.JTextField TitleTxt;
-    private javax.swing.JTextField TitleTxt1;
     private javax.swing.JTextField TitleTxt2;
-    private javax.swing.JButton UserManageBtn;
-    private javax.swing.JButton UserManageBtn1;
     private javax.swing.JButton UserManageBtn2;
-    private javax.swing.JPanel bg;
-    private javax.swing.JPanel bg1;
     private javax.swing.JPanel bg2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JPanel sidepanel;
-    private javax.swing.JPanel sidepanel1;
     private javax.swing.JPanel sidepanel2;
-    private javax.swing.JPanel toppanel;
-    private javax.swing.JPanel toppanel1;
     private javax.swing.JPanel toppanel2;
     // End of variables declaration//GEN-END:variables
 }

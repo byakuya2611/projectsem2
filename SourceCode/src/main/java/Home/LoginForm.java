@@ -259,8 +259,8 @@ public class LoginForm extends javax.swing.JFrame {
         
         if(email.equals("")) {
             sb.append("Email is empty\n");
-        } else if(emailMatcher.find()) {
-            sb.append("Login success!!!");
+        } else if(!emailMatcher.find()) {
+            sb.append("Email must be abc@gmail.com\n");
         }
         if(password.equals("")) {
             sb.append("Password is empty\n");
@@ -269,16 +269,18 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, sb.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             if(UserDAO.getLogin(email, password)) {
-                dispose();
-                new RegisterForm().setVisible(true);
+                if(UserDAO.getRoleAccount(email, password) == 2 || UserDAO.getRoleAccount(email, password) == 1) {
+                    dispose();
+                    new MainManage().setVisible(true);
+                } else {
+                    dispose();
+                    //bang order cua kh
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Email or Password dose not exits!!", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }
-        if(email.equals("admin@gmail.com") && password.equals("123456")) {
-            dispose();
-            new MainManage().setVisible(true);
-        }
+        }    
+
     }//GEN-LAST:event_signInBtnActionPerformed
 
     private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed

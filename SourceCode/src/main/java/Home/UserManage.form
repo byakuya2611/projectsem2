@@ -348,7 +348,6 @@
                   <Font name="Tahoma" size="18" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Add"/>
-                <Property name="actionCommand" type="java.lang.String" value="Add"/>
               </Properties>
             </Component>
           </SubComponents>

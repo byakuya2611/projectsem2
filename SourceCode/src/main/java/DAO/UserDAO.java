@@ -34,6 +34,22 @@ public class UserDAO extends BaseDAO{
         return  false;
     }
     
+    public static int getRoleAccount(String username, String password) {
+        openConn();
+        User user = new User();
+        String sql = "select * from user where email = '"+ username + "' and password = '" + password + "'";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet rs =statement.executeQuery();
+            if(rs.next()) {
+               return rs.getInt("role_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 2;
+    }
+    
     public static void Insert(User user) {
         openConn();
         String sql = "insert into user(fullname,email,phone_number,address,password,role_id,create_at,update_at,gender) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
