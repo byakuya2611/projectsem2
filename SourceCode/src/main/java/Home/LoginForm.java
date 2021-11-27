@@ -277,7 +277,7 @@ public class LoginForm extends javax.swing.JFrame {
         }
         if(email.equals("admin@gmail.com") && password.equals("123456")) {
             dispose();
-            new AdminDashboard().setVisible(true);
+            new MainManage().setVisible(true);
         }
     }//GEN-LAST:event_signInBtnActionPerformed
 
