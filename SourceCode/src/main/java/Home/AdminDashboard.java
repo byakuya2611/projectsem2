@@ -179,17 +179,18 @@ public class AdminDashboard extends javax.swing.JFrame {
         toppanelLayout.setHorizontalGroup(
             toppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(toppanelLayout.createSequentialGroup()
-                .addContainerGap(163, Short.MAX_VALUE)
-                .addComponent(EditBtn)
-                .addGap(55, 55, 55)
-                .addComponent(DeleteBtn)
-                .addGap(41, 41, 41)
-                .addComponent(SearchBtn)
-                .addGap(18, 18, 18))
-            .addGroup(toppanelLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(TitleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE)
+                .addGroup(toppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, toppanelLayout.createSequentialGroup()
+                        .addComponent(EditBtn)
+                        .addGap(55, 55, 55)
+                        .addComponent(DeleteBtn)
+                        .addGap(41, 41, 41)
+                        .addComponent(SearchBtn)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, toppanelLayout.createSequentialGroup()
+                        .addComponent(TitleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(82, 82, 82))))
         );
         toppanelLayout.setVerticalGroup(
             toppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +205,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        bg.add(toppanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 530, -1));
+        bg.add(toppanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 530, -1));
         bg.add(RevenuePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         MoviePanel.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -226,7 +227,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         ));
         MoviePanel.setViewportView(MovieTable);
 
-        bg.add(MoviePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 530, 400));
+        bg.add(MoviePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 530, 460));
         bg.add(TicketPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 530, 400));
 
         UserPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
