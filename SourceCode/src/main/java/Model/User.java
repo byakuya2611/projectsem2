@@ -35,7 +35,16 @@ public class User {
         this.address = address;
     }
 
-    
+    public User(String fullName, String email, String phoneNumber, String address, Integer roleId, String gender) {
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.roleId = roleId;
+        this.gender = gender;
+    }
+    public User() {
+    }
 
     public String getAddress() {
         return address;
@@ -61,8 +70,7 @@ public class User {
         this.updateAccoutDate = updateAccoutDate;
     }
     
-    public User() {
-    }
+    
 
     public Integer getId() {
         return id;

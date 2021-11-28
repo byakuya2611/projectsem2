@@ -50,7 +50,6 @@ public class MovieManage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1400, 700));
-        setPreferredSize(new java.awt.Dimension(1400, 700));
 
         bg2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -205,20 +204,7 @@ public class MovieManage extends javax.swing.JFrame {
 
         bg2.add(toppanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 1150, 760));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bg2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(bg2, javax.swing.GroupLayout.PREFERRED_SIZE, 728, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(bg2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

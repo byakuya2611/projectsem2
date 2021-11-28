@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Utilities.Utility;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -48,6 +50,30 @@ public class UserDAO extends BaseDAO{
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 2;
+    }
+    public static List<User> getListUser() {
+         openConn();
+        List<User> data = new ArrayList<User>();
+        String sql = "select * from user";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                User user = new User(
+                        resultSet.getString("fullname"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone_number"),
+                        resultSet.getString("address"),
+                        resultSet.getInt("role_id"),
+                        resultSet.getString("gender")                      
+                );
+                data.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConn();
+        return  data;
     }
     
     public static void Insert(User user) {
