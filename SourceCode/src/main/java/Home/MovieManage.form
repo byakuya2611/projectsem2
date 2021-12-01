@@ -3,11 +3,6 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="com.raven.swing.TimePicker" name="timePicker1">
-      <Properties>
-        <Property name="displayText" type="javax.swing.JTextField" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="TimePicker"/>
-        </Property>
-      </Properties>
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -613,7 +608,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
@@ -664,8 +659,8 @@
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="DatePicker" min="-2" pref="276" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                              <Component id="DatePicker" min="-2" pref="203" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
                               <Component id="TimePicker" min="-2" pref="153" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="ShowTimeBtn" min="-2" pref="94" max="-2" attributes="0"/>
@@ -679,9 +674,9 @@
                               <EmptySpace pref="31" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="jLabel5" pref="30" max="32767" attributes="0"/>
-                                  <Component id="DatePicker" pref="30" max="32767" attributes="0"/>
                                   <Component id="ShowTimeBtn" max="32767" attributes="0"/>
                                   <Component id="TimePicker" max="32767" attributes="0"/>
+                                  <Component id="DatePicker" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                           </Group>
@@ -697,8 +692,6 @@
                         <Property name="text" type="java.lang.String" value="Date And Time:"/>
                       </Properties>
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="DatePicker">
-                    </Component>
                     <Component class="javax.swing.JButton" name="ShowTimeBtn">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Show Time"/>
@@ -711,6 +704,8 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TimePickerActionPerformed"/>
                       </Events>
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="DatePicker">
                     </Component>
                   </SubComponents>
                 </Container>

@@ -81,6 +81,35 @@ public class UserDAO extends BaseDAO{
         return  data;
     }
     
+    public static List<User> getListEmployee() {
+        openConn();
+        List<User> data = new ArrayList<>();
+        String sql = "select * from user where role_id =2";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("fullname"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone_number"),
+                        resultSet.getInt("role_id"),
+                        resultSet.getString("gender"),
+                        resultSet.getString("create_at"),
+                        resultSet.getString("update_at"),
+                        resultSet.getString("address"),
+                        resultSet.getString("password")
+                );
+                data.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConn();
+        return  data;
+    }
+    
     public static void Insert(User user) {
         openConn();
         String sql = "insert into user(fullname,email,phone_number,address,password,role_id,create_at,update_at,gender) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";

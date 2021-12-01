@@ -5,6 +5,7 @@
  */
 package Home;
 
+import DAO.UserDAO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -23,6 +24,7 @@ public class MainManage extends javax.swing.JFrame {
     public MainManage() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
     }
 
     /**
@@ -39,14 +41,17 @@ public class MainManage extends javax.swing.JFrame {
         ExitBtn = new javax.swing.JButton();
         MovieManageBtn = new javax.swing.JButton();
         TicketManageBtn = new javax.swing.JButton();
-        UserManageBtn = new javax.swing.JButton();
+        EmployeeManageBtn = new javax.swing.JButton();
         RevenueBtn = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
+        UserManageBtn = new javax.swing.JButton();
         toppanel = new javax.swing.JPanel();
         TitleTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(825, 74));
+        setPreferredSize(new java.awt.Dimension(1578, 760));
 
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -89,17 +94,17 @@ public class MainManage extends javax.swing.JFrame {
         });
         sidepanel.add(TicketManageBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 280, 60));
 
-        UserManageBtn.setBackground(new java.awt.Color(54, 33, 88));
-        UserManageBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        UserManageBtn.setForeground(new java.awt.Color(255, 255, 255));
-        UserManageBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
-        UserManageBtn.setText("     User manage");
-        UserManageBtn.addActionListener(new java.awt.event.ActionListener() {
+        EmployeeManageBtn.setBackground(new java.awt.Color(54, 33, 88));
+        EmployeeManageBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        EmployeeManageBtn.setForeground(new java.awt.Color(255, 255, 255));
+        EmployeeManageBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
+        EmployeeManageBtn.setText("   Employee manage");
+        EmployeeManageBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserManageBtnActionPerformed(evt);
+                EmployeeManageBtnActionPerformed(evt);
             }
         });
-        sidepanel.add(UserManageBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 280, 60));
+        sidepanel.add(EmployeeManageBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 280, 60));
 
         RevenueBtn.setBackground(new java.awt.Color(54, 33, 88));
         RevenueBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -121,6 +126,18 @@ public class MainManage extends javax.swing.JFrame {
         jTextField1.setBorder(null);
         sidepanel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
         sidepanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 250, 10));
+
+        UserManageBtn.setBackground(new java.awt.Color(54, 33, 88));
+        UserManageBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        UserManageBtn.setForeground(new java.awt.Color(255, 255, 255));
+        UserManageBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
+        UserManageBtn.setText("     User manage");
+        UserManageBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserManageBtnActionPerformed(evt);
+            }
+        });
+        sidepanel.add(UserManageBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 280, 60));
 
         bg.add(sidepanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 840));
 
@@ -180,17 +197,23 @@ public class MainManage extends javax.swing.JFrame {
         new TicketManage().setVisible(true);
     }//GEN-LAST:event_TicketManageBtnActionPerformed
 
-    private void UserManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManageBtnActionPerformed
+    private void EmployeeManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmployeeManageBtnActionPerformed
         // TODO add your handling code here:
         dispose();
-        new UserManage().setVisible(true);
-    }//GEN-LAST:event_UserManageBtnActionPerformed
+        new EmployeeManage().setVisible(true);
+    }//GEN-LAST:event_EmployeeManageBtnActionPerformed
 
     private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
         // TODO add your handling code here:
         dispose();
         new RevenueManage().setVisible(true);
     }//GEN-LAST:event_RevenueBtnActionPerformed
+
+    private void UserManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManageBtnActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new UserManage().setVisible(true);
+    }//GEN-LAST:event_UserManageBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,6 +252,7 @@ public class MainManage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton EmployeeManageBtn;
     private javax.swing.JButton ExitBtn;
     private javax.swing.JButton MovieManageBtn;
     private javax.swing.JButton RevenueBtn;

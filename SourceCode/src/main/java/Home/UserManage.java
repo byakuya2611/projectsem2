@@ -586,7 +586,12 @@ public class UserManage extends javax.swing.JFrame {
 
     private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        frame = new JFrame("Exit");
+        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+            dispose();
+            new LoginForm().setVisible(true);
+        }
     }//GEN-LAST:event_ExitBtnActionPerformed
 
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed

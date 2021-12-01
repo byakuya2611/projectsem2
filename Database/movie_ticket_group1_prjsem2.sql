@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 14, 2021 at 06:53 AM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 7.4.21
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 01, 2021 lúc 03:46 PM
+-- Phiên bản máy phục vụ: 10.4.21-MariaDB
+-- Phiên bản PHP: 8.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,273 +18,51 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `movie_ticket_group1_prjsem2`
+-- Cơ sở dữ liệu: `movie_ticket_group1_prjsem2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `feedback`
---
-
-CREATE TABLE `feedback` (
-  `id` int(11) NOT NULL,
-  `firstname` varchar(30) NOT NULL,
-  `lastname` varchar(30) NOT NULL,
-  `email` varchar(250) NOT NULL,
-  `phone_number` varchar(20) NOT NULL,
-  `subject_name` varchar(350) NOT NULL,
-  `note` varchar(1000) NOT NULL,
-  `status` int(11) NOT NULL,
-  `create_at` datetime NOT NULL,
-  `update_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `movie`
+-- Cấu trúc bảng cho bảng `movie`
 --
 
 CREATE TABLE `movie` (
   `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `thumbnail` varchar(300) NOT NULL,
-  `start_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order`
---
-
-CREATE TABLE `order` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `fullname` varchar(50) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `phone_number` varchar(20) NOT NULL,
-  `address` varchar(200) NOT NULL,
-  `note` varchar(1000) NOT NULL,
-  `order_date` datetime NOT NULL,
-  `status` int(11) NOT NULL,
-  `total_money` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_detail`
---
-
-CREATE TABLE `order_detail` (
-  `id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `ticket_id` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  `num` int(11) NOT NULL,
-  `total_money` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `role`
---
-
-CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `room`
---
-
-CREATE TABLE `room` (
-  `id` int(11) NOT NULL,
-  `chair_id` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ticket`
---
-
-CREATE TABLE `ticket` (
-  `id` int(11) NOT NULL,
-  `movie_id` int(11) NOT NULL,
-  `room_id` int(11) NOT NULL,
-  `chair_id` varchar(10) NOT NULL,
-  `price` int(11) NOT NULL,
-  `discount` int(11) NOT NULL,
-  `create_at` datetime NOT NULL,
-  `update_at` datetime NOT NULL,
-  `delete` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `fullname` varchar(50) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `phone_number` varchar(20) NOT NULL,
-  `address` varchar(200) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `create_at` datetime NOT NULL,
-  `update_at` datetime NOT NULL,
-  `delete` int(11) NOT NULL
+  `start_at` date NOT NULL,
+  `time` time NOT NULL,
+  `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Đang đổ dữ liệu cho bảng `movie`
+--
+
+INSERT INTO `movie` (`id`, `name`, `thumbnail`, `start_at`, `time`, `description`) VALUES
+(1, 'abc', 'ahfkjdsf', '2021-11-03', '00:00:00', 'ádfasdfasdfsadf'),
+(2, 'abasdjfjhjsaf', 'ahfkapiruwioeuriqwie', '2021-11-19', '09:20:00', 'oiruetoiuwejroithdflgnkjdfshgklsdfg');
+
+--
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `movie`
+-- Chỉ mục cho bảng `movie`
 --
 ALTER TABLE `movie`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `order`
---
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_order_user` (`user_id`);
-
---
--- Indexes for table `order_detail`
---
-ALTER TABLE `order_detail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_order_detail_ticket` (`ticket_id`),
-  ADD KEY `fk_oder_detail_order` (`order_id`);
-
---
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `room`
---
-ALTER TABLE `room`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `ticket`
---
-ALTER TABLE `ticket`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_ticket_movie` (`movie_id`),
-  ADD KEY `fk_ticket_room` (`room_id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_role` (`role_id`);
-
---
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `feedback`
---
-ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `movie`
+-- AUTO_INCREMENT cho bảng `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `order`
---
-ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `order_detail`
---
-ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `role`
---
-ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `room`
---
-ALTER TABLE `room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ticket`
---
-ALTER TABLE `ticket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `order`
---
-ALTER TABLE `order`
-  ADD CONSTRAINT `fk_order_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-
---
--- Constraints for table `order_detail`
---
-ALTER TABLE `order_detail`
-  ADD CONSTRAINT `fk_oder_detail_order` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
-  ADD CONSTRAINT `fk_order_detail_ticket` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`);
-
---
--- Constraints for table `ticket`
---
-ALTER TABLE `ticket`
-  ADD CONSTRAINT `fk_ticket_movie` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
-  ADD CONSTRAINT `fk_ticket_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`);
-
---
--- Constraints for table `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `fk_user_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

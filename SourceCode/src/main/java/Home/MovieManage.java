@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class MovieManage extends javax.swing.JFrame {
 
     //Khai bao bien
+    private JFrame frame;
     DefaultTableModel tableModel;
     List<Movie> ListMovies = new ArrayList<>();
     
@@ -132,11 +133,9 @@ public class MovieManage extends javax.swing.JFrame {
         DescTxt = new javax.swing.JTextArea();
         DatePickerPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        DatePicker = new com.toedter.calendar.JDateChooser();
         ShowTimeBtn = new javax.swing.JButton();
         TimePicker = new javax.swing.JTextField();
-
-        timePicker1.setDisplayText(TimePicker);
+        DatePicker = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -451,8 +450,8 @@ public class MovieManage extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addComponent(DatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addComponent(DatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(135, 135, 135)
                 .addComponent(TimePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ShowTimeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -464,9 +463,9 @@ public class MovieManage extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(DatePickerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(DatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(ShowTimeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TimePicker))
+                    .addComponent(TimePicker)
+                    .addComponent(DatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27))
         );
 
@@ -513,7 +512,7 @@ public class MovieManage extends javax.swing.JFrame {
     private void UserManagerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManagerBtnActionPerformed
         // TODO add your handling code here:
         dispose();
-        new MovieManage().setVisible(true);
+        new UserManage().setVisible(true);
     }//GEN-LAST:event_UserManagerBtnActionPerformed
 
     private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
@@ -524,7 +523,12 @@ public class MovieManage extends javax.swing.JFrame {
 
     private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        frame = new JFrame("Exit");
+        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+            dispose();
+            new LoginForm().setVisible(true);
+        }
     }//GEN-LAST:event_ExitBtnActionPerformed
 
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed

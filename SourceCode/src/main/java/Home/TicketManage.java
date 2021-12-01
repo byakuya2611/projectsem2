@@ -5,8 +5,21 @@
  */
 package Home;
 
+import DAO.TicketDAO;
+import DAO.MovieDAO;
+import Model.Movie;
+import Model.Ticket;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,13 +27,93 @@ import javax.swing.JOptionPane;
  */
 public class TicketManage extends javax.swing.JFrame {
 
+    //Khai bao bien
     private JFrame frame;
+    DefaultTableModel tableModel;
+    List<Ticket> listTickets = new ArrayList<>();
+    List<Movie> listMovies = new ArrayList<>();
     /**
      * Creates new form MovieDetail
      */
     public TicketManage() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        tableModel = (DefaultTableModel) TicketTable.getModel();
+        listTickets = TicketDAO.getListTicket();
+        listMovies = MovieDAO.getListMovie();
+        showTicket();
+        TicketTable.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = TicketTable.getSelectedRow();
+                Ticket ticket = listTickets.get(index);
+                TicketNoTxt.setText(String.valueOf(ticket.getId()));
+                RoomTxt.setText(String.valueOf(ticket.getRoomId()));
+                ChairTxt.setText(ticket.getChairId());
+                PriceTxt.setText(String.valueOf(ticket.getPrice()));
+                DiscountTxt.setText(String.valueOf(ticket.getDiscount()));
+                for (Movie movie : listMovies) {
+                    if(movie.getId() == ticket.getMovieId()) {
+                        MovieNameTxt.setText(movie.getName());
+                        DateTxt.setText(Utilities.Utility.ConvertDateToString(movie.getStartDate()));
+                        TimeTxt.setText(Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
+                        
+                    }
+                }
+                Integer Total = ticket.getPrice() - ticket.getDiscount();
+                TotalTxt.setText(String.valueOf(Total));
+                
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+    }
+    public String movieIdToName(Integer movieId) {
+        String name = null;
+        for (Movie movie : listMovies) {
+            if(movie.getId() == movieId) {
+                name = movie.getName();
+            }
+        }
+        return name;
+        
+    }
+    
+    //showTable
+    public void showTicket() {
+        tableModel.setRowCount(0);
+        listTickets.forEach(ticket -> {
+            tableModel.addRow(new Object[] {
+                ticket.getId(),
+                movieIdToName(ticket.getMovieId()),
+                ticket.getRoomId(),
+                ticket.getChairId(),
+                ticket.getPrice(),
+                ticket.getDiscount(),
+                ticket.getCreateTicketDate(),
+                ticket.getUpdateTicketDate()
+            
+            });
+        });
     }
 
     /**
@@ -32,228 +125,810 @@ public class TicketManage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bg2 = new javax.swing.JPanel();
-        sidepanel2 = new javax.swing.JPanel();
-        ExitBtn2 = new javax.swing.JButton();
-        MovieManageBtn2 = new javax.swing.JButton();
+        sidepanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        MovieManageBtn = new javax.swing.JButton();
         TicketManageBtn2 = new javax.swing.JButton();
-        UserManageBtn2 = new javax.swing.JButton();
-        RevenueBtn2 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        UserManagerBtn = new javax.swing.JButton();
+        RevenueBtn = new javax.swing.JButton();
+        ExitBtn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        toppanel = new javax.swing.JPanel();
+        TitleTxt = new javax.swing.JLabel();
+        bottompanel = new javax.swing.JPanel();
+        AddBtn = new javax.swing.JButton();
+        DeleteBtn = new javax.swing.JButton();
+        SearchBtn = new javax.swing.JButton();
+        UpdateBtn = new javax.swing.JButton();
+        ResetBtn = new javax.swing.JButton();
+        bodypanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TicketTable = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        MovieIdTxt = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        RoomBox = new javax.swing.JComboBox<>();
+        ChairIdTxt = new javax.swing.JTextField();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        TypeBox = new javax.swing.JComboBox<>();
+        DiscountBox = new javax.swing.JComboBox<>();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        TicketNoTxt = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        MovieNameTxt = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        RoomTxt = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        ChairTxt = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        DateTxt = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        PriceTxt = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        toppanel2 = new javax.swing.JPanel();
-        TitleTxt2 = new javax.swing.JTextField();
-        EditBtn2 = new javax.swing.JButton();
-        DeleteBtn2 = new javax.swing.JButton();
-        SearchBtn2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        DiscountTxt = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        TotalTxt = new javax.swing.JTextField();
+        TimeTxt = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(825, 74));
+        setPreferredSize(new java.awt.Dimension(1578, 760));
 
-        bg2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        sidepanel.setBackground(new java.awt.Color(54, 33, 88));
+        sidepanel.setPreferredSize(new java.awt.Dimension(300, 760));
 
-        sidepanel2.setBackground(new java.awt.Color(54, 33, 88));
-        sidepanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Movie Ticket");
 
-        ExitBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        ExitBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        ExitBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        ExitBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/exit.png"))); // NOI18N
-        ExitBtn2.setText("     Exit");
-        ExitBtn2.addActionListener(new java.awt.event.ActionListener() {
+        MovieManageBtn.setBackground(new java.awt.Color(54, 33, 88));
+        MovieManageBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        MovieManageBtn.setForeground(new java.awt.Color(255, 255, 255));
+        MovieManageBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/movie-reel.png"))); // NOI18N
+        MovieManageBtn.setText("Movie Manager");
+        MovieManageBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        MovieManageBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitBtn2ExitBtnActionPerformed(evt);
+                MovieManageBtnActionPerformed(evt);
             }
         });
-        sidepanel2.add(ExitBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 280, 60));
-
-        MovieManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        MovieManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        MovieManageBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        MovieManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/movie-reel.png"))); // NOI18N
-        MovieManageBtn2.setText("     Movie manage");
-        MovieManageBtn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MovieManageBtn2MovieManageBtnActionPerformed(evt);
-            }
-        });
-        sidepanel2.add(MovieManageBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 280, 60));
 
         TicketManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
         TicketManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         TicketManageBtn2.setForeground(new java.awt.Color(255, 255, 255));
         TicketManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/ticket.png"))); // NOI18N
-        TicketManageBtn2.setText("     Ticket manage");
+        TicketManageBtn2.setText("Ticket Manager");
+        TicketManageBtn2.setPreferredSize(new java.awt.Dimension(73, 41));
         TicketManageBtn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TicketManageBtn2TicketManageBtnActionPerformed(evt);
+                TicketManageBtn2ActionPerformed(evt);
             }
         });
-        sidepanel2.add(TicketManageBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 280, 60));
 
-        UserManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        UserManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        UserManageBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        UserManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
-        UserManageBtn2.setText("     User manage");
-        UserManageBtn2.addActionListener(new java.awt.event.ActionListener() {
+        UserManagerBtn.setBackground(new java.awt.Color(54, 33, 88));
+        UserManagerBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        UserManagerBtn.setForeground(new java.awt.Color(255, 255, 255));
+        UserManagerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
+        UserManagerBtn.setText("User Manager");
+        UserManagerBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        UserManagerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserManageBtn2UserManageBtnActionPerformed(evt);
+                UserManagerBtnActionPerformed(evt);
             }
         });
-        sidepanel2.add(UserManageBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 280, 60));
 
-        RevenueBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        RevenueBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        RevenueBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        RevenueBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/money.png"))); // NOI18N
-        RevenueBtn2.setText("     Revenue");
-        RevenueBtn2.addActionListener(new java.awt.event.ActionListener() {
+        RevenueBtn.setBackground(new java.awt.Color(54, 33, 88));
+        RevenueBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        RevenueBtn.setForeground(new java.awt.Color(255, 255, 255));
+        RevenueBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/money.png"))); // NOI18N
+        RevenueBtn.setText("Revenue");
+        RevenueBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        RevenueBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RevenueBtn2RevenueBtnActionPerformed(evt);
+                RevenueBtnActionPerformed(evt);
             }
         });
-        sidepanel2.add(RevenueBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 280, 60));
 
-        jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(54, 33, 88));
-        jTextField3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setText("Movie Ticket");
-        jTextField3.setBorder(null);
-        sidepanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
-        sidepanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 250, 10));
-
-        bg2.add(sidepanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 840));
-
-        toppanel2.setBackground(new java.awt.Color(153, 0, 204));
-
-        TitleTxt2.setEditable(false);
-        TitleTxt2.setBackground(new java.awt.Color(153, 0, 204));
-        TitleTxt2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        TitleTxt2.setForeground(new java.awt.Color(255, 255, 255));
-        TitleTxt2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TitleTxt2.setText("Ticket Manage");
-        TitleTxt2.setBorder(null);
-
-        EditBtn2.setBackground(new java.awt.Color(153, 0, 204));
-        EditBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        EditBtn2.setText("Edit");
-        EditBtn2.addActionListener(new java.awt.event.ActionListener() {
+        ExitBtn.setBackground(new java.awt.Color(54, 33, 88));
+        ExitBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        ExitBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ExitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/exit.png"))); // NOI18N
+        ExitBtn.setText("Exit");
+        ExitBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        ExitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditBtn2EditBtnActionPerformed(evt);
+                ExitBtnActionPerformed(evt);
             }
         });
 
-        DeleteBtn2.setBackground(new java.awt.Color(153, 0, 204));
-        DeleteBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        DeleteBtn2.setText("Delete");
-        DeleteBtn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteBtn2DeleteBtnActionPerformed(evt);
-            }
-        });
-
-        SearchBtn2.setBackground(new java.awt.Color(153, 0, 204));
-        SearchBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        SearchBtn2.setText("Search");
-        SearchBtn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchBtn2SearchBtnActionPerformed(evt);
-            }
-        });
-
-        jButton3.setBackground(new java.awt.Color(153, 0, 204));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton3.setText("Add");
-
-        javax.swing.GroupLayout toppanel2Layout = new javax.swing.GroupLayout(toppanel2);
-        toppanel2.setLayout(toppanel2Layout);
-        toppanel2Layout.setHorizontalGroup(
-            toppanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(toppanel2Layout.createSequentialGroup()
-                .addGroup(toppanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(toppanel2Layout.createSequentialGroup()
-                        .addGap(374, 374, 374)
-                        .addComponent(TitleTxt2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(toppanel2Layout.createSequentialGroup()
-                        .addGap(122, 122, 122)
-                        .addComponent(jButton3)
-                        .addGap(124, 124, 124)
-                        .addComponent(EditBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(123, 123, 123)
-                        .addComponent(DeleteBtn2)
-                        .addGap(165, 165, 165)
-                        .addComponent(SearchBtn2)))
-                .addContainerGap(256, Short.MAX_VALUE))
+        javax.swing.GroupLayout sidepanelLayout = new javax.swing.GroupLayout(sidepanel);
+        sidepanel.setLayout(sidepanelLayout);
+        sidepanelLayout.setHorizontalGroup(
+            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidepanelLayout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
+            .addGroup(sidepanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addComponent(MovieManageBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(TicketManageBtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RevenueBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ExitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(UserManagerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        toppanel2Layout.setVerticalGroup(
-            toppanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(toppanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(TitleTxt2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 621, Short.MAX_VALUE)
-                .addGroup(toppanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                    .addComponent(EditBtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(DeleteBtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SearchBtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(35, 35, 35))
+        sidepanelLayout.setVerticalGroup(
+            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidepanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(MovieManageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(TicketManageBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(UserManagerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(RevenueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(444, Short.MAX_VALUE))
         );
 
-        bg2.add(toppanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 1150, 760));
+        getContentPane().add(sidepanel, java.awt.BorderLayout.LINE_START);
 
-        getContentPane().add(bg2, java.awt.BorderLayout.CENTER);
+        jPanel2.setBackground(new java.awt.Color(153, 0, 204));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        toppanel.setBackground(new java.awt.Color(153, 0, 204));
+        toppanel.setPreferredSize(new java.awt.Dimension(1278, 64));
+        toppanel.setLayout(new java.awt.BorderLayout());
+
+        TitleTxt.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        TitleTxt.setForeground(new java.awt.Color(255, 255, 255));
+        TitleTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TitleTxt.setText("Ticket Manager");
+        toppanel.add(TitleTxt, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(toppanel, java.awt.BorderLayout.PAGE_START);
+
+        bottompanel.setBackground(new java.awt.Color(153, 0, 204));
+        bottompanel.setPreferredSize(new java.awt.Dimension(1278, 70));
+        bottompanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        AddBtn.setBackground(new java.awt.Color(54, 33, 88));
+        AddBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        AddBtn.setForeground(new java.awt.Color(255, 255, 255));
+        AddBtn.setText("Add");
+        AddBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        AddBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(AddBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        DeleteBtn.setBackground(new java.awt.Color(54, 33, 88));
+        DeleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        DeleteBtn.setForeground(new java.awt.Color(255, 255, 255));
+        DeleteBtn.setText("Delete");
+        DeleteBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(DeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
+
+        SearchBtn.setBackground(new java.awt.Color(54, 33, 88));
+        SearchBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        SearchBtn.setForeground(new java.awt.Color(255, 255, 255));
+        SearchBtn.setText("Search");
+        SearchBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        SearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(SearchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
+
+        UpdateBtn.setBackground(new java.awt.Color(54, 33, 88));
+        UpdateBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        UpdateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        UpdateBtn.setText("Update");
+        UpdateBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        UpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(UpdateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
+
+        ResetBtn.setBackground(new java.awt.Color(54, 33, 88));
+        ResetBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        ResetBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ResetBtn.setText("Reset");
+        ResetBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        ResetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(ResetBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, -1, -1));
+
+        jPanel2.add(bottompanel, java.awt.BorderLayout.PAGE_END);
+
+        TicketTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        TicketTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "TicketNo", "MovieName", "Room", "Chair", "Price", "Discount", "Create Time", "Update Time"
+            }
+        ));
+        jScrollPane1.setViewportView(TicketTable);
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1278, 500));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setPreferredSize(new java.awt.Dimension(1278, 100));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Movie Id:");
+
+        MovieIdTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MovieIdTxtActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(MovieIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(205, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(MovieIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(330, 330, 330))
+        );
+
+        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setText("Chair:");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Room:");
+
+        RoomBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose", "1", "2", "3", "4", "5", "6" }));
+
+        ChairIdTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChairIdTxtActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ChairIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RoomBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(209, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(RoomBox, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ChairIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setText("Type:");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setText("Discount:");
+
+        TypeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose", "Normal", "Vip" }));
+        TypeBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TypeBoxActionPerformed(evt);
+            }
+        });
+
+        DiscountBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose", "0", "20%", "30%", "50%" }));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(DiscountBox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DiscountBox, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(TypeBox, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("Ticket No:");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Movie Name:");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("Room:");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setText("Chair:");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setText("Date:");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setText("Price:");
+
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+
+        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setText("Discount:");
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setText("Total:");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setText("Time:");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jLabel10)
+                .addGap(18, 18, 18)
+                .addComponent(DateTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel16)
+                .addGap(18, 18, 18)
+                .addComponent(TimeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(TicketNoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel6)
+                        .addGap(10, 10, 10)
+                        .addComponent(MovieNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(RoomTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(PriceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(ChairTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(DiscountTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(183, 183, 183)
+                        .addComponent(jLabel13)
+                        .addGap(18, 18, 18)
+                        .addComponent(TotalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel4))
+                    .addComponent(TicketNoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel6))
+                    .addComponent(MovieNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RoomTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PriceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel11))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ChairTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DiscountTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel12))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel10))
+                            .addComponent(DateTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel13))
+                            .addComponent(TotalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel16))
+                    .addComponent(TimeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        javax.swing.GroupLayout bodypanelLayout = new javax.swing.GroupLayout(bodypanel);
+        bodypanel.setLayout(bodypanelLayout);
+        bodypanelLayout.setHorizontalGroup(
+            bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addGroup(bodypanelLayout.createSequentialGroup()
+                .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(99, 99, 99)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(127, 127, 127))
+        );
+        bodypanelLayout.setVerticalGroup(
+            bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodypanelLayout.createSequentialGroup()
+                .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(bodypanelLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel2.add(bodypanel, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ExitBtn2ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtn2ExitBtnActionPerformed
-        // TODO add your handling code here:
-        frame = new JFrame("Exit");
-        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
-            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
-        dispose();
-        new LoginForm().setVisible(true);
-        }
-    }//GEN-LAST:event_ExitBtn2ExitBtnActionPerformed
-
-    private void MovieManageBtn2MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtn2MovieManageBtnActionPerformed
+    private void MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtnActionPerformed
         // TODO add your handling code here:
         dispose();
         new MovieManage().setVisible(true);
-    }//GEN-LAST:event_MovieManageBtn2MovieManageBtnActionPerformed
+    }//GEN-LAST:event_MovieManageBtnActionPerformed
 
-    private void TicketManageBtn2TicketManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtn2TicketManageBtnActionPerformed
+    private void TicketManageBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtn2ActionPerformed
         // TODO add your handling code here:
         dispose();
         new TicketManage().setVisible(true);
-    }//GEN-LAST:event_TicketManageBtn2TicketManageBtnActionPerformed
+    }//GEN-LAST:event_TicketManageBtn2ActionPerformed
 
-    private void UserManageBtn2UserManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManageBtn2UserManageBtnActionPerformed
+    private void UserManagerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManagerBtnActionPerformed
         // TODO add your handling code here:
         dispose();
         new UserManage().setVisible(true);
-    }//GEN-LAST:event_UserManageBtn2UserManageBtnActionPerformed
+    }//GEN-LAST:event_UserManagerBtnActionPerformed
 
-    private void RevenueBtn2RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtn2RevenueBtnActionPerformed
+    private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
         // TODO add your handling code here:
         dispose();
         new RevenueManage().setVisible(true);
-    }//GEN-LAST:event_RevenueBtn2RevenueBtnActionPerformed
+    }//GEN-LAST:event_RevenueBtnActionPerformed
 
-    private void EditBtn2EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtn2EditBtnActionPerformed
+    private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EditBtn2EditBtnActionPerformed
+        frame = new JFrame("Exit");
+        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+            dispose();
+            new LoginForm().setVisible(true);
+        }
+    }//GEN-LAST:event_ExitBtnActionPerformed
 
-    private void DeleteBtn2DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtn2DeleteBtnActionPerformed
+    private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_DeleteBtn2DeleteBtnActionPerformed
+       String movie = MovieIdTxt.getText();
+       Integer movieId = Integer.parseInt(movie);
+       String room = RoomBox.getSelectedItem().toString();
+       Integer roomId = Integer.parseInt(room);
+       String chairId = ChairIdTxt.getText();
+       String type = TypeBox.getSelectedItem().toString();
+       String discount = DiscountBox.getSelectedItem().toString();
+       java.util.Date dateCreateDateTicket = new java.util.Date();
+       java.util.Date dateUpdateDateTicket = new java.util.Date();
+       Integer price;
+       Integer discountNum;
+       if(type.toLowerCase().equals("normal")) {
+           price = 80000;
+           if(discount.toLowerCase().equals("20%")) {
+                discountNum = 16000;
+           } else if(discount.toLowerCase().equals("30%")) {
+                discountNum = 24000;
+           } else if(discount.toLowerCase().equals("50%")){
+                discountNum = 40000;
+           } else {
+               discountNum = 0;
+           }
+       } else {
+           price = 100000;
+           if(discount.toLowerCase().equals("20%")) {
+                discountNum = 20000;
+           } else if(discount.toLowerCase().equals("30%")) {
+                discountNum = 30000;
+           } else if(discount.toLowerCase().equals("50%")) {
+                discountNum = 50000;
+           } else {
+               discountNum = 0;
+           }
+       }
+       Ticket ticket = new Ticket(movieId, roomId, chairId, price, discountNum, dateCreateDateTicket, dateUpdateDateTicket);
+       if(Validation(movie, room, chairId, type, discount).length() > 0) {
+           JOptionPane.showMessageDialog(this, Validation(movie, room, chairId, type, discount).toString(), "Error!!!", JOptionPane.ERROR_MESSAGE);
+           
+       } else {
+           TicketDAO.Insert(ticket);
+           JOptionPane.showMessageDialog(this, "DONE!!", "Sucess", JOptionPane.INFORMATION_MESSAGE);
+           Reset();
+       }
+       
+       listTickets = TicketDAO.getListTicket();
+       showTicket();
+       
+    }//GEN-LAST:event_AddBtnActionPerformed
 
-    private void SearchBtn2SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtn2SearchBtnActionPerformed
+    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SearchBtn2SearchBtnActionPerformed
+        int selectedIndex = TicketTable.getSelectedRow();
+        if (selectedIndex >= 0) {
+            Ticket ticket = listTickets.get(selectedIndex);
+            int option = JOptionPane.showConfirmDialog(this, "Do you want delete this ticket?");
+            if(option == 0) {
+                TicketDAO.Delete(ticket.getId());
+                Reset();
+            }
+            listTickets = TicketDAO.getListTicket();
+            showTicket();
+        }
+    }//GEN-LAST:event_DeleteBtnActionPerformed
 
+    private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
+        // TODO add your handling code here
+        List<Ticket> tickets = new ArrayList<>();
+        String input = JOptionPane.showInputDialog(this, "Enter ticket id:");
+        if(input != null && input.length() > 0) {
+            tickets = TicketDAO.Find(Integer.parseInt(input));
+            tableModel.setRowCount(0);
+            tickets.forEach(ticket -> {
+                tableModel.addRow(new Object[] {
+                    ticket.getMovieId(),
+                    ticket.getRoomId(),
+                    ticket.getChairId(),
+                    ticket.getPrice(),
+                    ticket.getDiscount(),
+                    ticket.getCreateTicketDate(),
+                    ticket.getUpdateTicketDate()
+                });
+            });
+        } else {
+            showTicket();
+        }
+    }//GEN-LAST:event_SearchBtnActionPerformed
+
+    private void UpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = TicketTable.getSelectedRow();
+        if (selectedIndex >= 0) {
+            Ticket ticket = listTickets.get(selectedIndex);
+            String movie = MovieIdTxt.getText();
+            Integer movieId = Integer.parseInt(movie);
+            String room = RoomBox.getSelectedItem().toString();
+            Integer roomId = Integer.parseInt(room);
+            String chairId = ChairIdTxt.getText();
+            String type = TypeBox.getSelectedItem().toString();
+            String discount = DiscountBox.getSelectedItem().toString();
+            java.util.Date dateCreateDateTicket = new java.util.Date();
+            java.util.Date dateUpdateDateTicket = new java.util.Date();
+            Integer price;
+            Integer discountNum;
+            if(type.toLowerCase().equals("normal")) {
+                price = 80000;
+                if(discount.toLowerCase().equals("20%")) {
+                     discountNum = 16000;
+                } else if(discount.toLowerCase().equals("30%")) {
+                     discountNum = 24000;
+                } else if(discount.toLowerCase().equals("50%")){
+                     discountNum = 40000;
+                } else {
+                    discountNum = 0;
+                }
+            } else {
+                price = 100000;
+                if(discount.toLowerCase().equals("20%")) {
+                     discountNum = 20000;
+                } else if(discount.toLowerCase().equals("30%")) {
+                     discountNum = 30000;
+                } else if(discount.toLowerCase().equals("50%")) {
+                     discountNum = 50000;
+                } else {
+                    discountNum = 0;
+                }
+            }
+            
+            if(Validation(movie, room, chairId, type, discount).length() > 0) {
+                JOptionPane.showMessageDialog(this, Validation(movie, room, chairId, type, discount).toString(), "Error!!!", JOptionPane.ERROR_MESSAGE);
+
+            } else {
+                int option = JOptionPane.showConfirmDialog(this, "Do you want update this ticket?");
+                if(option == 0) {
+                    ticket.setMovieId(movieId);
+                    ticket.setRoomId(roomId);
+                    ticket.setChairId(chairId);
+                    ticket.setPrice(price);
+                    ticket.setDiscount(discountNum);
+                    ticket.setCreateTicketDate(dateCreateDateTicket);
+                    ticket.setUpdateTicketDate(dateUpdateDateTicket);
+                    TicketDAO.Update(ticket, ticket.getId());
+                    Reset();
+                }
+                
+            }
+            listTickets = TicketDAO.getListTicket();
+            showTicket();
+        }
+    }//GEN-LAST:event_UpdateBtnActionPerformed
+
+    private void ResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetBtnActionPerformed
+        // TODO add your handling code here:
+        Reset();
+    }//GEN-LAST:event_ResetBtnActionPerformed
+
+    private void MovieIdTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieIdTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MovieIdTxtActionPerformed
+
+    private void TypeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TypeBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TypeBoxActionPerformed
+
+    private void ChairIdTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChairIdTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ChairIdTxtActionPerformed
+
+    private void Reset() {
+        MovieIdTxt.setText("");
+        RoomBox.setSelectedItem(0);
+        ChairIdTxt.setText("");
+        TypeBox.setSelectedItem(0);
+        DiscountBox.setSelectedItem(0);
+    }
+    
+    private StringBuilder Validation(String movieId, String room, String chairId, String type, String discount) {
+        StringBuilder sb = new StringBuilder();
+        Pattern moviePattern = Pattern.compile("[0-9]");
+        Matcher movieMatcher = moviePattern.matcher(movieId);
+        if(movieId.equals("")) {
+            sb.append("Movie id is empty!!");
+        } else if (!movieMatcher.find()) {
+            sb.append("Movie id must be 0-9");
+        }
+        if(room.equals("Choose")) {
+            sb.append("Room is empty");
+        }
+        if(chairId.equals("")) {
+            sb.append("Chair id is empty");
+        }
+        if(type.equals("Choose")) {
+            sb.append("Type is empty");
+        }
+        if(discount.equals("Choose")) {
+            sb.append("Discount is empty");
+        }
+        
+        
+        return sb;
+    }
     /**
      * @param args the command line arguments
      */
@@ -291,20 +966,60 @@ public class TicketManage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DeleteBtn2;
-    private javax.swing.JButton EditBtn2;
-    private javax.swing.JButton ExitBtn2;
-    private javax.swing.JButton MovieManageBtn2;
-    private javax.swing.JButton RevenueBtn2;
-    private javax.swing.JButton SearchBtn2;
+    private javax.swing.JButton AddBtn;
+    private javax.swing.JTextField ChairIdTxt;
+    private javax.swing.JTextField ChairTxt;
+    private javax.swing.JTextField DateTxt;
+    private javax.swing.JButton DeleteBtn;
+    private javax.swing.JComboBox<String> DiscountBox;
+    private javax.swing.JTextField DiscountTxt;
+    private javax.swing.JButton ExitBtn;
+    private javax.swing.JTextField MovieIdTxt;
+    private javax.swing.JButton MovieManageBtn;
+    private javax.swing.JTextField MovieNameTxt;
+    private javax.swing.JTextField PriceTxt;
+    private javax.swing.JButton ResetBtn;
+    private javax.swing.JButton RevenueBtn;
+    private javax.swing.JComboBox<String> RoomBox;
+    private javax.swing.JTextField RoomTxt;
+    private javax.swing.JButton SearchBtn;
     private javax.swing.JButton TicketManageBtn2;
-    private javax.swing.JTextField TitleTxt2;
-    private javax.swing.JButton UserManageBtn2;
-    private javax.swing.JPanel bg2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JTextField TicketNoTxt;
+    private javax.swing.JTable TicketTable;
+    private javax.swing.JTextField TimeTxt;
+    private javax.swing.JLabel TitleTxt;
+    private javax.swing.JTextField TotalTxt;
+    private javax.swing.JComboBox<String> TypeBox;
+    private javax.swing.JButton UpdateBtn;
+    private javax.swing.JButton UserManagerBtn;
+    private javax.swing.JPanel bodypanel;
+    private javax.swing.JPanel bottompanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JPanel sidepanel2;
-    private javax.swing.JPanel toppanel2;
+    private javax.swing.JPanel sidepanel;
+    private javax.swing.JPanel toppanel;
     // End of variables declaration//GEN-END:variables
 }

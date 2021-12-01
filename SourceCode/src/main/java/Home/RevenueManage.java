@@ -5,8 +5,17 @@
  */
 package Home;
 
+import DAO.MovieDAO;
+import DAO.TicketDAO;
+import Model.Movie;
+import Model.Ticket;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,12 +24,52 @@ import javax.swing.JOptionPane;
 public class RevenueManage extends javax.swing.JFrame {
 
     private JFrame frame;
+    DefaultTableModel tableModel;
+    List<Ticket> listTickets = new ArrayList<>();
+    List<Movie> listMovies = new ArrayList<>();
     /**
      * Creates new form RevenueManage
      */
     public RevenueManage() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        tableModel = (DefaultTableModel) MovieRevenueTable.getModel();
+        listTickets = TicketDAO.getListTicket();
+        listMovies = MovieDAO.getListMovie();
+        showRevenue();
+    }
+    
+    public Integer countTickets(Integer movieId) {
+        Integer count = 0;
+        for (Ticket ticket : listTickets) {
+            if(ticket.getMovieId() == movieId) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
+    
+    public Integer totalMovieRevenue(Integer movieId) {
+        Integer total = 0;
+        for (Ticket ticket : listTickets) {
+            if(ticket.getMovieId() == movieId) {
+                total = total + ticket.getPrice() - ticket.getDiscount();
+            }
+        }
+        return total;
+    }
+    
+    public void showRevenue() {
+        tableModel.setRowCount(0);
+        listMovies.forEach(movie -> {
+            tableModel.addRow(new Object[] {
+                movie.getName(),
+                countTickets(movie.getId()),
+                totalMovieRevenue(movie.getId())
+            });
+            
+        });
     }
 
     /**
@@ -32,227 +81,354 @@ public class RevenueManage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bg2 = new javax.swing.JPanel();
-        sidepanel2 = new javax.swing.JPanel();
-        ExitBtn2 = new javax.swing.JButton();
-        MovieManageBtn2 = new javax.swing.JButton();
+        sidepanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        MovieManageBtn = new javax.swing.JButton();
         TicketManageBtn2 = new javax.swing.JButton();
-        UserManageBtn2 = new javax.swing.JButton();
-        RevenueBtn2 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
-        toppanel2 = new javax.swing.JPanel();
-        TitleTxt2 = new javax.swing.JTextField();
-        EditBtn2 = new javax.swing.JButton();
-        DeleteBtn2 = new javax.swing.JButton();
-        SearchBtn2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        UserManagerBtn = new javax.swing.JButton();
+        RevenueBtn = new javax.swing.JButton();
+        ExitBtn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        toppanel = new javax.swing.JPanel();
+        TitleTxt = new javax.swing.JLabel();
+        bottompanel = new javax.swing.JPanel();
+        bodypanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        MovieRevenueTable = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        DateFromPicker = new com.toedter.calendar.JDateChooser();
+        DateToPicker = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        CaculateBtn = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        RevenueTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(825, 74));
 
-        bg2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        sidepanel.setBackground(new java.awt.Color(54, 33, 88));
+        sidepanel.setPreferredSize(new java.awt.Dimension(300, 760));
 
-        sidepanel2.setBackground(new java.awt.Color(54, 33, 88));
-        sidepanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Movie Ticket");
 
-        ExitBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        ExitBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        ExitBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        ExitBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/exit.png"))); // NOI18N
-        ExitBtn2.setText("     Exit");
-        ExitBtn2.addActionListener(new java.awt.event.ActionListener() {
+        MovieManageBtn.setBackground(new java.awt.Color(54, 33, 88));
+        MovieManageBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        MovieManageBtn.setForeground(new java.awt.Color(255, 255, 255));
+        MovieManageBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/movie-reel.png"))); // NOI18N
+        MovieManageBtn.setText("Movie Manager");
+        MovieManageBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        MovieManageBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitBtn2ExitBtnActionPerformed(evt);
+                MovieManageBtnActionPerformed(evt);
             }
         });
-        sidepanel2.add(ExitBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 280, 60));
-
-        MovieManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        MovieManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        MovieManageBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        MovieManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/movie-reel.png"))); // NOI18N
-        MovieManageBtn2.setText("     Movie manage");
-        MovieManageBtn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MovieManageBtn2MovieManageBtnActionPerformed(evt);
-            }
-        });
-        sidepanel2.add(MovieManageBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 280, 60));
 
         TicketManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
         TicketManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         TicketManageBtn2.setForeground(new java.awt.Color(255, 255, 255));
         TicketManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/ticket.png"))); // NOI18N
-        TicketManageBtn2.setText("     Ticket manage");
+        TicketManageBtn2.setText("Ticket Manager");
+        TicketManageBtn2.setPreferredSize(new java.awt.Dimension(73, 41));
         TicketManageBtn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TicketManageBtn2TicketManageBtnActionPerformed(evt);
+                TicketManageBtn2ActionPerformed(evt);
             }
         });
-        sidepanel2.add(TicketManageBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 280, 60));
 
-        UserManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        UserManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        UserManageBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        UserManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
-        UserManageBtn2.setText("     User manage");
-        UserManageBtn2.addActionListener(new java.awt.event.ActionListener() {
+        UserManagerBtn.setBackground(new java.awt.Color(54, 33, 88));
+        UserManagerBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        UserManagerBtn.setForeground(new java.awt.Color(255, 255, 255));
+        UserManagerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
+        UserManagerBtn.setText("User Manager");
+        UserManagerBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        UserManagerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserManageBtn2UserManageBtnActionPerformed(evt);
+                UserManagerBtnActionPerformed(evt);
             }
         });
-        sidepanel2.add(UserManageBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 280, 60));
 
-        RevenueBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        RevenueBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        RevenueBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        RevenueBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/money.png"))); // NOI18N
-        RevenueBtn2.setText("     Revenue");
-        RevenueBtn2.addActionListener(new java.awt.event.ActionListener() {
+        RevenueBtn.setBackground(new java.awt.Color(54, 33, 88));
+        RevenueBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        RevenueBtn.setForeground(new java.awt.Color(255, 255, 255));
+        RevenueBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/money.png"))); // NOI18N
+        RevenueBtn.setText("Revenue");
+        RevenueBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        RevenueBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RevenueBtn2RevenueBtnActionPerformed(evt);
+                RevenueBtnActionPerformed(evt);
             }
         });
-        sidepanel2.add(RevenueBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 280, 60));
 
-        jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(54, 33, 88));
-        jTextField3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setText("Movie Ticket");
-        jTextField3.setBorder(null);
-        sidepanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
-        sidepanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 250, 10));
-
-        bg2.add(sidepanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 840));
-
-        toppanel2.setBackground(new java.awt.Color(153, 0, 204));
-
-        TitleTxt2.setEditable(false);
-        TitleTxt2.setBackground(new java.awt.Color(153, 0, 204));
-        TitleTxt2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        TitleTxt2.setForeground(new java.awt.Color(255, 255, 255));
-        TitleTxt2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TitleTxt2.setText("Revenue Manage");
-        TitleTxt2.setBorder(null);
-
-        EditBtn2.setBackground(new java.awt.Color(153, 0, 204));
-        EditBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        EditBtn2.setText("Edit");
-        EditBtn2.addActionListener(new java.awt.event.ActionListener() {
+        ExitBtn.setBackground(new java.awt.Color(54, 33, 88));
+        ExitBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        ExitBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ExitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/exit.png"))); // NOI18N
+        ExitBtn.setText("Exit");
+        ExitBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        ExitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditBtn2EditBtnActionPerformed(evt);
+                ExitBtnActionPerformed(evt);
             }
         });
 
-        DeleteBtn2.setBackground(new java.awt.Color(153, 0, 204));
-        DeleteBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        DeleteBtn2.setText("Delete");
-        DeleteBtn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteBtn2DeleteBtnActionPerformed(evt);
-            }
-        });
-
-        SearchBtn2.setBackground(new java.awt.Color(153, 0, 204));
-        SearchBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        SearchBtn2.setText("Search");
-        SearchBtn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchBtn2SearchBtnActionPerformed(evt);
-            }
-        });
-
-        jButton3.setBackground(new java.awt.Color(153, 0, 204));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton3.setText("Add");
-
-        javax.swing.GroupLayout toppanel2Layout = new javax.swing.GroupLayout(toppanel2);
-        toppanel2.setLayout(toppanel2Layout);
-        toppanel2Layout.setHorizontalGroup(
-            toppanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(toppanel2Layout.createSequentialGroup()
-                .addGroup(toppanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(toppanel2Layout.createSequentialGroup()
-                        .addGap(374, 374, 374)
-                        .addComponent(TitleTxt2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(toppanel2Layout.createSequentialGroup()
-                        .addGap(122, 122, 122)
-                        .addComponent(jButton3)
-                        .addGap(124, 124, 124)
-                        .addComponent(EditBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(123, 123, 123)
-                        .addComponent(DeleteBtn2)
-                        .addGap(165, 165, 165)
-                        .addComponent(SearchBtn2)))
-                .addContainerGap(256, Short.MAX_VALUE))
+        javax.swing.GroupLayout sidepanelLayout = new javax.swing.GroupLayout(sidepanel);
+        sidepanel.setLayout(sidepanelLayout);
+        sidepanelLayout.setHorizontalGroup(
+            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidepanelLayout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
+            .addGroup(sidepanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addComponent(MovieManageBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(TicketManageBtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RevenueBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ExitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(UserManagerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        toppanel2Layout.setVerticalGroup(
-            toppanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(toppanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(TitleTxt2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 621, Short.MAX_VALUE)
-                .addGroup(toppanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                    .addComponent(EditBtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(DeleteBtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SearchBtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(35, 35, 35))
+        sidepanelLayout.setVerticalGroup(
+            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidepanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(MovieManageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(TicketManageBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(UserManagerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(RevenueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(444, Short.MAX_VALUE))
         );
 
-        bg2.add(toppanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 1150, 760));
+        getContentPane().add(sidepanel, java.awt.BorderLayout.LINE_START);
 
-        getContentPane().add(bg2, java.awt.BorderLayout.CENTER);
+        jPanel2.setBackground(new java.awt.Color(153, 0, 204));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        toppanel.setBackground(new java.awt.Color(153, 0, 204));
+        toppanel.setPreferredSize(new java.awt.Dimension(1278, 64));
+        toppanel.setLayout(new java.awt.BorderLayout());
+
+        TitleTxt.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        TitleTxt.setForeground(new java.awt.Color(255, 255, 255));
+        TitleTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TitleTxt.setText("Revenue Manager");
+        toppanel.add(TitleTxt, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(toppanel, java.awt.BorderLayout.PAGE_START);
+
+        bottompanel.setBackground(new java.awt.Color(153, 0, 204));
+        bottompanel.setPreferredSize(new java.awt.Dimension(1278, 70));
+        bottompanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(bottompanel, java.awt.BorderLayout.PAGE_END);
+
+        MovieRevenueTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        MovieRevenueTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Movie Name", "Total tickets sold", "Total Revenue"
+            }
+        ));
+        jScrollPane1.setViewportView(MovieRevenueTable);
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1278, 500));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setPreferredSize(new java.awt.Dimension(1278, 100));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Caculate Revenue");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(466, 466, 466)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(464, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("From:");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("To:");
+
+        CaculateBtn.setBackground(new java.awt.Color(54, 33, 88));
+        CaculateBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        CaculateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        CaculateBtn.setText("Caculate");
+        CaculateBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        CaculateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CaculateBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DateToPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DateFromPicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(209, 209, 209)
+                .addComponent(CaculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(516, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(DateFromPicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(DateToPicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(CaculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(500, Short.MAX_VALUE)
+                .addComponent(RevenueTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(489, 489, 489))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(RevenueTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 44, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel8, java.awt.BorderLayout.PAGE_END);
+
+        javax.swing.GroupLayout bodypanelLayout = new javax.swing.GroupLayout(bodypanel);
+        bodypanel.setLayout(bodypanelLayout);
+        bodypanelLayout.setHorizontalGroup(
+            bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1140, Short.MAX_VALUE)
+        );
+        bodypanelLayout.setVerticalGroup(
+            bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodypanelLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel2.add(bodypanel, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ExitBtn2ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtn2ExitBtnActionPerformed
-        // TODO add your handling code here:
-        frame = new JFrame("Exit");
-        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
-            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
-        dispose();
-        new LoginForm().setVisible(true);
-        }
-    }//GEN-LAST:event_ExitBtn2ExitBtnActionPerformed
-
-    private void MovieManageBtn2MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtn2MovieManageBtnActionPerformed
+    private void MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtnActionPerformed
         // TODO add your handling code here:
         dispose();
         new MovieManage().setVisible(true);
-    }//GEN-LAST:event_MovieManageBtn2MovieManageBtnActionPerformed
+    }//GEN-LAST:event_MovieManageBtnActionPerformed
 
-    private void TicketManageBtn2TicketManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtn2TicketManageBtnActionPerformed
+    private void TicketManageBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtn2ActionPerformed
         // TODO add your handling code here:
         dispose();
         new TicketManage().setVisible(true);
-    }//GEN-LAST:event_TicketManageBtn2TicketManageBtnActionPerformed
+    }//GEN-LAST:event_TicketManageBtn2ActionPerformed
 
-    private void UserManageBtn2UserManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManageBtn2UserManageBtnActionPerformed
+    private void UserManagerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManagerBtnActionPerformed
         // TODO add your handling code here:
         dispose();
         new UserManage().setVisible(true);
-    }//GEN-LAST:event_UserManageBtn2UserManageBtnActionPerformed
+    }//GEN-LAST:event_UserManagerBtnActionPerformed
 
-    private void RevenueBtn2RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtn2RevenueBtnActionPerformed
+    private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
         // TODO add your handling code here:
         dispose();
         new RevenueManage().setVisible(true);
-    }//GEN-LAST:event_RevenueBtn2RevenueBtnActionPerformed
+    }//GEN-LAST:event_RevenueBtnActionPerformed
 
-    private void EditBtn2EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtn2EditBtnActionPerformed
+    private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EditBtn2EditBtnActionPerformed
+        frame = new JFrame("Exit");
+        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+            dispose();
+            new LoginForm().setVisible(true);
+        }
+    }//GEN-LAST:event_ExitBtnActionPerformed
 
-    private void DeleteBtn2DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtn2DeleteBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DeleteBtn2DeleteBtnActionPerformed
-
-    private void SearchBtn2SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtn2SearchBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchBtn2SearchBtnActionPerformed
+    private void CaculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CaculateBtnActionPerformed
+        // TODO add your handling code here
+        Integer total = 0;
+        Date dateFrom = DateFromPicker.getDate();
+        Date dateTo = DateToPicker.getDate();
+        SimpleDateFormat date = new SimpleDateFormat();
+        for (Movie movie : listMovies) {
+            if(date.format(movie.getStartDate()).compareTo(date.format(dateFrom)) >= 0 
+                    && date.format(movie.getStartDate()).compareTo(date.format(dateTo)) <= 0) {
+                total += totalMovieRevenue(movie.getId());
+            }
+        }
+        RevenueTxt.setText(String.valueOf(total));
+        
+    }//GEN-LAST:event_CaculateBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,20 +466,31 @@ public class RevenueManage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DeleteBtn2;
-    private javax.swing.JButton EditBtn2;
-    private javax.swing.JButton ExitBtn2;
-    private javax.swing.JButton MovieManageBtn2;
-    private javax.swing.JButton RevenueBtn2;
-    private javax.swing.JButton SearchBtn2;
+    private javax.swing.JButton CaculateBtn;
+    private com.toedter.calendar.JDateChooser DateFromPicker;
+    private com.toedter.calendar.JDateChooser DateToPicker;
+    private javax.swing.JButton ExitBtn;
+    private javax.swing.JButton MovieManageBtn;
+    private javax.swing.JTable MovieRevenueTable;
+    private javax.swing.JButton RevenueBtn;
+    private javax.swing.JTextField RevenueTxt;
     private javax.swing.JButton TicketManageBtn2;
-    private javax.swing.JTextField TitleTxt2;
-    private javax.swing.JButton UserManageBtn2;
-    private javax.swing.JPanel bg2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JPanel sidepanel2;
-    private javax.swing.JPanel toppanel2;
+    private javax.swing.JLabel TitleTxt;
+    private javax.swing.JButton UserManagerBtn;
+    private javax.swing.JPanel bodypanel;
+    private javax.swing.JPanel bottompanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel sidepanel;
+    private javax.swing.JPanel toppanel;
     // End of variables declaration//GEN-END:variables
 }

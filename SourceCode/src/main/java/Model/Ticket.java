@@ -17,8 +17,7 @@ public class Ticket {
     private Integer price, discount;
     private Date createTicketDate, updateTicketDate;
 
-    public Ticket(Integer id, Integer movieId, Integer roomId, String chairId, Integer price, Integer discount, Date createTicketDate, Date updateTicketDate) {
-        this.id = id;
+    public Ticket(Integer movieId, Integer roomId, String chairId, Integer price, Integer discount, Date createTicketDate, Date updateTicketDate) {
         this.movieId = movieId;
         this.roomId = roomId;
         this.chairId = chairId;
@@ -27,6 +26,23 @@ public class Ticket {
         this.createTicketDate = createTicketDate;
         this.updateTicketDate = updateTicketDate;
     }
+    
+    public Ticket(Integer id, Integer movieId, Integer roomId, String chairId, Integer price, Integer discount, String createTicketDate, String updateTicketDate) {
+        this.id = id;
+        this.movieId = movieId;
+        this.roomId = roomId;
+        this.chairId = chairId;
+        this.price = price;
+        this.discount = discount;
+        this.createTicketDate = Utilities.Utility.ConvertStringToDate(createTicketDate);
+        this.updateTicketDate = Utilities.Utility.ConvertStringToDate(updateTicketDate);
+    }
+
+    public Ticket() {
+    }
+    
+
+    
 
     public Integer getId() {
         return id;
