@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -34,15 +35,19 @@ public class User {
         this.updateAccoutDate = updateAccoutDate;
         this.address = address;
     }
-
-    public User(String fullName, String email, String phoneNumber, String address, Integer roleId, String gender) {
+    public User(Integer id,String fullName, String email, String phoneNumber, Integer roleId, String gender, String createAccountDate, String updateAccoutDate, String address, String passWord) {
+        this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.address = address;
         this.roleId = roleId;
         this.gender = gender;
+        this.createAccountDate = Utilities.Utility.ConvertStringToDate(createAccountDate);
+        this.updateAccoutDate = Utilities.Utility.ConvertStringToDate(updateAccoutDate);
+        this.address = address;
+        this.passWord = passWord;
     }
+
     public User() {
     }
 

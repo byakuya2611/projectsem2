@@ -7,9 +7,14 @@ package Home;
 
 import DAO.UserDAO;
 import Model.User;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,41 +22,86 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class UserManage extends javax.swing.JFrame {
+
     //Khai bao bien
     DefaultTableModel tableModel;
-     List<User> listUsers = new ArrayList<>();
-    
+    List<User> listUsers = new ArrayList<>();
+
     private JFrame frame;
+
     /**
      * Creates new form UserManage
      */
     public UserManage() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        tableModel = (DefaultTableModel) UserTable.getModel(); 
+        tableModel = (DefaultTableModel) UserTable.getModel();
         listUsers = UserDAO.getListUser();
         showUser();
+        UserTable.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = UserTable.getSelectedRow();
+                User user = listUsers.get(index);
+                FullNameTxt.setText(user.getFullName());
+                EmailTxt.setText(user.getEmail());
+
+                PhoneTxt.setText(user.getPhoneNumber());
+                AddressTxt.setText(user.getAddress());
+                GenderBox.setSelectedItem(user.getGender());
+                if (user.getRoleId() == 1) {
+                    RoleBox.setSelectedIndex(2);
+                } else if (user.getRoleId() == 2) {
+                    RoleBox.setSelectedIndex(1);
+                } else {
+                    RoleBox.setSelectedIndex(3);
+                }
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+        });
     }
+
     //show table
-    private void showUser() { 
+    private void showUser() {
         tableModel.setRowCount(0);
-        listUsers.forEach(user -> { 
-            tableModel.addRow(new Object[] {
+        listUsers.forEach(user -> {
+            tableModel.addRow(new Object[]{
                 user.getFullName(),
                 user.getEmail(),
                 user.getPhoneNumber(),
                 user.getAddress(),
                 user.getRoleId(),
-                user.getGender()
+                user.getGender(),
+                user.getCreateAccountDate(),
+                user.getUpdateAccoutDate()
             });
         });
-            
+
     }
+
     /**
      *
      */
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,10 +123,11 @@ public class UserManage extends javax.swing.JFrame {
         toppanel = new javax.swing.JPanel();
         TitleTxt = new javax.swing.JLabel();
         bottompanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        AddBtn = new javax.swing.JButton();
+        DeleteBtn = new javax.swing.JButton();
+        SearchBtn = new javax.swing.JButton();
+        UpdateBtn = new javax.swing.JButton();
+        ResetBtn = new javax.swing.JButton();
         bodypanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         UserTable = new javax.swing.JTable();
@@ -115,6 +166,11 @@ public class UserManage extends javax.swing.JFrame {
         MovieManageBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/movie-reel.png"))); // NOI18N
         MovieManageBtn.setText("Movie Manager");
         MovieManageBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        MovieManageBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MovieManageBtnActionPerformed(evt);
+            }
+        });
 
         TicketManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
         TicketManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -122,6 +178,11 @@ public class UserManage extends javax.swing.JFrame {
         TicketManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/ticket.png"))); // NOI18N
         TicketManageBtn2.setText("Ticket Manager");
         TicketManageBtn2.setPreferredSize(new java.awt.Dimension(73, 41));
+        TicketManageBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TicketManageBtn2ActionPerformed(evt);
+            }
+        });
 
         UserManagerBtn.setBackground(new java.awt.Color(54, 33, 88));
         UserManagerBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -129,6 +190,11 @@ public class UserManage extends javax.swing.JFrame {
         UserManagerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
         UserManagerBtn.setText("User Manager");
         UserManagerBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        UserManagerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserManagerBtnActionPerformed(evt);
+            }
+        });
 
         RevenueBtn.setBackground(new java.awt.Color(54, 33, 88));
         RevenueBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -136,6 +202,11 @@ public class UserManage extends javax.swing.JFrame {
         RevenueBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/money.png"))); // NOI18N
         RevenueBtn.setText("Revenue");
         RevenueBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        RevenueBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RevenueBtnActionPerformed(evt);
+            }
+        });
 
         ExitBtn.setBackground(new java.awt.Color(54, 33, 88));
         ExitBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -143,6 +214,11 @@ public class UserManage extends javax.swing.JFrame {
         ExitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/exit.png"))); // NOI18N
         ExitBtn.setText("Exit");
         ExitBtn.setPreferredSize(new java.awt.Dimension(73, 41));
+        ExitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout sidepanelLayout = new javax.swing.GroupLayout(sidepanel);
         sidepanel.setLayout(sidepanelLayout);
@@ -204,37 +280,69 @@ public class UserManage extends javax.swing.JFrame {
         bottompanel.setPreferredSize(new java.awt.Dimension(1278, 70));
         bottompanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(54, 33, 88));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Add");
-        jButton1.setPreferredSize(new java.awt.Dimension(100, 35));
-        bottompanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        AddBtn.setBackground(new java.awt.Color(54, 33, 88));
+        AddBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        AddBtn.setForeground(new java.awt.Color(255, 255, 255));
+        AddBtn.setText("Add");
+        AddBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        AddBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(AddBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(54, 33, 88));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Delete");
-        jButton2.setPreferredSize(new java.awt.Dimension(100, 35));
-        bottompanel.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, -1, -1));
+        DeleteBtn.setBackground(new java.awt.Color(54, 33, 88));
+        DeleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        DeleteBtn.setForeground(new java.awt.Color(255, 255, 255));
+        DeleteBtn.setText("Delete");
+        DeleteBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(DeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
 
-        jButton3.setBackground(new java.awt.Color(54, 33, 88));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Search");
-        jButton3.setPreferredSize(new java.awt.Dimension(100, 35));
-        bottompanel.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
+        SearchBtn.setBackground(new java.awt.Color(54, 33, 88));
+        SearchBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        SearchBtn.setForeground(new java.awt.Color(255, 255, 255));
+        SearchBtn.setText("Search");
+        SearchBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        SearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(SearchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
 
-        jButton4.setBackground(new java.awt.Color(54, 33, 88));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Update");
-        jButton4.setPreferredSize(new java.awt.Dimension(100, 35));
-        bottompanel.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
+        UpdateBtn.setBackground(new java.awt.Color(54, 33, 88));
+        UpdateBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        UpdateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        UpdateBtn.setText("Update");
+        UpdateBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        UpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(UpdateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
+
+        ResetBtn.setBackground(new java.awt.Color(54, 33, 88));
+        ResetBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        ResetBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ResetBtn.setText("Reset");
+        ResetBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        ResetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(ResetBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, -1, -1));
 
         jPanel2.add(bottompanel, java.awt.BorderLayout.PAGE_END);
 
-        UserTable.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        UserTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         UserTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -334,18 +442,17 @@ public class UserManage extends javax.swing.JFrame {
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(EmailTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(PhoneTxt)))
-                .addContainerGap())
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(EmailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(PhoneTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(16, 16, 16))
         );
 
         jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
@@ -390,7 +497,7 @@ public class UserManage extends javax.swing.JFrame {
                 .addGap(102, 102, 102)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RoleBox, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(RoleBox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(519, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
@@ -452,7 +559,204 @@ public class UserManage extends javax.swing.JFrame {
     private void GenderBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenderBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_GenderBoxActionPerformed
-    
+
+    private void MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtnActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new MovieManage().setVisible(true);
+    }//GEN-LAST:event_MovieManageBtnActionPerformed
+
+    private void TicketManageBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtn2ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new TicketManage().setVisible(true);
+    }//GEN-LAST:event_TicketManageBtn2ActionPerformed
+
+    private void UserManagerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManagerBtnActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new UserManage().setVisible(true);
+    }//GEN-LAST:event_UserManagerBtnActionPerformed
+
+    private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new RevenueManage().setVisible(true);
+    }//GEN-LAST:event_RevenueBtnActionPerformed
+
+    private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_ExitBtnActionPerformed
+
+    private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
+        // TODO add your handling code here:
+        String fullName = FullNameTxt.getText();
+        String password = new String(PasswordTxt.getPassword());
+        String phone = PhoneTxt.getText();
+        String email = EmailTxt.getText();
+        String address = AddressTxt.getText();
+        String gender = GenderBox.getSelectedItem().toString();
+        String role = RoleBox.getSelectedItem().toString();
+        Integer role_id;
+        java.util.Date dateCreateDateAccount = new java.util.Date();
+        java.util.Date dateUpdatDateAccount = new java.util.Date();
+        if (role.toLowerCase().equals("admin")) {
+            role_id = 1;
+        } else if (role.toLowerCase().equals("employee")) {
+            role_id = 2;
+        } else {
+            role_id = 3;
+        }
+        User user = new User(fullName, email, phone, password, role_id, gender, dateCreateDateAccount, dateUpdatDateAccount, address);
+        if (Validation(fullName, password, email, phone, gender, role).length() > 0) {
+            JOptionPane.showMessageDialog(this, Validation(fullName, password, email, phone, gender, role).toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            UserDAO.Insert(user);
+            JOptionPane.showMessageDialog(this, "DONE!!", "Sucess", JOptionPane.INFORMATION_MESSAGE);
+            Reset();
+        }
+
+        listUsers = UserDAO.getListUser();
+        showUser();
+    }//GEN-LAST:event_AddBtnActionPerformed
+
+    private void UpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = UserTable.getSelectedRow();
+        if (selectedIndex >= 0) {
+            User user = listUsers.get(selectedIndex);
+            String fullName = FullNameTxt.getText();
+            String password = user.getPassWord();
+            String phone = PhoneTxt.getText();
+            String email = EmailTxt.getText();
+            String address = AddressTxt.getText();
+            String gender = GenderBox.getSelectedItem().toString();
+            String role = RoleBox.getSelectedItem().toString();
+            Integer role_id;
+            java.util.Date dateCreateDateAccount = user.getCreateAccountDate();
+            java.util.Date dateUpdatDateAccount = new java.util.Date();
+            if (role.toLowerCase().equals("admin")) {
+                role_id = 1;
+            } else if (role.toLowerCase().equals("employee")) {
+                role_id = 2;
+            } else {
+                role_id = 3;
+                if (Validation(fullName, password, email, phone, gender, role).length() > 0) {
+                    JOptionPane.showMessageDialog(this, Validation(fullName, password, email, phone, gender, role).toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int option = JOptionPane.showConfirmDialog(this, "Do you want upadate this user?");
+                    if (option == 0) {
+                        user.setFullName(fullName);
+                        user.setAddress(address);
+                        user.setPassWord(password);
+                        user.setPhoneNumber(phone);
+                        user.setEmail(email);
+                        user.setGender(gender);
+                        user.setRoleId(role_id);
+                        user.setCreateAccountDate(dateCreateDateAccount);
+                        user.setUpdateAccoutDate(dateUpdatDateAccount);
+                        UserDAO.Update(user, user.getId());
+                        Reset();
+                    }
+
+                }
+                listUsers = UserDAO.getListUser();
+                showUser();
+            }
+        }
+    }//GEN-LAST:event_UpdateBtnActionPerformed
+
+    private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
+        // TODO add your handling code here
+        List<User> users = new ArrayList<>();
+        String input = JOptionPane.showInputDialog(this,"Enter your full name:");
+        if(input != null && input.length() > 0) {
+            users = UserDAO.Find(input);
+            tableModel.setRowCount(0);
+            users.forEach(user -> {
+            tableModel.addRow(new Object[]{
+                user.getFullName(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getAddress(),
+                user.getRoleId(),
+                user.getGender(),
+                user.getCreateAccountDate(),
+                user.getUpdateAccoutDate()
+            });
+        });
+        } else {
+            showUser();
+        }
+    }//GEN-LAST:event_SearchBtnActionPerformed
+
+    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = UserTable.getSelectedRow();
+        if (selectedIndex >= 0) {
+            User user = listUsers.get(selectedIndex);
+            int option = JOptionPane.showConfirmDialog(this, "Do you want delete this user?");
+            if (option == 0) {
+                UserDAO.Delete(user.getId());
+                Reset();
+            }
+            listUsers = UserDAO.getListUser();
+            showUser();
+        }
+    }//GEN-LAST:event_DeleteBtnActionPerformed
+
+    private void ResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetBtnActionPerformed
+        // TODO add your handling code here:
+        Reset();
+    }//GEN-LAST:event_ResetBtnActionPerformed
+
+    private void Reset() {
+        FullNameTxt.setText("");
+        PasswordTxt.setText("");
+        PhoneTxt.setText("");
+        EmailTxt.setText("");
+        AddressTxt.setText("");
+        PhoneTxt.setText("");
+        GenderBox.setSelectedIndex(0);
+        RoleBox.setSelectedIndex(0);
+    }
+
+    private StringBuilder Validation(String fullname, String password, String email, String phone, String gender, String role) {
+        StringBuilder sb = new StringBuilder();
+        if (fullname.equals("")) {
+            sb.append("Full name is empty\n");
+        }
+        Pattern emailPattern = Pattern.compile("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
+        Matcher emailMatcher = emailPattern.matcher(email);
+        if (email.equals("")) {
+            sb.append("Email is empty \n");
+        } else if (!emailMatcher.find()) {
+            sb.append("Email must be abc@gmail.com \n");
+        }
+        Pattern phonePattern = Pattern.compile("[0-9]{10}");
+        Matcher phoneMatcher = phonePattern.matcher(phone);
+        if (phone.equals("")) {
+            sb.append("phone is empty \n");
+        } else if (!phoneMatcher.find()) {
+            sb.append("Phone must be 0-9 at least 10 \n");
+        }
+        if (gender.equals("Choose")) {
+            sb.append("Gender is empty\n");
+        }
+        Pattern passwordPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
+        Matcher passwordMatcher = passwordPattern.matcher(password);
+        if (password.equals("")) {
+            sb.append("password is empty \n");
+        } else if (!passwordMatcher.find()) {
+            sb.append("Password must be at least once a digit, a lower case, an upper case, no whitespace,  at least eight character\n");
+        }
+        if (role.toLowerCase().equals("choose")) {
+            sb.append("Role is empty\n");
+        }
+        return sb;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -489,7 +793,9 @@ public class UserManage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddBtn;
     private javax.swing.JTextField AddressTxt;
+    private javax.swing.JButton DeleteBtn;
     private javax.swing.JTextField EmailTxt;
     private javax.swing.JButton ExitBtn;
     private javax.swing.JTextField FullNameTxt;
@@ -497,18 +803,17 @@ public class UserManage extends javax.swing.JFrame {
     private javax.swing.JButton MovieManageBtn;
     private javax.swing.JPasswordField PasswordTxt;
     private javax.swing.JTextField PhoneTxt;
+    private javax.swing.JButton ResetBtn;
     private javax.swing.JButton RevenueBtn;
     private javax.swing.JComboBox<String> RoleBox;
+    private javax.swing.JButton SearchBtn;
     private javax.swing.JButton TicketManageBtn2;
     private javax.swing.JLabel TitleTxt;
+    private javax.swing.JButton UpdateBtn;
     private javax.swing.JButton UserManagerBtn;
     private javax.swing.JTable UserTable;
     private javax.swing.JPanel bodypanel;
     private javax.swing.JPanel bottompanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

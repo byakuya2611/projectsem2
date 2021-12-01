@@ -1,6 +1,7 @@
 package Model;
 
 
+import java.sql.Time;
 import java.util.Date;
 
 /*
@@ -18,14 +19,37 @@ public class Movie {
     private String name;
     private String thumbnail;
     private String description;
-    private Date startTime;
+    private Date startDate;
+    private Time startTime;
 
-    public Movie(Integer id, String name, String thumbnail, String description, Date startTime) {
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
+    }
+
+    
+    public Movie(Integer id, String name, String thumbnail, String description, Date startDate, Time startTime) {
         this.id = id;
         this.name = name;
         this.thumbnail = thumbnail;
         this.description = description;
+        this.startDate = startDate;
         this.startTime = startTime;
+        
+    }
+    public Movie(String name, String thumbnail, String description, Date startDate, Time startTime) {
+        this.name = name;
+        this.thumbnail = thumbnail;
+        this.description = description;
+        this.startDate = startDate;
+        this.startTime = startTime;
+        
+    }
+    public  Movie() {
+        
     }
 
     public Integer getId() {
@@ -60,12 +84,11 @@ public class Movie {
         this.description = description;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
-    
 }
