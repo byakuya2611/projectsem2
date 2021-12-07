@@ -17,41 +17,39 @@ import java.util.Date;
 public class Movie {
     private Integer id;
     private String name;
-    private String thumbnail;
     private String description;
-    private Date startDate;
-    private Time startTime;
-
-    public Time getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
+    private String img;
+    private String cast;
+    private int type_id;
+    private String director;
+    private String age;
+    private String start_at;
+    private String type;
     
-    public Movie(Integer id, String name, String thumbnail, String description, Date startDate, Time startTime) {
+    public void Movie() {
+    }
+
+    public Movie(Integer id, String name, String description, String img, String cast, int type_id, String director, String age, String start_at, String type) {
         this.id = id;
         this.name = name;
-        this.thumbnail = thumbnail;
-        this.description = description;
-        this.startDate = startDate;
-        this.startTime = startTime;
-        
-    }
-    public Movie(String name, String thumbnail, String description, Date startDate, Time startTime) {
-        this.name = name;
-        this.thumbnail = thumbnail;
-        this.description = description;
-        this.startDate = startDate;
-        this.startTime = startTime;
-        
-    }
-    public  Movie() {
-        
+        this.description = description;    
+        this.img = img;
+        this.cast = cast;
+        this.type_id = type_id;
+        this.director = director;
+        this.age = age;
+        this.start_at = start_at;
+        this.type = type;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -68,14 +66,6 @@ public class Movie {
         this.name = name;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -83,12 +73,54 @@ public class Movie {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Date getStartDate() {
-        return startDate;
+    public String getImg() {
+        return img;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setImg(String img) {
+        this.img = img;
     }
+
+    public String getCast() {
+        return cast;
+    }
+
+    public void setCast(String cast) {
+        this.cast = cast;
+    }
+
+    public int getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(int type_id) {
+        this.type_id = type_id;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getStart_at() {
+        return start_at;
+    }
+
+    public void setStart_at(String start_at) {
+        this.start_at = start_at;
+    }
+    
+
+    
 }

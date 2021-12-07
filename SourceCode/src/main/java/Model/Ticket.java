@@ -12,101 +12,63 @@ import java.util.Date;
  * @author Admin
  */
 public class Ticket {
-    private Integer id, movieId, roomId;
-    private String chairId;
-    private Integer price, discount;
-    private Date createTicketDate, updateTicketDate;
-
-    public Ticket(Integer movieId, Integer roomId, String chairId, Integer price, Integer discount, Date createTicketDate, Date updateTicketDate) {
-        this.movieId = movieId;
-        this.roomId = roomId;
-        this.chairId = chairId;
-        this.price = price;
-        this.discount = discount;
-        this.createTicketDate = createTicketDate;
-        this.updateTicketDate = updateTicketDate;
-    }
+    private int ticket_id, schedule_id, user_id,chair_id;
+    private String code, room_name, chair_name, date, time, movie_name;
     
-    public Ticket(Integer id, Integer movieId, Integer roomId, String chairId, Integer price, Integer discount, String createTicketDate, String updateTicketDate) {
-        this.id = id;
-        this.movieId = movieId;
-        this.roomId = roomId;
-        this.chairId = chairId;
-        this.price = price;
-        this.discount = discount;
-        this.createTicketDate = Utilities.Utility.ConvertStringToDate(createTicketDate);
-        this.updateTicketDate = Utilities.Utility.ConvertStringToDate(updateTicketDate);
-    }
-
-    public Ticket() {
-    }
     
+    public Ticket(){}
 
-    
-
-    public Integer getId() {
-        return id;
+    public Ticket(int ticket_id, int schedule_id, int user_id, int chair_id, String code, String room_name, String chair_name, String date, String time, String movie_name) {
+        this.ticket_id = ticket_id;
+        this.schedule_id = schedule_id;
+        this.user_id = user_id;
+        this.chair_id = chair_id;
+        this.code = code;
+        this.room_name = room_name;
+        this.chair_name = chair_name;
+        this.date = date;
+        this.time = time;
+        this.movie_name = movie_name;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTicket_id(int ticket_id) {
+        this.ticket_id = ticket_id;
     }
 
-    public Integer getMovieId() {
-        return movieId;
+    public void setSchedule_id(int schedule_id) {
+        this.schedule_id = schedule_id;
     }
 
-    public void setMovieId(Integer movieId) {
-        this.movieId = movieId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public Integer getRoomId() {
-        return roomId;
+    public void setChair_id(int chair_id) {
+        this.chair_id = chair_id;
     }
 
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getChairId() {
-        return chairId;
+    public void setRoom_name(String room_name) {
+        this.room_name = room_name;
     }
 
-    public void setChairId(String chairId) {
-        this.chairId = chairId;
+    public void setChair_name(String chair_name) {
+        this.chair_name = chair_name;
     }
 
-    public Integer getPrice() {
-        return price;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public Integer getDiscount() {
-        return discount;
+    public void setMovie_name(String movie_name) {
+        this.movie_name = movie_name;
     }
-
-    public void setDiscount(Integer discount) {
-        this.discount = discount;
-    }
-
-    public Date getCreateTicketDate() {
-        return createTicketDate;
-    }
-
-    public void setCreateTicketDate(Date createTicketDate) {
-        this.createTicketDate = createTicketDate;
-    }
-
-    public Date getUpdateTicketDate() {
-        return updateTicketDate;
-    }
-
-    public void setUpdateTicketDate(Date updateTicketDate) {
-        this.updateTicketDate = updateTicketDate;
-    }
-    
     
 }

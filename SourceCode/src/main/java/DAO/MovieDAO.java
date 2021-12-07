@@ -21,7 +21,7 @@ public class MovieDAO extends BaseDAO{
     public static List<Movie> getListMovie() {
         openConn();
         List<Movie> movies = new ArrayList<>();
-        String sql = "select * from movie";
+        String sql = "select m.id, m.name, m.thumbnail, m.start_at, m.description, m.type_id, m.director, m.cast, m.age, mt.type_name from movie as m , movie_type as mt where m.type_id = mt.id";
         try {
             statement = conn.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
@@ -29,11 +29,14 @@ public class MovieDAO extends BaseDAO{
                 Movie movie = new Movie(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getString("thumbnail"),
                         resultSet.getString("description"),
-                        resultSet.getDate("start_at"),
-                        resultSet.getTime("time")
-                        
+                        resultSet.getString("thumbnail"),
+                        resultSet.getString("cast"),
+                        resultSet.getInt("type_id"),
+                        resultSet.getString("director"),
+                        resultSet.getString("age"),
+                        resultSet.getString("start_at"),
+                        resultSet.getString("type_name")
                 );
                 movies.add(movie);
             }
@@ -44,39 +47,39 @@ public class MovieDAO extends BaseDAO{
         return movies;
     }
     
-    public static void Insert(Movie movie) {
-        openConn();
-        String sql = "insert into movie(name,thumbnail,start_at, time, description) values(?, ?, ?, ?, ?)";
-        try {
-            statement = conn.prepareStatement(sql);
-            statement.setString(1, movie.getName());
-            statement.setString(2, movie.getThumbnail());
-            statement.setString(3, Utilities.Utility.ConvertDateToString(movie.getStartDate()));
-            statement.setString(4, Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
-            statement.setString(5, movie.getDescription());
-            statement.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(MovieDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        closeConn();
-    }
+//    public static void Insert(Movie movie) {
+//        openConn();
+//        String sql = "insert into movie(name,thumbnail,start_at, time, description) values(?, ?, ?, ?, ?)";
+//        try {
+//            statement = conn.prepareStatement(sql);
+//            statement.setString(1, movie.getName());
+//            statement.setString(2, movie.getThumbnail());
+//            statement.setString(3, Utilities.Utility.ConvertDateToString(movie.getStartDate()));
+//            statement.setString(4, Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
+//            statement.setString(5, movie.getDescription());
+//            statement.execute();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MovieDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        closeConn();
+//    }
     
-    public static void Update(Movie movie, Integer id) {
-        openConn();
-        String sql = "update movie set name = ?, thumbnail = ?, start_at = ?, time = ?, description = ? where id = " + id;
-        try {
-            statement = conn.prepareStatement(sql);
-            statement.setString(1, movie.getName());
-            statement.setString(2, movie.getThumbnail());
-            statement.setString(3, Utilities.Utility.ConvertDateToString(movie.getStartDate()));
-            statement.setString(4, Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
-            statement.setString(5, movie.getDescription());
-            statement.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(MovieDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        closeConn();
-    }
+//    public static void Update(Movie movie, Integer id) {
+//        openConn();
+//        String sql = "update movie set name = ?, thumbnail = ?, start_at = ?, time = ?, description = ? where id = " + id;
+//        try {
+//            statement = conn.prepareStatement(sql);
+//            statement.setString(1, movie.getName());
+//            statement.setString(2, movie.getThumbnail());
+//            statement.setString(3, Utilities.Utility.ConvertDateToString(movie.getStartDate()));
+//            statement.setString(4, Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
+//            statement.setString(5, movie.getDescription());
+//            statement.execute();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MovieDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        closeConn();
+//    }
     
     public static void Delete(Integer id) {
         openConn();
@@ -93,7 +96,7 @@ public class MovieDAO extends BaseDAO{
     public static List<Movie> Find(String name) {
         List<Movie> movies = new ArrayList<>();
         openConn();
-        String sql = "select * from movie where name like ?";
+        String sql = "select m.id, m.name,m.thumbnail,m.start_at,m.description, m.type_id,m.director,m.cast,m.age, mt.type_name from movie as m , movie_type as mt where m.type_id = mt.id and m.name like ?";;
         try {
             statement = conn.prepareStatement(sql);
             statement.setString(1, "%" + name + "%");
@@ -102,10 +105,14 @@ public class MovieDAO extends BaseDAO{
                 Movie movie = new Movie(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getString("thumbnail"),
                         resultSet.getString("description"),
-                        resultSet.getDate("start_at"),
-                        resultSet.getTime("time")
+                        resultSet.getString("thumbnail"),
+                        resultSet.getString("cast"),
+                        resultSet.getInt("type_id"),
+                        resultSet.getString("director"),
+                        resultSet.getString("age"),
+                        resultSet.getString("start_at"),
+                        resultSet.getNString("type_name")
                 );
                 movies.add(movie);
             }

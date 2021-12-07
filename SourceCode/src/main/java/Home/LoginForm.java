@@ -275,6 +275,7 @@ public class LoginForm extends javax.swing.JFrame {
                 } else {
                     dispose();
                     //bang order cua kh
+                    new Home(UserDAO.getUser(email, password).getId()).setVisible(true);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Email or Password dose not exits!!", "Error", JOptionPane.ERROR_MESSAGE);
