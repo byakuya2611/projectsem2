@@ -46,7 +46,7 @@ public class Home extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Home");
+        jLabel1.setText("Customer");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -63,7 +63,7 @@ public class Home extends javax.swing.JFrame {
         OrderHistoryBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         OrderHistoryBtn.setForeground(new java.awt.Color(255, 255, 255));
         OrderHistoryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/ticket-confirmation.png"))); // NOI18N
-        OrderHistoryBtn.setText("Vé đã mua");
+        OrderHistoryBtn.setText("Purchased Ticket");
         OrderHistoryBtn.setBorder(null);
         OrderHistoryBtn.setBorderPainted(false);
         OrderHistoryBtn.setFocusPainted(false);
@@ -77,7 +77,7 @@ public class Home extends javax.swing.JFrame {
         InformationBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         InformationBtn.setForeground(new java.awt.Color(255, 255, 255));
         InformationBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/account-circle-outline.png"))); // NOI18N
-        InformationBtn.setText("Thông tin cá nhân");
+        InformationBtn.setText("Your information");
         InformationBtn.setBorder(null);
         InformationBtn.setBorderPainted(false);
         InformationBtn.setFocusPainted(false);
@@ -91,7 +91,7 @@ public class Home extends javax.swing.JFrame {
         OrderBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         OrderBtn.setForeground(new java.awt.Color(255, 255, 255));
         OrderBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/ticket1.png"))); // NOI18N
-        OrderBtn.setText("Mua Vé");
+        OrderBtn.setText("Order Ticket");
         OrderBtn.setBorder(null);
         OrderBtn.setBorderPainted(false);
         OrderBtn.setFocusPainted(false);
@@ -104,7 +104,7 @@ public class Home extends javax.swing.JFrame {
         LogOutBtn.setBackground(new java.awt.Color(48, 51, 107));
         LogOutBtn.setForeground(new java.awt.Color(255, 255, 255));
         LogOutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/logout-variant.png"))); // NOI18N
-        LogOutBtn.setText("Đăng xuất");
+        LogOutBtn.setText("Logout");
         LogOutBtn.setBorder(null);
         LogOutBtn.setBorderPainted(false);
         LogOutBtn.setFocusPainted(false);

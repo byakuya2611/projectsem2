@@ -32,14 +32,16 @@ public class TicketManage extends javax.swing.JFrame {
     DefaultTableModel tableModel;
     List<Ticket> listTickets = new ArrayList<>();
     List<Movie> listMovies = new ArrayList<>();
+    private static int userId;
     /**
      * Creates new form MovieDetail
      */
-    public TicketManage() {
+    public TicketManage(int userId) {
         initComponents();
+        this.userId = userId;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         tableModel = (DefaultTableModel) TicketTable.getModel();
-        listTickets = TicketDAO.getListTicket();
+        listTickets = TicketDAO.GetTicketList(userId);
         listMovies = MovieDAO.getListMovie();
         showTicket();
         TicketTable.addMouseListener(new MouseListener() {
@@ -47,22 +49,12 @@ public class TicketManage extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 int index = TicketTable.getSelectedRow();
                 Ticket ticket = listTickets.get(index);
-                TicketNoTxt.setText(String.valueOf(ticket.getId()));
-                RoomTxt.setText(String.valueOf(ticket.getRoomId()));
-                ChairTxt.setText(ticket.getChairId());
-                PriceTxt.setText(String.valueOf(ticket.getPrice()));
-                DiscountTxt.setText(String.valueOf(ticket.getDiscount()));
-                for (Movie movie : listMovies) {
-                    if(movie.getId() == ticket.getMovieId()) {
-                        MovieNameTxt.setText(movie.getName());
-                        DateTxt.setText(Utilities.Utility.ConvertDateToString(movie.getStartDate()));
-                        TimeTxt.setText(Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
-                        
-                    }
-                }
-                Integer Total = ticket.getPrice() - ticket.getDiscount();
-                TotalTxt.setText(String.valueOf(Total));
-                
+                TicketNoTxt.setText(String.valueOf(ticket.getCode()));
+                RoomTxt.setText(String.valueOf(ticket.getRoom_name()));
+                ChairTxt.setText(ticket.getChair_name());
+                MovieNameTxt.setText(ticket.getMovie_name());
+                DateTxt.setText(ticket.getDate());
+                TimeTxt.setText(ticket.getTime());
                 
             }
 
@@ -103,14 +95,13 @@ public class TicketManage extends javax.swing.JFrame {
         tableModel.setRowCount(0);
         listTickets.forEach(ticket -> {
             tableModel.addRow(new Object[] {
-                ticket.getId(),
-                movieIdToName(ticket.getMovieId()),
-                ticket.getRoomId(),
-                ticket.getChairId(),
-                ticket.getPrice(),
-                ticket.getDiscount(),
-                ticket.getCreateTicketDate(),
-                ticket.getUpdateTicketDate()
+                ticket.getCode(),
+                ticket.getUser_id(),
+                ticket.getMovie_name(),
+                ticket.getRoom_name(),
+                ticket.getChair_name(),        
+                ticket.getDate(),
+                ticket.getTime()
             
             });
         });
@@ -125,14 +116,6 @@ public class TicketManage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        sidepanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        MovieManageBtn = new javax.swing.JButton();
-        TicketManageBtn2 = new javax.swing.JButton();
-        UserManagerBtn = new javax.swing.JButton();
-        RevenueBtn = new javax.swing.JButton();
-        ExitBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         toppanel = new javax.swing.JPanel();
         TitleTxt = new javax.swing.JLabel();
@@ -183,115 +166,6 @@ public class TicketManage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(825, 74));
-        setPreferredSize(new java.awt.Dimension(1578, 760));
-
-        sidepanel.setBackground(new java.awt.Color(54, 33, 88));
-        sidepanel.setPreferredSize(new java.awt.Dimension(300, 760));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Movie Ticket");
-
-        MovieManageBtn.setBackground(new java.awt.Color(54, 33, 88));
-        MovieManageBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        MovieManageBtn.setForeground(new java.awt.Color(255, 255, 255));
-        MovieManageBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/movie-reel.png"))); // NOI18N
-        MovieManageBtn.setText("Movie Manager");
-        MovieManageBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        MovieManageBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MovieManageBtnActionPerformed(evt);
-            }
-        });
-
-        TicketManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        TicketManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        TicketManageBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        TicketManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/ticket.png"))); // NOI18N
-        TicketManageBtn2.setText("Ticket Manager");
-        TicketManageBtn2.setPreferredSize(new java.awt.Dimension(73, 41));
-        TicketManageBtn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TicketManageBtn2ActionPerformed(evt);
-            }
-        });
-
-        UserManagerBtn.setBackground(new java.awt.Color(54, 33, 88));
-        UserManagerBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        UserManagerBtn.setForeground(new java.awt.Color(255, 255, 255));
-        UserManagerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
-        UserManagerBtn.setText("User Manager");
-        UserManagerBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        UserManagerBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserManagerBtnActionPerformed(evt);
-            }
-        });
-
-        RevenueBtn.setBackground(new java.awt.Color(54, 33, 88));
-        RevenueBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        RevenueBtn.setForeground(new java.awt.Color(255, 255, 255));
-        RevenueBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/money.png"))); // NOI18N
-        RevenueBtn.setText("Revenue");
-        RevenueBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        RevenueBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RevenueBtnActionPerformed(evt);
-            }
-        });
-
-        ExitBtn.setBackground(new java.awt.Color(54, 33, 88));
-        ExitBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        ExitBtn.setForeground(new java.awt.Color(255, 255, 255));
-        ExitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/exit.png"))); // NOI18N
-        ExitBtn.setText("Exit");
-        ExitBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        ExitBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitBtnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout sidepanelLayout = new javax.swing.GroupLayout(sidepanel);
-        sidepanel.setLayout(sidepanelLayout);
-        sidepanelLayout.setHorizontalGroup(
-            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidepanelLayout.createSequentialGroup()
-                .addContainerGap(71, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69))
-            .addGroup(sidepanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addComponent(MovieManageBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TicketManageBtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RevenueBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ExitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(UserManagerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        sidepanelLayout.setVerticalGroup(
-            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidepanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(MovieManageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(TicketManageBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(UserManagerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(RevenueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(444, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(sidepanel, java.awt.BorderLayout.LINE_START);
 
         jPanel2.setBackground(new java.awt.Color(153, 0, 204));
         jPanel2.setLayout(new java.awt.BorderLayout());
@@ -385,7 +259,7 @@ public class TicketManage extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "TicketNo", "MovieName", "Room", "Chair", "Price", "Discount", "Create Time", "Update Time"
+                "Code", "User", "Movie", "Room", "Chair", "Price", "Date", "Time"
             }
         ));
         jScrollPane1.setViewportView(TicketTable);
@@ -396,7 +270,7 @@ public class TicketManage extends javax.swing.JFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(1278, 100));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Movie Id:");
+        jLabel2.setText("Movie Name:");
 
         MovieIdTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -413,7 +287,7 @@ public class TicketManage extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(MovieIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(505, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,7 +326,7 @@ public class TicketManage extends javax.swing.JFrame {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RoomBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addContainerGap(509, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -516,7 +390,7 @@ public class TicketManage extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Ticket No:");
+        jLabel4.setText("Code:");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Movie Name:");
@@ -667,7 +541,7 @@ public class TicketManage extends javax.swing.JFrame {
             .addComponent(jScrollPane1)
             .addGroup(bodypanelLayout.createSequentialGroup()
                 .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(99, 99, 99)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -693,42 +567,10 @@ public class TicketManage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new MovieManage().setVisible(true);
-    }//GEN-LAST:event_MovieManageBtnActionPerformed
-
-    private void TicketManageBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtn2ActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new TicketManage().setVisible(true);
-    }//GEN-LAST:event_TicketManageBtn2ActionPerformed
-
-    private void UserManagerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManagerBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new UserManage().setVisible(true);
-    }//GEN-LAST:event_UserManagerBtnActionPerformed
-
-    private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new RevenueManage().setVisible(true);
-    }//GEN-LAST:event_RevenueBtnActionPerformed
-
-    private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
-        // TODO add your handling code here:
-        frame = new JFrame("Exit");
-        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
-            dispose();
-            new LoginForm().setVisible(true);
-        }
-    }//GEN-LAST:event_ExitBtnActionPerformed
-
+    
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
         // TODO add your handling code here:
+        /*
        String movie = MovieIdTxt.getText();
        Integer movieId = Integer.parseInt(movie);
        String room = RoomBox.getSelectedItem().toString();
@@ -775,11 +617,13 @@ public class TicketManage extends javax.swing.JFrame {
        
        listTickets = TicketDAO.getListTicket();
        showTicket();
-       
+    */
     }//GEN-LAST:event_AddBtnActionPerformed
 
+    
     private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
         // TODO add your handling code here:
+        /*
         int selectedIndex = TicketTable.getSelectedRow();
         if (selectedIndex >= 0) {
             Ticket ticket = listTickets.get(selectedIndex);
@@ -790,11 +634,12 @@ public class TicketManage extends javax.swing.JFrame {
             }
             listTickets = TicketDAO.getListTicket();
             showTicket();
-        }
+        }*/
     }//GEN-LAST:event_DeleteBtnActionPerformed
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         // TODO add your handling code here
+        /*
         List<Ticket> tickets = new ArrayList<>();
         String input = JOptionPane.showInputDialog(this, "Enter ticket id:");
         if(input != null && input.length() > 0) {
@@ -814,10 +659,12 @@ public class TicketManage extends javax.swing.JFrame {
         } else {
             showTicket();
         }
+        */
     }//GEN-LAST:event_SearchBtnActionPerformed
 
     private void UpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateBtnActionPerformed
         // TODO add your handling code here:
+        /*
         int selectedIndex = TicketTable.getSelectedRow();
         if (selectedIndex >= 0) {
             Ticket ticket = listTickets.get(selectedIndex);
@@ -877,16 +724,13 @@ public class TicketManage extends javax.swing.JFrame {
             listTickets = TicketDAO.getListTicket();
             showTicket();
         }
+        */
     }//GEN-LAST:event_UpdateBtnActionPerformed
 
     private void ResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetBtnActionPerformed
         // TODO add your handling code here:
         Reset();
     }//GEN-LAST:event_ResetBtnActionPerformed
-
-    private void MovieIdTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieIdTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MovieIdTxtActionPerformed
 
     private void TypeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TypeBoxActionPerformed
         // TODO add your handling code here:
@@ -895,6 +739,10 @@ public class TicketManage extends javax.swing.JFrame {
     private void ChairIdTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChairIdTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ChairIdTxtActionPerformed
+
+    private void MovieIdTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieIdTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MovieIdTxtActionPerformed
 
     private void Reset() {
         MovieIdTxt.setText("");
@@ -960,7 +808,7 @@ public class TicketManage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TicketManage().setVisible(true);
+                new TicketManage(userId).setVisible(true);
             }
         });
     }
@@ -973,17 +821,13 @@ public class TicketManage extends javax.swing.JFrame {
     private javax.swing.JButton DeleteBtn;
     private javax.swing.JComboBox<String> DiscountBox;
     private javax.swing.JTextField DiscountTxt;
-    private javax.swing.JButton ExitBtn;
     private javax.swing.JTextField MovieIdTxt;
-    private javax.swing.JButton MovieManageBtn;
     private javax.swing.JTextField MovieNameTxt;
     private javax.swing.JTextField PriceTxt;
     private javax.swing.JButton ResetBtn;
-    private javax.swing.JButton RevenueBtn;
     private javax.swing.JComboBox<String> RoomBox;
     private javax.swing.JTextField RoomTxt;
     private javax.swing.JButton SearchBtn;
-    private javax.swing.JButton TicketManageBtn2;
     private javax.swing.JTextField TicketNoTxt;
     private javax.swing.JTable TicketTable;
     private javax.swing.JTextField TimeTxt;
@@ -991,10 +835,8 @@ public class TicketManage extends javax.swing.JFrame {
     private javax.swing.JTextField TotalTxt;
     private javax.swing.JComboBox<String> TypeBox;
     private javax.swing.JButton UpdateBtn;
-    private javax.swing.JButton UserManagerBtn;
     private javax.swing.JPanel bodypanel;
     private javax.swing.JPanel bottompanel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1016,10 +858,8 @@ public class TicketManage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JPanel sidepanel;
     private javax.swing.JPanel toppanel;
     // End of variables declaration//GEN-END:variables
 }

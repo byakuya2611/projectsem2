@@ -25,12 +25,14 @@ public class EmployeeManage extends javax.swing.JFrame {
 
     DefaultTableModel tableModel;
     List<User> listEmployees = new ArrayList<>();
+    private static int userId;
     private JFrame frame;
     /**
      * Creates new form EmployeeManage
      */
-    public EmployeeManage() {
+    public EmployeeManage(int userId) {
         initComponents();
+        this.userId = userId;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         tableModel = (DefaultTableModel) UserTable.getModel();
         listEmployees = UserDAO.getListEmployee();
@@ -46,13 +48,6 @@ public class EmployeeManage extends javax.swing.JFrame {
                 PhoneTxt.setText(user.getPhoneNumber());
                 AddressTxt.setText(user.getAddress());
                 GenderBox.setSelectedItem(user.getGender());
-                if (user.getRoleId() == 1) {
-                    RoleBox.setSelectedIndex(2);
-                } else if (user.getRoleId() == 2) {
-                    RoleBox.setSelectedIndex(1);
-                } else {
-                    RoleBox.setSelectedIndex(3);
-                }
 
             }
 
@@ -86,7 +81,6 @@ public class EmployeeManage extends javax.swing.JFrame {
                 user.getEmail(),
                 user.getPhoneNumber(),
                 user.getAddress(),
-                user.getRoleId(),
                 user.getGender(),
                 user.getCreateAccountDate(),
                 user.getUpdateAccoutDate()
@@ -104,23 +98,11 @@ public class EmployeeManage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        sidepanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        MovieManageBtn = new javax.swing.JButton();
-        TicketManageBtn2 = new javax.swing.JButton();
-        UserManagerBtn = new javax.swing.JButton();
-        RevenueBtn = new javax.swing.JButton();
-        ExitBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         toppanel = new javax.swing.JPanel();
         TitleTxt = new javax.swing.JLabel();
         bottompanel = new javax.swing.JPanel();
-        AddBtn = new javax.swing.JButton();
-        DeleteBtn = new javax.swing.JButton();
-        SearchBtn = new javax.swing.JButton();
-        UpdateBtn = new javax.swing.JButton();
-        ResetBtn = new javax.swing.JButton();
+        BackBtn = new javax.swing.JButton();
         bodypanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         UserTable = new javax.swing.JTable();
@@ -130,135 +112,29 @@ public class EmployeeManage extends javax.swing.JFrame {
         FullNameTxt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         PasswordTxt = new javax.swing.JPasswordField();
+        AddBtn = new javax.swing.JButton();
+        ResetBtn = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         EmailTxt = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         PhoneTxt = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        UpdateBtn = new javax.swing.JButton();
+        DeleteBtn = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         AddressTxt = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         GenderBox = new javax.swing.JComboBox<>();
-        RoleBox = new javax.swing.JComboBox<>();
+        SearchBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(825, 74));
-        setPreferredSize(new java.awt.Dimension(1578, 760));
-
-        sidepanel.setBackground(new java.awt.Color(54, 33, 88));
-        sidepanel.setPreferredSize(new java.awt.Dimension(300, 760));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Movie Ticket");
-
-        MovieManageBtn.setBackground(new java.awt.Color(54, 33, 88));
-        MovieManageBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        MovieManageBtn.setForeground(new java.awt.Color(255, 255, 255));
-        MovieManageBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/movie-reel.png"))); // NOI18N
-        MovieManageBtn.setText("Movie Manager");
-        MovieManageBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        MovieManageBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MovieManageBtnActionPerformed(evt);
-            }
-        });
-
-        TicketManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        TicketManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        TicketManageBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        TicketManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/ticket.png"))); // NOI18N
-        TicketManageBtn2.setText("Ticket Manager");
-        TicketManageBtn2.setPreferredSize(new java.awt.Dimension(73, 41));
-        TicketManageBtn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TicketManageBtn2ActionPerformed(evt);
-            }
-        });
-
-        UserManagerBtn.setBackground(new java.awt.Color(54, 33, 88));
-        UserManagerBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        UserManagerBtn.setForeground(new java.awt.Color(255, 255, 255));
-        UserManagerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
-        UserManagerBtn.setText("User Manager");
-        UserManagerBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        UserManagerBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserManagerBtnActionPerformed(evt);
-            }
-        });
-
-        RevenueBtn.setBackground(new java.awt.Color(54, 33, 88));
-        RevenueBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        RevenueBtn.setForeground(new java.awt.Color(255, 255, 255));
-        RevenueBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/money.png"))); // NOI18N
-        RevenueBtn.setText("Revenue");
-        RevenueBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        RevenueBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RevenueBtnActionPerformed(evt);
-            }
-        });
-
-        ExitBtn.setBackground(new java.awt.Color(54, 33, 88));
-        ExitBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        ExitBtn.setForeground(new java.awt.Color(255, 255, 255));
-        ExitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/exit.png"))); // NOI18N
-        ExitBtn.setText("Exit");
-        ExitBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        ExitBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitBtnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout sidepanelLayout = new javax.swing.GroupLayout(sidepanel);
-        sidepanel.setLayout(sidepanelLayout);
-        sidepanelLayout.setHorizontalGroup(
-            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidepanelLayout.createSequentialGroup()
-                .addContainerGap(71, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69))
-            .addGroup(sidepanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addComponent(MovieManageBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TicketManageBtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RevenueBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ExitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(UserManagerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        sidepanelLayout.setVerticalGroup(
-            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidepanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(MovieManageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(TicketManageBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(UserManagerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(RevenueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(244, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(sidepanel, java.awt.BorderLayout.LINE_START);
 
         jPanel2.setBackground(new java.awt.Color(153, 0, 204));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        toppanel.setBackground(new java.awt.Color(153, 0, 204));
+        toppanel.setBackground(new java.awt.Color(0, 102, 204));
         toppanel.setPreferredSize(new java.awt.Dimension(1278, 64));
         toppanel.setLayout(new java.awt.BorderLayout());
 
@@ -270,84 +146,37 @@ public class EmployeeManage extends javax.swing.JFrame {
 
         jPanel2.add(toppanel, java.awt.BorderLayout.PAGE_START);
 
-        bottompanel.setBackground(new java.awt.Color(153, 0, 204));
+        bottompanel.setBackground(new java.awt.Color(19, 15, 64));
         bottompanel.setPreferredSize(new java.awt.Dimension(1278, 70));
         bottompanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        AddBtn.setBackground(new java.awt.Color(54, 33, 88));
-        AddBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        AddBtn.setForeground(new java.awt.Color(255, 255, 255));
-        AddBtn.setText("Add");
-        AddBtn.setPreferredSize(new java.awt.Dimension(100, 35));
-        AddBtn.addActionListener(new java.awt.event.ActionListener() {
+        BackBtn.setBackground(new java.awt.Color(0, 102, 153));
+        BackBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        BackBtn.setForeground(new java.awt.Color(255, 255, 255));
+        BackBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/backburger.png"))); // NOI18N
+        BackBtn.setText("Back");
+        BackBtn.setPreferredSize(new java.awt.Dimension(150, 50));
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddBtnActionPerformed(evt);
+                BackBtnActionPerformed(evt);
             }
         });
-        bottompanel.add(AddBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
-
-        DeleteBtn.setBackground(new java.awt.Color(54, 33, 88));
-        DeleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        DeleteBtn.setForeground(new java.awt.Color(255, 255, 255));
-        DeleteBtn.setText("Delete");
-        DeleteBtn.setPreferredSize(new java.awt.Dimension(100, 35));
-        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteBtnActionPerformed(evt);
-            }
-        });
-        bottompanel.add(DeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
-
-        SearchBtn.setBackground(new java.awt.Color(54, 33, 88));
-        SearchBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        SearchBtn.setForeground(new java.awt.Color(255, 255, 255));
-        SearchBtn.setText("Search");
-        SearchBtn.setPreferredSize(new java.awt.Dimension(100, 35));
-        SearchBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchBtnActionPerformed(evt);
-            }
-        });
-        bottompanel.add(SearchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
-
-        UpdateBtn.setBackground(new java.awt.Color(54, 33, 88));
-        UpdateBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        UpdateBtn.setForeground(new java.awt.Color(255, 255, 255));
-        UpdateBtn.setText("Update");
-        UpdateBtn.setPreferredSize(new java.awt.Dimension(100, 35));
-        UpdateBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UpdateBtnActionPerformed(evt);
-            }
-        });
-        bottompanel.add(UpdateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
-
-        ResetBtn.setBackground(new java.awt.Color(54, 33, 88));
-        ResetBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        ResetBtn.setForeground(new java.awt.Color(255, 255, 255));
-        ResetBtn.setText("Reset");
-        ResetBtn.setPreferredSize(new java.awt.Dimension(100, 35));
-        ResetBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ResetBtnActionPerformed(evt);
-            }
-        });
-        bottompanel.add(ResetBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, -1, -1));
+        bottompanel.add(BackBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
         jPanel2.add(bottompanel, java.awt.BorderLayout.PAGE_END);
 
         UserTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         UserTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Fuill Name", "Email", "Phone", "Address", "Role", "Gender", "Create Account", "Update Account"
+                "Fuill Name", "Email", "Phone", "Address", "Gender", "Create Account", "Update Account"
             }
         ));
         jScrollPane1.setViewportView(UserTable);
@@ -369,6 +198,28 @@ public class EmployeeManage extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Password:");
 
+        AddBtn.setBackground(new java.awt.Color(54, 33, 88));
+        AddBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        AddBtn.setForeground(new java.awt.Color(255, 255, 255));
+        AddBtn.setText("Add");
+        AddBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        AddBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddBtnActionPerformed(evt);
+            }
+        });
+
+        ResetBtn.setBackground(new java.awt.Color(54, 33, 88));
+        ResetBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        ResetBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ResetBtn.setText("Reset");
+        ResetBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        ResetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -380,9 +231,16 @@ public class EmployeeManage extends javax.swing.JFrame {
                     .addComponent(FullNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(108, 108, 108)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PasswordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(PasswordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(95, 95, 95)
+                        .addComponent(AddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addComponent(ResetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,7 +252,10 @@ public class EmployeeManage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(FullNameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(PasswordTxt))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(PasswordTxt)
+                        .addComponent(AddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ResetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -418,6 +279,28 @@ public class EmployeeManage extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setText("Phone:");
 
+        UpdateBtn.setBackground(new java.awt.Color(54, 33, 88));
+        UpdateBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        UpdateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        UpdateBtn.setText("Update");
+        UpdateBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        UpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateBtnActionPerformed(evt);
+            }
+        });
+
+        DeleteBtn.setBackground(new java.awt.Color(54, 33, 88));
+        DeleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        DeleteBtn.setForeground(new java.awt.Color(255, 255, 255));
+        DeleteBtn.setText("Delete");
+        DeleteBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -429,9 +312,16 @@ public class EmployeeManage extends javax.swing.JFrame {
                     .addComponent(EmailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(116, 116, 116)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PhoneTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(647, Short.MAX_VALUE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(PhoneTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)
+                        .addComponent(UpdateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,7 +335,10 @@ public class EmployeeManage extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PhoneTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PhoneTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UpdateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(16, 16, 16))
         );
 
@@ -463,9 +356,6 @@ public class EmployeeManage extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setText("Gender:");
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setText("Role:");
-
         GenderBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose", "Male", "Female", "Other" }));
         GenderBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -473,7 +363,16 @@ public class EmployeeManage extends javax.swing.JFrame {
             }
         });
 
-        RoleBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose", "Employee", "Admin", "User" }));
+        SearchBtn.setBackground(new java.awt.Color(54, 33, 88));
+        SearchBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        SearchBtn.setForeground(new java.awt.Color(255, 255, 255));
+        SearchBtn.setText("Search");
+        SearchBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        SearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -488,11 +387,9 @@ public class EmployeeManage extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(GenderBox, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(102, 102, 102)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RoleBox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGap(305, 305, 305)
+                .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(232, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -500,13 +397,12 @@ public class EmployeeManage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel15))
+                    .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(AddressTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                     .addComponent(GenderBox)
-                    .addComponent(RoleBox))
+                    .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
 
@@ -517,7 +413,7 @@ public class EmployeeManage extends javax.swing.JFrame {
         bodypanelLayout.setHorizontalGroup(
             bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1183, Short.MAX_VALUE)
         );
         bodypanelLayout.setVerticalGroup(
             bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -534,40 +430,6 @@ public class EmployeeManage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new MovieManage().setVisible(true);
-    }//GEN-LAST:event_MovieManageBtnActionPerformed
-
-    private void TicketManageBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtn2ActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new TicketManage().setVisible(true);
-    }//GEN-LAST:event_TicketManageBtn2ActionPerformed
-
-    private void UserManagerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManagerBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new UserManage().setVisible(true);
-    }//GEN-LAST:event_UserManagerBtnActionPerformed
-
-    private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new RevenueManage().setVisible(true);
-    }//GEN-LAST:event_RevenueBtnActionPerformed
-
-    private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
-        // TODO add your handling code here:
-        frame = new JFrame("Exit");
-        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
-            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
-        dispose();
-        new LoginForm().setVisible(true);
-        }
-    }//GEN-LAST:event_ExitBtnActionPerformed
-
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
         // TODO add your handling code here:
         String fullName = FullNameTxt.getText();
@@ -576,27 +438,19 @@ public class EmployeeManage extends javax.swing.JFrame {
         String email = EmailTxt.getText();
         String address = AddressTxt.getText();
         String gender = GenderBox.getSelectedItem().toString();
-        String role = RoleBox.getSelectedItem().toString();
-        Integer role_id;
+        Integer role_id = 2;
         java.util.Date dateCreateDateAccount = new java.util.Date();
         java.util.Date dateUpdatDateAccount = new java.util.Date();
-        if (role.toLowerCase().equals("admin")) {
-            role_id = 1;
-        } else if (role.toLowerCase().equals("employee")) {
-            role_id = 2;
-        } else {
-            role_id = 3;
-        }
         User user = new User(fullName, email, phone, password, role_id, gender, dateCreateDateAccount, dateUpdatDateAccount, address);
-        if (Validation(fullName, password, email, phone, gender, role).length() > 0) {
-            JOptionPane.showMessageDialog(this, Validation(fullName, password, email, phone, gender, role).toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        if (Validation(fullName, password, email, phone, gender).length() > 0) {
+            JOptionPane.showMessageDialog(this, Validation(fullName, password, email, phone, gender).toString(), "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             UserDAO.Insert(user);
             JOptionPane.showMessageDialog(this, "DONE!!", "Sucess", JOptionPane.INFORMATION_MESSAGE);
             Reset();
         }
 
-        listEmployees = UserDAO.getListUser();
+        listEmployees = UserDAO.getListEmployee();
         showEmployee();
     }//GEN-LAST:event_AddBtnActionPerformed
 
@@ -610,7 +464,7 @@ public class EmployeeManage extends javax.swing.JFrame {
                 UserDAO.Delete(user.getId());
                 Reset();
             }
-            listEmployees = UserDAO.getListUser();
+            listEmployees = UserDAO.getListEmployee();
             showEmployee();
         }
     }//GEN-LAST:event_DeleteBtnActionPerformed
@@ -650,38 +504,30 @@ public class EmployeeManage extends javax.swing.JFrame {
             String email = EmailTxt.getText();
             String address = AddressTxt.getText();
             String gender = GenderBox.getSelectedItem().toString();
-            String role = RoleBox.getSelectedItem().toString();
-            Integer role_id;
+            Integer role_id = 2;
             java.util.Date dateCreateDateAccount = user.getCreateAccountDate();
             java.util.Date dateUpdatDateAccount = new java.util.Date();
-            if (role.toLowerCase().equals("admin")) {
-                role_id = 1;
-            } else if (role.toLowerCase().equals("employee")) {
-                role_id = 2;
+            if (Validation(fullName, password, email, phone, gender).length() > 0) {
+                JOptionPane.showMessageDialog(this, Validation(fullName, password, email, phone, gender).toString(), "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                role_id = 3;
-                if (Validation(fullName, password, email, phone, gender, role).length() > 0) {
-                    JOptionPane.showMessageDialog(this, Validation(fullName, password, email, phone, gender, role).toString(), "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    int option = JOptionPane.showConfirmDialog(this, "Do you want upadate this user?");
-                    if (option == 0) {
-                        user.setFullName(fullName);
-                        user.setAddress(address);
-                        user.setPassWord(password);
-                        user.setPhoneNumber(phone);
-                        user.setEmail(email);
-                        user.setGender(gender);
-                        user.setRoleId(role_id);
-                        user.setCreateAccountDate(dateCreateDateAccount);
-                        user.setUpdateAccoutDate(dateUpdatDateAccount);
-                        UserDAO.Update(user, user.getId());
-                        Reset();
-                    }
-
+                int option = JOptionPane.showConfirmDialog(this, "Do you want upadate this user?");
+                if (option == 0) {
+                    user.setFullName(fullName);
+                    user.setAddress(address);
+                    user.setPassWord(password);
+                    user.setPhoneNumber(phone);
+                    user.setEmail(email);
+                    user.setGender(gender);
+                    user.setRoleId(role_id);
+                    user.setCreateAccountDate(dateCreateDateAccount);
+                    user.setUpdateAccoutDate(dateUpdatDateAccount);
+                    UserDAO.Update(user, user.getId());
+                    Reset();
                 }
-                listEmployees = UserDAO.getListUser();
-                showEmployee();
+
             }
+            listEmployees = UserDAO.getListEmployee();
+            showEmployee();
         }
     }//GEN-LAST:event_UpdateBtnActionPerformed
 
@@ -710,6 +556,14 @@ public class EmployeeManage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_GenderBoxActionPerformed
 
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+        AdminHome adHome = new AdminHome(userId);
+        adHome.setExtendedState(MAXIMIZED_BOTH);
+        adHome.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BackBtnActionPerformed
+
     private void Reset() {
         FullNameTxt.setText("");
         PasswordTxt.setText("");
@@ -718,10 +572,9 @@ public class EmployeeManage extends javax.swing.JFrame {
         AddressTxt.setText("");
         PhoneTxt.setText("");
         GenderBox.setSelectedIndex(0);
-        RoleBox.setSelectedIndex(0);
     }
 
-    private StringBuilder Validation(String fullname, String password, String email, String phone, String gender, String role) {
+    private StringBuilder Validation(String fullname, String password, String email, String phone, String gender) {
         StringBuilder sb = new StringBuilder();
         if (fullname.equals("")) {
             sb.append("Full name is empty\n");
@@ -749,9 +602,6 @@ public class EmployeeManage extends javax.swing.JFrame {
             sb.append("password is empty \n");
         } else if (!passwordMatcher.find()) {
             sb.append("Password must be at least once a digit, a lower case, an upper case, no whitespace,  at least eight character\n");
-        }
-        if (role.toLowerCase().equals("choose")) {
-            sb.append("Role is empty\n");
         }
         return sb;
     }
@@ -785,7 +635,7 @@ public class EmployeeManage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EmployeeManage().setVisible(true);
+                new EmployeeManage(userId).setVisible(true);
             }
         });
     }
@@ -793,29 +643,22 @@ public class EmployeeManage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;
     private javax.swing.JTextField AddressTxt;
+    private javax.swing.JButton BackBtn;
     private javax.swing.JButton DeleteBtn;
     private javax.swing.JTextField EmailTxt;
-    private javax.swing.JButton ExitBtn;
     private javax.swing.JTextField FullNameTxt;
     private javax.swing.JComboBox<String> GenderBox;
-    private javax.swing.JButton MovieManageBtn;
     private javax.swing.JPasswordField PasswordTxt;
     private javax.swing.JTextField PhoneTxt;
     private javax.swing.JButton ResetBtn;
-    private javax.swing.JButton RevenueBtn;
-    private javax.swing.JComboBox<String> RoleBox;
     private javax.swing.JButton SearchBtn;
-    private javax.swing.JButton TicketManageBtn2;
     private javax.swing.JLabel TitleTxt;
     private javax.swing.JButton UpdateBtn;
-    private javax.swing.JButton UserManagerBtn;
     private javax.swing.JTable UserTable;
     private javax.swing.JPanel bodypanel;
     private javax.swing.JPanel bottompanel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
@@ -826,8 +669,6 @@ public class EmployeeManage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JPanel sidepanel;
     private javax.swing.JPanel toppanel;
     // End of variables declaration//GEN-END:variables
 }

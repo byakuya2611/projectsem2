@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,7 +6,9 @@
 package Home;
 
 import DAO.MovieDAO;
+import DAO.UserDAO;
 import Model.Movie;
+import Model.User;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,10 +34,12 @@ public class MovieOrder {
     private final int sizey = 200;
     private List<Movie> listMovie;
     private static int userID;
+    private List<User> listEmployee;
     
     public MovieOrder(int userID) {
         this.userID = userID;
         listMovie = MovieDAO.getListMovie();
+        listEmployee = UserDAO.getListEmployee();
         create();
     }
     
@@ -102,10 +106,29 @@ public class MovieOrder {
          prev.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Home home = new Home(userID);
-                home.setExtendedState(MAXIMIZED_BOTH);
-                home.setVisible(true);
-                jFrame.setVisible(false);
+                //Home home = new Home(userID);
+                //home.setExtendedState(MAXIMIZED_BOTH);
+                //home.setVisible(true);
+                //jFrame.setVisible(false);
+                int emp = 0;
+                for (User user : listEmployee) {
+                    if(user.getId() == userID) {
+                        EmployeeHome emHome = new EmployeeHome(userID);
+                        emHome.setExtendedState(MAXIMIZED_BOTH);
+                        emHome.setVisible(true);
+                        jFrame.setVisible(false);
+                    } else if(userID == 1) {
+                        AdminHome adHome = new AdminHome(userID);
+                        adHome.setExtendedState(MAXIMIZED_BOTH);
+                        adHome.setVisible(true);
+                        jFrame.setVisible(false);
+                    } else {
+                        Home home = new Home(userID);
+                        home.setExtendedState(MAXIMIZED_BOTH);
+                        home.setVisible(true);
+                        jFrame.setVisible(false);
+                    }
+                }
             }
         });
          bottomPanel.add(prev, BorderLayout.WEST);

@@ -131,7 +131,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Th&#xf4;ng tin phim"/>
+                <Property name="text" type="java.lang.String" value="Movie Information"/>
               </Properties>
             </Component>
           </SubComponents>

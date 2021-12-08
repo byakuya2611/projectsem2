@@ -22,7 +22,7 @@ public class TicketDAO extends BaseDAO{
     public static List<Ticket> GetTicketList(int user_id) {
         openConn();
         List<Ticket> tickets = new ArrayList<>();
-        String sql =  "select t.id, t.schedule_id, t.chair_id, t.user_id, t.code, m.name, r.room_name, c.chair_name, ms.schedule_date, ms.start_time, ms.price from ticket as t, movie as m, room as r, chair as c, movie_schedule as ms where t.schedule_id = ms.id and ms.schedule_date >= CURDATE() and ms.movie_id = m.id and ms.room_id = r.id and c.id = t.chair_id and t.user_id = " + user_id;
+        String sql =  "select t.id, t.schedule_id, t.user_id, t.chair_id, ms.price, t.code, m.name, r.room_name, c.chair_name, ms.schedule_date, ms.start_time from ticket as t, movie as m, room as r, chair as c, movie_schedule as ms where t.schedule_id = ms.id and ms.schedule_date >= CURDATE() and ms.movie_id = m.id and ms.room_id = r.id and c.id = t.chair_id and t.user_id = " + user_id;
         try {
             statement = conn.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
@@ -37,7 +37,8 @@ public class TicketDAO extends BaseDAO{
                         resultSet.getString("chair_name"),
                         resultSet.getString("schedule_date"),
                         resultSet.getString("start_time"),
-                        resultSet.getString("movie_name")          
+                        resultSet.getString("movie_name")
+                        
                 );
                 tickets.add(ticket);
             }

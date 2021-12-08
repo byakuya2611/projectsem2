@@ -269,12 +269,14 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, sb.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             if(UserDAO.getLogin(email, password)) {
-                if(UserDAO.getRoleAccount(email, password) == 2 || UserDAO.getRoleAccount(email, password) == 1) {
+                if(UserDAO.getRoleAccount(email, password) == 1) {
                     dispose();
-                    new MainManage().setVisible(true);
+                    new AdminHome(UserDAO.getUser(email, password).getId()).setVisible(true);
+                } else if(UserDAO.getRoleAccount(email, password) == 2){
+                    dispose();
+                    new EmployeeHome(UserDAO.getUser(email, password).getId()).setVisible(true);
                 } else {
                     dispose();
-                    //bang order cua kh
                     new Home(UserDAO.getUser(email, password).getId()).setVisible(true);
                 }
             } else {

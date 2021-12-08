@@ -55,7 +55,7 @@ public class ScheduleOrder {
             JButton button = new JButton();
             button.setFocusPainted(false);
             button.setText( schedule.getRoom_name() + " Date: " + schedule.getDate() + " Time: " + schedule.getTime());
-            button.setForeground(new Color(255, 255, 255));
+            button.setForeground(new Color(0, 0, 0));
             button.setFont(new Font("Tahoma", 4, 16));
             button.setPreferredSize(new Dimension(sizex,sizey));
             button.setBackground(new Color(66, 245, 135));

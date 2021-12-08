@@ -46,10 +46,10 @@ public class MovieManage extends javax.swing.JFrame {
                 int index = MovieTable.getSelectedRow();
                 Movie movie = ListMovies.get(index);
                 MovieNameTxt.setText(movie.getName());
-                ThumnailTxt.setText(movie.getThumbnail());
+                //ThumnailTxt.setText(movie.getThumbnail());
                 DescTxt.setText(movie.getDescription());
-                DatePicker.setDate(movie.getStartDate());
-                TimePicker.setText(Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
+                //DatePicker.setDate(movie.getStartDate());
+                //TimePicker.setText(Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
             }
             @Override
             public void mousePressed(MouseEvent e) {
@@ -80,10 +80,10 @@ public class MovieManage extends javax.swing.JFrame {
             tableModel.addRow(new Object[] {
                 tableModel.getRowCount() + 1,
                 movie.getName(),
-                movie.getThumbnail(),
+                //movie.getThumbnail(),
                 movie.getDescription(),
-                movie.getStartDate(),
-                movie.getStartTime()
+                //movie.getStartDate(),
+                //movie.getStartTime()
             });
         }) ;
     }
@@ -506,19 +506,19 @@ public class MovieManage extends javax.swing.JFrame {
     private void TicketManageBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtn2ActionPerformed
         // TODO add your handling code here:
         dispose();
-        new TicketManage().setVisible(true);
+        //new TicketManage().setVisible(true);
     }//GEN-LAST:event_TicketManageBtn2ActionPerformed
 
     private void UserManagerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManagerBtnActionPerformed
         // TODO add your handling code here:
         dispose();
-        new UserManage().setVisible(true);
+        //new UserManage().setVisible(true);
     }//GEN-LAST:event_UserManagerBtnActionPerformed
 
     private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
         // TODO add your handling code here:
         dispose();
-        new RevenueManage().setVisible(true);
+        //new RevenueManage().setVisible(true);
     }//GEN-LAST:event_RevenueBtnActionPerformed
 
     private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
@@ -538,8 +538,8 @@ public class MovieManage extends javax.swing.JFrame {
         String desc = DescTxt.getText();
         Date date = DatePicker.getDate();
         Time time = Utilities.Utility.ConvertStringToTime(timePicker1.getSelectedTime());
-        Movie movie = new Movie(movieName, thumbnail, desc, date,time);
-        MovieDAO.Insert(movie);
+        //Movie movie = new Movie(movieName, thumbnail, desc, date,time);
+        //MovieDAO.Insert(movie);
         Reset();
         ListMovies = MovieDAO.getListMovie();
         showMovie();
@@ -559,11 +559,11 @@ public class MovieManage extends javax.swing.JFrame {
             int option = JOptionPane.showConfirmDialog(this, "Do you want update this movie?");
             if(option == 0) {
                 movie.setName(movieName);
-                movie.setThumbnail(thumbnail);
+                //movie.setThumbnail(thumbnail);
                 movie.setDescription(desc);
-                movie.setStartDate(date);
-                movie.setStartTime(time);
-                MovieDAO.Update(movie, movie.getId());
+               // movie.setStartDate(date);
+                //movie.setStartTime(time);
+                //MovieDAO.Update(movie, movie.getId());
                 Reset();
             }
             ListMovies = MovieDAO.getListMovie();
@@ -582,10 +582,10 @@ public class MovieManage extends javax.swing.JFrame {
             tableModel.addRow(new Object[] {
                 tableModel.getRowCount() + 1,
                 movie.getName(),
-                movie.getThumbnail(),
+                //movie.getThumbnail(),
                 movie.getDescription(),
-                movie.getStartDate(),
-                movie.getStartTime()
+                //movie.getStartDate(),
+                //movie.getStartTime()
             });
         });   
         } else {
