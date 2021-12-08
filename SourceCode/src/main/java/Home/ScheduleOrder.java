@@ -47,7 +47,7 @@ public class ScheduleOrder {
         ScheduleListPanel = new JPanel();
         ScheduleListPanel.setLayout(layout);
         ScheduleListPanel.setBorder(new EmptyBorder(30,10,10,10));
-        ScheduleListPanel.setBackground(Color.decode("0x130f40"));
+        ScheduleListPanel.setBackground(new Color(0,0,0));
         
         for(int i = 0; i<schedules.size();i++) {
             Schedule schedule = schedules.get(i);
@@ -72,7 +72,7 @@ public class ScheduleOrder {
         frame.add(ScheduleListPanel, BorderLayout.NORTH);
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBorder(new EmptyBorder(10,10,10,10));
-        bottomPanel.setBackground(Color.decode("0x130f40"));
+        bottomPanel.setBackground(new Color(0,0,0));
         JButton prev = new JButton("Back");
         prev.setPreferredSize(new Dimension(150, 50));
         prev.setBackground(new Color(0,102,153));
@@ -97,7 +97,7 @@ public class ScheduleOrder {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setSize(900,500);
-        frame.getContentPane().setBackground(Color.decode("0x130f40"));
+        frame.getContentPane().setBackground(new Color(0,0,0));
         return frame;
     }
     

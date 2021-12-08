@@ -157,16 +157,22 @@ public class Home extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(558, 413));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void OrderHistoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderHistoryBtnActionPerformed
         // TODO add your handling code here:
+        History history = new History(userId);
         
+        this.setVisible(false);
     }//GEN-LAST:event_OrderHistoryBtnActionPerformed
 
     private void InformationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InformationBtnActionPerformed
         // TODO add your handling code here:
+        InformationUser informationUser = new InformationUser(userId);
+        informationUser.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_InformationBtnActionPerformed
 
     private void LogOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutBtnActionPerformed

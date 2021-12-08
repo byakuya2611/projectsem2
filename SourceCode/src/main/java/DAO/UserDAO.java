@@ -37,7 +37,63 @@ public class UserDAO extends BaseDAO {
         closeConn();
         return false;
     }
-
+    
+    public static User getUser(String email) { 
+        openConn();
+        User user = new User();
+        String sql = "select * from user where email = '" + email + "'";
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                user = new User(
+                    resultSet.getInt("id"),
+                    resultSet.getString("fullname"),
+                    resultSet.getString("email"),
+                    resultSet.getString("phone_number"),
+                    resultSet.getInt("role_id"),
+                    resultSet.getString("gender"),
+                    resultSet.getString("create_at"),
+                    resultSet.getString("update_at"),
+                    resultSet.getString("address"),
+                    resultSet.getString("password")
+                );
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConn();
+        return user;
+    }
+    public static User getUser(int user_id) { 
+        openConn();
+        User user = new User();
+        String sql = "select * from user where id = " + user_id;
+        try {
+            statement = conn.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                user = new User(
+                    resultSet.getInt("id"),
+                    resultSet.getString("fullname"),
+                    resultSet.getString("email"),
+                    resultSet.getString("phone_number"),
+                    resultSet.getInt("role_id"),
+                    resultSet.getString("gender"),
+                    resultSet.getString("create_at"),
+                    resultSet.getString("update_at"),
+                    resultSet.getString("address"),
+                    resultSet.getString("password")
+            );
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConn();
+        return user;
+    }
     public static User getUser(String username, String password) { 
         openConn();
         User user = new User();

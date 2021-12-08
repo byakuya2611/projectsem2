@@ -37,7 +37,7 @@ public class TicketDAO extends BaseDAO{
                         resultSet.getString("chair_name"),
                         resultSet.getString("schedule_date"),
                         resultSet.getString("start_time"),
-                        resultSet.getString("movie_name")          
+                        resultSet.getString("name")          
                 );
                 tickets.add(ticket);
             }

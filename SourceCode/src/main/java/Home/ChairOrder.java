@@ -72,7 +72,7 @@ public class ChairOrder {
         btnPanel = new JPanel();
         btnPanel.setLayout(layout);
         btnPanel.setBorder(new EmptyBorder(30, 10, 10, 10));
-        btnPanel.setBackground(Color.decode("0x130f40"));
+        btnPanel.setBackground(new Color(0,0,0));
         if (row > 0 && column > 0) {
             int c = column + 1;
             for (int i = 0; i <= row; i++) {
@@ -91,8 +91,10 @@ public class ChairOrder {
                                 //To change body of generated methods, choose Tools | Templates.
                                 if (Total.contains(chair.getId())) {
                                     Total.remove(new Integer(chair.getId()));
+                                    btn.setBackground(new Color(66, 245, 135));
                                 } else {
                                     Total.add(chair.getId());
+                                    btn.setBackground(Color.DARK_GRAY);
                                 }
                             }
                         });
@@ -113,7 +115,7 @@ public class ChairOrder {
         
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBorder(new EmptyBorder(10,10,10,10));
-        bottomPanel.setBackground(Color.decode("0x130f40"));
+        bottomPanel.setBackground(new Color(0,0,0));
         JButton prev = new JButton("Back");
         prev.setFocusPainted(false);
         prev.setPreferredSize(new Dimension(150, 50));
@@ -155,7 +157,7 @@ public class ChairOrder {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setSize(900, 500);
-        frame.getContentPane().setBackground(Color.decode("0x130f40"));
+        frame.getContentPane().setBackground(new Color(0,0,0));
         return frame;
     }
 

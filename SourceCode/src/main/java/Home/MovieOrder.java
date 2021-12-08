@@ -45,7 +45,7 @@ public class MovieOrder {
          ListPanelFilm = new JPanel();
          ListPanelFilm.setLayout(grid);
          ListPanelFilm.setBorder(new EmptyBorder(30, 10, 10, 10));
-         ListPanelFilm.setBackground(Color.decode("0x130f40"));
+         ListPanelFilm.setBackground(new Color(0,0,0));
          
          for(int i = 0; i< listMovie.size(); i++) { 
              Movie movie = listMovie.get(i);
@@ -61,7 +61,7 @@ public class MovieOrder {
              
              //button
              ImageIcon img = new ImageIcon(getClass().getResource("/img/"+movie.getImg()));
-             Image imgScale = img.getImage().getScaledInstance(sizex, sizey, Image.SCALE_SMOOTH);
+             Image imgScale = img.getImage().getScaledInstance(200, 250, Image.SCALE_SMOOTH);
              JButton button = new JButton(new ImageIcon(imgScale));
              button.setForeground(Color.decode("0xffffff"));
              button.setPreferredSize(new Dimension(sizex,sizey));
@@ -91,7 +91,7 @@ public class MovieOrder {
          jFrame.add(ListPanelFilm, BorderLayout.NORTH);
          JPanel bottomPanel = new JPanel(new BorderLayout());
          bottomPanel.setBorder(new EmptyBorder(10, 10, 10, 10));        
-         bottomPanel.setBackground(Color.decode("0x130f40"));
+         bottomPanel.setBackground(new Color(0,0,0));
          JButton prev = new JButton("Back");
          prev.setIcon(new ImageIcon(getClass().getResource("/logo/backburger.png")));
          prev.setPreferredSize(new Dimension(150, 50));
@@ -120,7 +120,7 @@ public class MovieOrder {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setSize(900,500);
-        frame.getContentPane().setBackground(Color.decode("0x130f40"));
+        frame.getContentPane().setBackground(new Color(0,0,0));
         return frame;
     }
     

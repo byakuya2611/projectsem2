@@ -31,6 +31,47 @@ public class Ticket {
         this.movie_name = movie_name;
     }
 
+    public int getTicket_id() {
+        return ticket_id;
+    }
+
+    public int getSchedule_id() {
+        return schedule_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public int getChair_id() {
+        return chair_id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getRoom_name() {
+        return room_name;
+    }
+
+    public String getChair_name() {
+        return chair_name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getMovie_name() {
+        return movie_name;
+    }
+
+    
     public void setTicket_id(int ticket_id) {
         this.ticket_id = ticket_id;
     }

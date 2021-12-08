@@ -9,6 +9,7 @@ import DAO.UserDAO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
@@ -23,6 +24,8 @@ import javax.swing.border.Border;
  */
 public class LoginForm extends javax.swing.JFrame {
 
+    public Preferences pref  = Preferences.userRoot().node("rememberme");
+    
     private JFrame frame;
     /**
      * Creates new form LoginForm
@@ -31,6 +34,12 @@ public class LoginForm extends javax.swing.JFrame {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        String email = null;
+        email = pref.get("Email", email);
+        emailTxt.setText(email);
+        String pass = null;
+        pass = pref.get("Password", pass);
+        passwordTxt.setText(pass);
     }
 
     /**
@@ -51,12 +60,12 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         passwordTxt = new javax.swing.JPasswordField();
         jSeparator2 = new javax.swing.JSeparator();
-        rememberCheck = new java.awt.Checkbox();
         forgotPassword = new javax.swing.JLabel();
         signInBtn = new javax.swing.JButton();
         signUpBtn = new javax.swing.JButton();
         closeBtn = new javax.swing.JPanel();
         ExitBtn = new javax.swing.JLabel();
+        remember = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -84,6 +93,9 @@ public class LoginForm extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 emailTxtFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                emailTxtFocusLost(evt);
+            }
         });
         jPanel2.add(emailTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 380, 40));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 380, 10));
@@ -109,11 +121,6 @@ public class LoginForm extends javax.swing.JFrame {
         jPanel2.add(passwordTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 380, 40));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 380, -1));
 
-        rememberCheck.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        rememberCheck.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
-        rememberCheck.setLabel("Remember me");
-        jPanel2.add(rememberCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
-
         forgotPassword.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
         forgotPassword.setForeground(new java.awt.Color(204, 0, 0));
         forgotPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -135,6 +142,7 @@ public class LoginForm extends javax.swing.JFrame {
         signInBtn.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         signInBtn.setBorderPainted(false);
         signInBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signInBtn.setFocusPainted(false);
         signInBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 signInBtnMouseClicked(evt);
@@ -159,6 +167,7 @@ public class LoginForm extends javax.swing.JFrame {
         signUpBtn.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         signUpBtn.setBorderPainted(false);
         signUpBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signUpBtn.setFocusPainted(false);
         signUpBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 signUpBtnMouseEntered(evt);
@@ -197,6 +206,11 @@ public class LoginForm extends javax.swing.JFrame {
 
         jPanel2.add(closeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 0, 50, 50));
 
+        remember.setBackground(new java.awt.Color(255, 255, 255));
+        remember.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        remember.setText("Remeber Me");
+        jPanel2.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 140, -1));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 540));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1210, 540));
@@ -204,7 +218,21 @@ public class LoginForm extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(481, 541));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    public void saveEmailPass(String email, String pass) {
+        if(email != null && pass != null) {
+            String user = email;
+            pref.put("Email", user);
+            String password = pass;
+            pref.put("Password", password);
+        }
+    }
+    
+    public final void check(boolean remeber) {
+        String pass = new String(passwordTxt.getPassword());
+        if(remeber == true) {
+            saveEmailPass(emailTxt.getText(), pass);
+        }
+    }
     private void ExitBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitBtnMouseClicked
         // TODO add your handling code here:
         frame = new JFrame("Exit");
@@ -213,7 +241,7 @@ public class LoginForm extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_ExitBtnMouseClicked
-
+    
     private void ExitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitBtnMouseEntered
         // TODO add your handling code here:
         changeColor(closeBtn, new Color(255,0,0));
@@ -226,7 +254,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void emailTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTxtFocusGained
         // TODO add your handling code here:
-        emailTxt.setText("");
+       
     }//GEN-LAST:event_emailTxtFocusGained
 
     private void passwordTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTxtFocusGained
@@ -271,8 +299,19 @@ public class LoginForm extends javax.swing.JFrame {
             if(UserDAO.getLogin(email, password)) {
                 if(UserDAO.getRoleAccount(email, password) == 2 || UserDAO.getRoleAccount(email, password) == 1) {
                     dispose();
+                    if(remember.isSelected()) {
+                        check(true);
+                    } else {
+                        check(false);
+                    }
                     new MainManage().setVisible(true);
                 } else {
+                    if(remember.isSelected()) {
+                        check(true);
+                    } else {
+                        check(false);
+                    }
+                            
                     dispose();
                     //bang order cua kh
                     new Home(UserDAO.getUser(email, password).getId()).setVisible(true);
@@ -313,6 +352,10 @@ public class LoginForm extends javax.swing.JFrame {
         signUpBtn.setBackground(Color.WHITE);
         signUpBtn.setForeground(Color.BLACK);
     }//GEN-LAST:event_signUpBtnMouseExited
+
+    private void emailTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTxtFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailTxtFocusLost
     
     public void changeColor(JPanel hover, Color rand) {
         hover.setBackground(rand);
@@ -365,7 +408,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPasswordField passwordTxt;
-    private java.awt.Checkbox rememberCheck;
+    private javax.swing.JCheckBox remember;
     private javax.swing.JButton signInBtn;
     private javax.swing.JButton signUpBtn;
     // End of variables declaration//GEN-END:variables

@@ -50,7 +50,7 @@ public class Pay {
         
         panel_pay = new JPanel(new BorderLayout());
         panel_pay.setBorder(new EmptyBorder(30,10,10,10));
-        panel_pay.setBackground(Color.decode("0x130f40"));
+        panel_pay.setBackground(new Color(0,0,0));
         Label lbl1 = new Label("Price \t * \t Number of chairs \t = \t Total: ");
         lbl1.setForeground(Color.WHITE);
         lbl1.setBackground(new Color(66, 245, 135));
@@ -70,7 +70,7 @@ public class Pay {
         
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBorder(new EmptyBorder(10,10,10,10));
-        bottomPanel.setBackground(Color.decode("0x130f40"));
+        bottomPanel.setBackground(new Color(0,0,0));
         JButton prev = new JButton("Back");
         prev.setFocusPainted(false);
         prev.setPreferredSize(new Dimension(150, 50));
@@ -116,7 +116,7 @@ public class Pay {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setSize(900,500);
-        frame.getContentPane().setBackground(Color.decode("0x130f40"));
+        frame.getContentPane().setBackground(new Color(0,0,0));
         return frame;
     }
     
