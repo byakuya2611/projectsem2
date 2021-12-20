@@ -9,6 +9,7 @@ import DAO.UserDAO;
 import Model.User;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -26,6 +27,7 @@ public class EmployeeManage extends javax.swing.JFrame {
     DefaultTableModel tableModel;
     List<User> listEmployees = new ArrayList<>();
     private static int userId;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
     private JFrame frame;
     /**
      * Creates new form EmployeeManage
@@ -82,8 +84,8 @@ public class EmployeeManage extends javax.swing.JFrame {
                 user.getPhoneNumber(),
                 user.getAddress(),
                 user.getGender(),
-                user.getCreateAccountDate(),
-                user.getUpdateAccoutDate()
+                dateFormat.format(user.getCreateAccountDate()),
+                dateFormat.format(user.getUpdateAccoutDate())
             });
         });
 
@@ -126,7 +128,6 @@ public class EmployeeManage extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         GenderBox = new javax.swing.JComboBox<>();
-        SearchBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(825, 74));
@@ -363,17 +364,6 @@ public class EmployeeManage extends javax.swing.JFrame {
             }
         });
 
-        SearchBtn.setBackground(new java.awt.Color(54, 33, 88));
-        SearchBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        SearchBtn.setForeground(new java.awt.Color(255, 255, 255));
-        SearchBtn.setText("Search");
-        SearchBtn.setPreferredSize(new java.awt.Dimension(100, 35));
-        SearchBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -387,9 +377,7 @@ public class EmployeeManage extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(GenderBox, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(305, 305, 305)
-                .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addContainerGap(637, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,8 +389,7 @@ public class EmployeeManage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(AddressTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(GenderBox)
-                    .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(GenderBox))
                 .addGap(14, 14, 14))
         );
 
@@ -468,30 +455,6 @@ public class EmployeeManage extends javax.swing.JFrame {
             showEmployee();
         }
     }//GEN-LAST:event_DeleteBtnActionPerformed
-
-    private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
-        // TODO add your handling code here
-        List<User> users = new ArrayList<>();
-        String input = JOptionPane.showInputDialog(this,"Enter your full name:");
-        if(input != null && input.length() > 0) {
-            users = UserDAO.Find(input);
-            tableModel.setRowCount(0);
-            users.forEach(user -> {
-                tableModel.addRow(new Object[]{
-                    user.getFullName(),
-                    user.getEmail(),
-                    user.getPhoneNumber(),
-                    user.getAddress(),
-                    user.getRoleId(),
-                    user.getGender(),
-                    user.getCreateAccountDate(),
-                    user.getUpdateAccoutDate()
-                });
-            });
-        } else {
-            showEmployee();
-        }
-    }//GEN-LAST:event_SearchBtnActionPerformed
 
     private void UpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateBtnActionPerformed
         // TODO add your handling code here:
@@ -652,7 +615,6 @@ public class EmployeeManage extends javax.swing.JFrame {
     private javax.swing.JPasswordField PasswordTxt;
     private javax.swing.JTextField PhoneTxt;
     private javax.swing.JButton ResetBtn;
-    private javax.swing.JButton SearchBtn;
     private javax.swing.JLabel TitleTxt;
     private javax.swing.JButton UpdateBtn;
     private javax.swing.JTable UserTable;

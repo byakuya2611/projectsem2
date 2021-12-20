@@ -91,20 +91,20 @@ public class ChairOrder {
                                 //To change body of generated methods, choose Tools | Templates.
                                 if (Total.contains(chair.getId())) {
                                     Total.remove(new Integer(chair.getId()));
-                                    btn.setBackground(new Color(66, 245, 135));
+                                    btn.setBackground(new Color(0, 102, 153));
                                 } else {
                                     Total.add(chair.getId());
                                     btn.setBackground(Color.DARK_GRAY);
                                 }
                             }
                         });
-                        btn.setBackground(new Color(66, 245, 135));
+                        btn.setBackground(new Color(0, 102, 153));
                         if (check(chair.getId(), ListChairOrdered)) {
                             btn.setBackground(Color.DARK_GRAY);
                             btn.setEnabled(false);
                         }
                     } else {
-                        btn.setBackground(new Color(66, 245, 135));
+                        btn.setBackground(new Color(0, 102, 153));
                         btn.setBorder(new EmptyBorder(0, 0, 0, 0));
                         btn.setEnabled(false);
                     }

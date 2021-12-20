@@ -43,4 +43,53 @@ public class ScheduleDAO extends BaseDAO{
         closeConn();
         return scheduleList;
     }
+    
+    public static void Insert(Schedule schedule) {
+        openConn();
+        String sql = "insert into movie_schedule(movie_id, room_id, schedule_date, start_time, price) values (?, ?, ?, ?, ?)";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, schedule.getMovie_id());
+            statement.setInt(2, schedule.getRoom_id());
+            statement.setString(3, schedule.getDate());
+            statement.setString(4, schedule.getTime());
+            statement.setInt(5, schedule.getPrice());
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        closeConn();
+    }
+    
+    public static void Update(Schedule schedule, Integer id) {
+        openConn();
+        String sql = "update movie_schedule set room_id = ?, schedule_date = ?, start_time = ?, price = ? where id = " + id;
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, schedule.getRoom_id());
+            statement.setString(2, schedule.getDate());
+            statement.setString(3, schedule.getTime());
+            statement.setInt(4, schedule.getPrice());
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        closeConn();
+    }
+    
+    public static void Delete(Integer id) {
+        openConn();
+        String sql = "delete from movie_schedule where id = " + id;
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        closeConn();
+    }
+    
 }

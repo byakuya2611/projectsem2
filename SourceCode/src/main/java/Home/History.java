@@ -56,7 +56,7 @@ public class History {
             
             
             
-            Label dateTime = new Label(ticket.getDate() + " - " + ticket.getTime());
+            Label dateTime = new Label(ticket.getDate() + " - " + ticket.getTime() + " - " + ticket.getCode());
             dateTime.setFont(new Font("Tahoma", 1, 12));
             dateTime.setForeground(Color.WHITE);
             dateTime.setAlignment(Label.CENTER);

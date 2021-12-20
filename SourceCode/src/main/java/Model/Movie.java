@@ -25,12 +25,27 @@ public class Movie {
     private String age;
     private String start_at;
     private String type;
+
+    public Movie() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public void Movie() {
     }
 
     public Movie(Integer id, String name, String description, String img, String cast, int type_id, String director, String age, String start_at, String type) {
         this.id = id;
+        this.name = name;
+        this.description = description;    
+        this.img = img;
+        this.cast = cast;
+        this.type_id = type_id;
+        this.director = director;
+        this.age = age;
+        this.start_at = start_at;
+        this.type = type;
+    }
+    public Movie(String name, String description, String img, String cast, int type_id, String director, String age, String start_at, String type) {
         this.name = name;
         this.description = description;    
         this.img = img;

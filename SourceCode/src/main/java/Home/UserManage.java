@@ -9,6 +9,7 @@ import DAO.UserDAO;
 import Model.User;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,6 +28,7 @@ public class UserManage extends javax.swing.JFrame {
     DefaultTableModel tableModel;
     List<User> listUsers = new ArrayList<>();
     private static int userId;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     private JFrame frame;
 
@@ -86,8 +88,8 @@ public class UserManage extends javax.swing.JFrame {
                 user.getPhoneNumber(),
                 user.getAddress(),
                 user.getGender(),
-                user.getCreateAccountDate(),
-                user.getUpdateAccoutDate()
+                dateFormat.format(user.getCreateAccountDate()),
+                dateFormat.format(user.getUpdateAccoutDate())
             });
         });
 
@@ -517,10 +519,9 @@ public class UserManage extends javax.swing.JFrame {
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         // TODO add your handling code here
-        List<User> users = new ArrayList<>();
         String input = JOptionPane.showInputDialog(this,"Enter your full name:");
         if(input != null && input.length() > 0) {
-            users = UserDAO.Find(input);
+            List<User> users = UserDAO.Find(input);
             tableModel.setRowCount(0);
             users.forEach(user -> {
             tableModel.addRow(new Object[]{
@@ -528,14 +529,81 @@ public class UserManage extends javax.swing.JFrame {
                 user.getEmail(),
                 user.getPhoneNumber(),
                 user.getAddress(),
-                user.getRoleId(),
                 user.getGender(),
-                user.getCreateAccountDate(),
-                user.getUpdateAccoutDate()
+                dateFormat.format(user.getCreateAccountDate()),
+                dateFormat.format(user.getUpdateAccoutDate())
+            });
+            UserTable.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = UserTable.getSelectedRow();
+                User user = users.get(index);
+                FullNameTxt.setText(user.getFullName());
+                EmailTxt.setText(user.getEmail());
+
+                PhoneTxt.setText(user.getPhoneNumber());
+                AddressTxt.setText(user.getAddress());
+                GenderBox.setSelectedItem(user.getGender());
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
             });
         });
         } else {
             showUser();
+            UserTable.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = UserTable.getSelectedRow();
+                User user = listUsers.get(index);
+                FullNameTxt.setText(user.getFullName());
+                EmailTxt.setText(user.getEmail());
+
+                PhoneTxt.setText(user.getPhoneNumber());
+                AddressTxt.setText(user.getAddress());
+                GenderBox.setSelectedItem(user.getGender());
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+            });
         }
     }//GEN-LAST:event_SearchBtnActionPerformed
 

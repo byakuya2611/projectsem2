@@ -184,10 +184,16 @@ public class EmployeeHome extends javax.swing.JFrame {
 
     private void MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtnActionPerformed
         // TODO add your handling code here:
+        MovieManage movieManage = new MovieManage(userId);
+        movieManage.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_MovieManageBtnActionPerformed
 
     private void TicketManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtnActionPerformed
         // TODO add your handling code here:
+        TicketManage ticketManage = new TicketManage(userId);
+        ticketManage.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_TicketManageBtnActionPerformed
 
     private void OrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderBtnActionPerformed

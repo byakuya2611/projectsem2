@@ -17,7 +17,8 @@ import java.util.logging.Logger;
  *
  * @author Admin
  */
-public class MovieDAO extends BaseDAO{
+public class MovieDAO extends BaseDAO {
+
     public static List<Movie> getListMovie() {
         openConn();
         List<Movie> movies = new ArrayList<>();
@@ -25,7 +26,7 @@ public class MovieDAO extends BaseDAO{
         try {
             statement = conn.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 Movie movie = new Movie(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
@@ -46,41 +47,47 @@ public class MovieDAO extends BaseDAO{
         closeConn();
         return movies;
     }
-    
-//    public static void Insert(Movie movie) {
-//        openConn();
-//        String sql = "insert into movie(name,thumbnail,start_at, time, description) values(?, ?, ?, ?, ?)";
-//        try {
-//            statement = conn.prepareStatement(sql);
-//            statement.setString(1, movie.getName());
-//            statement.setString(2, movie.getThumbnail());
-//            statement.setString(3, Utilities.Utility.ConvertDateToString(movie.getStartDate()));
-//            statement.setString(4, Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
-//            statement.setString(5, movie.getDescription());
-//            statement.execute();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MovieDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        closeConn();
-//    }
-    
-//    public static void Update(Movie movie, Integer id) {
-//        openConn();
-//        String sql = "update movie set name = ?, thumbnail = ?, start_at = ?, time = ?, description = ? where id = " + id;
-//        try {
-//            statement = conn.prepareStatement(sql);
-//            statement.setString(1, movie.getName());
-//            statement.setString(2, movie.getThumbnail());
-//            statement.setString(3, Utilities.Utility.ConvertDateToString(movie.getStartDate()));
-//            statement.setString(4, Utilities.Utility.ConvertTimeToString(movie.getStartTime()));
-//            statement.setString(5, movie.getDescription());
-//            statement.execute();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MovieDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        closeConn();
-//    }
-    
+
+    public static void Insert(Movie movie) {
+        openConn();
+        String sql = "insert into movie(name,thumbnail,start_at,description,type_id,director,cast,age) values(?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, movie.getName());
+            statement.setString(2, movie.getImg());
+            statement.setString(3, movie.getStart_at());
+            statement.setString(4, movie.getDescription());
+            statement.setInt(5, movie.getType_id());
+            statement.setString(6, movie.getDirector());
+            statement.setString(7, movie.getCast());
+            statement.setString(8, movie.getAge());
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(MovieDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConn();
+    }
+
+    public static void Update(Movie movie, Integer id) {
+        openConn();
+        String sql = "update movie set name = ?, thumbnail = ?, start_at = ?, description = ?, type_id = ?, director = ?, cast = ?, age = ? where id = " + id;
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, movie.getName());
+            statement.setString(2, movie.getImg());
+            statement.setString(3, movie.getStart_at());
+            statement.setString(4, movie.getDescription());
+            statement.setInt(5, movie.getType_id());
+            statement.setString(6, movie.getDirector());
+            statement.setString(7, movie.getCast());
+            statement.setString(8, movie.getAge());
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(MovieDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConn();
+    }
+
     public static void Delete(Integer id) {
         openConn();
         String sql = "Delete from movie where id = " + id;
@@ -92,7 +99,7 @@ public class MovieDAO extends BaseDAO{
         }
         closeConn();
     }
-    
+
     public static List<Movie> Find(String name) {
         List<Movie> movies = new ArrayList<>();
         openConn();
@@ -101,7 +108,7 @@ public class MovieDAO extends BaseDAO{
             statement = conn.prepareStatement(sql);
             statement.setString(1, "%" + name + "%");
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 Movie movie = new Movie(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),

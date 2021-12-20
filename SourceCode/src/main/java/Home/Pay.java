@@ -58,7 +58,7 @@ public class Pay {
         panel_pay.setBackground(new Color(0,0,0));
         Label lbl1 = new Label("Price \t * \t Number of chairs \t = \t Total: ");
         lbl1.setForeground(Color.WHITE);
-        lbl1.setBackground(new Color(66, 245, 135));
+        lbl1.setBackground(new Color(0, 102, 153));
         lbl1.setAlignment(Label.CENTER);
         lbl1.setFont(new Font("Tahoma", 4, 18));
         panel_pay.add(lbl1, BorderLayout.NORTH);
@@ -66,7 +66,7 @@ public class Pay {
         
         Label lbl2 = new Label(price + "\t * \t" + listChair.size() + "\t = \t " + (price*listChair.size()) + "VND");
         lbl2.setForeground(Color.WHITE);
-        lbl2.setBackground(new Color(66, 245, 135));
+        lbl2.setBackground(new Color(0, 102, 153));
         lbl2.setAlignment(Label.CENTER);
         lbl2.setFont(new Font("Tahoma", 4, 18));
         panel_pay.add(lbl2,BorderLayout.SOUTH);

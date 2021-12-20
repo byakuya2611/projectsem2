@@ -29,6 +29,14 @@ public class Schedule {
         this.room_name = room_name;
         this.price = price;
     }
+    public Schedule(int movie_id, int room_id, String date, String time, String room_name, int price) {
+        this.movie_id = movie_id;
+        this.room_id = room_id;
+        this.date = date;
+        this.time = time;
+        this.room_name = room_name;
+        this.price = price;
+    }
 
     public int getPrice() {
         return price;

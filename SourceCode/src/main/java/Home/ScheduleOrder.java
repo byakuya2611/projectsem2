@@ -58,7 +58,7 @@ public class ScheduleOrder {
             button.setForeground(new Color(255, 255, 255));
             button.setFont(new Font("Tahoma", 4, 16));
             button.setPreferredSize(new Dimension(sizex,sizey));
-            button.setBackground(new Color(66, 245, 135));
+            button.setBackground(new Color(0, 102, 153));
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

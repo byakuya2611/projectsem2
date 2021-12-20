@@ -30,9 +30,9 @@ public class MovieInformation extends javax.swing.JFrame {
         TypeTxt.setText("Type: " + movie.getType() );
         AgeTxt.setText("Age: " + movie.getAge());
         directorTxt.setText("Director: " + movie.getDirector());
-        ActorTxt.setText("Actor: " + movie.getCast());
-        DateTxt.setText("Date Publishing: " + movie.getStart_at());
-        DescTxt.setText("Desc: " + movie.getDescription());
+        ActorTxt.setText("Cast: " + movie.getCast());
+        DateTxt.setText("Release Date: " + movie.getStart_at());
+        DescTxt.setText("Description: " + movie.getDescription());
         ImageIcon img = new ImageIcon(getClass().getResource("/img/" + movie.getImg()));
         Image imgScale = img.getImage().getScaledInstance(200, 300, Image.SCALE_SMOOTH);
         ImgLabel.setIcon(new ImageIcon(imgScale));
@@ -71,7 +71,7 @@ public class MovieInformation extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Thông tin phim");
+        jLabel1.setText("Movie Information");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -86,28 +86,28 @@ public class MovieInformation extends javax.swing.JFrame {
 
         MovieNameTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         MovieNameTxt.setForeground(new java.awt.Color(255, 255, 255));
-        MovieNameTxt.setText("Tên phim: ");
+        MovieNameTxt.setText("Name: ");
 
         directorTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         directorTxt.setForeground(new java.awt.Color(255, 255, 255));
-        directorTxt.setText("Đạo diễn:");
+        directorTxt.setText("Director:");
 
         ActorTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         ActorTxt.setForeground(new java.awt.Color(255, 255, 255));
-        ActorTxt.setText("Diễn viên:");
+        ActorTxt.setText("Cast:");
 
         TypeTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         TypeTxt.setForeground(new java.awt.Color(255, 255, 255));
-        TypeTxt.setText("Thể loại:");
+        TypeTxt.setText("Type:");
 
         AgeTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         AgeTxt.setForeground(new java.awt.Color(255, 255, 255));
-        AgeTxt.setText("Độ tuổi");
+        AgeTxt.setText("Age:");
 
         DescTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         DescTxt.setForeground(new java.awt.Color(255, 255, 255));
         DescTxt.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        DescTxt.setText("Mô tả:");
+        DescTxt.setText("Description:");
         DescTxt.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         Back.setBackground(new java.awt.Color(0, 0, 204));
@@ -140,7 +140,7 @@ public class MovieInformation extends javax.swing.JFrame {
 
         DateTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         DateTxt.setForeground(new java.awt.Color(255, 255, 255));
-        DateTxt.setText("Ngày phát hành:");
+        DateTxt.setText("Release Date:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

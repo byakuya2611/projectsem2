@@ -131,7 +131,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Th&#xf4;ng tin phim"/>
+                <Property name="text" type="java.lang.String" value="Movie Information"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -146,7 +146,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="T&#xea;n phim: "/>
+            <Property name="text" type="java.lang.String" value="Name: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="directorTxt">
@@ -157,7 +157,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x110;&#x1ea1;o di&#x1ec5;n:"/>
+            <Property name="text" type="java.lang.String" value="Director:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="ActorTxt">
@@ -168,7 +168,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Di&#x1ec5;n vi&#xea;n:"/>
+            <Property name="text" type="java.lang.String" value="Cast:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="TypeTxt">
@@ -179,7 +179,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Th&#x1ec3; lo&#x1ea1;i:"/>
+            <Property name="text" type="java.lang.String" value="Type:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="AgeTxt">
@@ -190,7 +190,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x110;&#x1ed9; tu&#x1ed5;i"/>
+            <Property name="text" type="java.lang.String" value="Age:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="DescTxt">
@@ -202,7 +202,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="M&#xf4; t&#x1ea3;:"/>
+            <Property name="text" type="java.lang.String" value="Description:"/>
             <Property name="verticalAlignment" type="int" value="1"/>
           </Properties>
         </Component>
@@ -264,7 +264,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Ng&#xe0;y ph&#xe1;t h&#xe0;nh:"/>
+            <Property name="text" type="java.lang.String" value="Release Date:"/>
           </Properties>
         </Component>
       </SubComponents>

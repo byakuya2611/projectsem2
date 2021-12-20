@@ -222,7 +222,9 @@ public class AdminHome extends javax.swing.JFrame {
 
     private void MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtnActionPerformed
         // TODO add your handling code here:
-
+        MovieManage movieManage = new MovieManage(userId);
+        movieManage.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_MovieManageBtnActionPerformed
 
     private void TicketManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtnActionPerformed
@@ -253,6 +255,9 @@ public class AdminHome extends javax.swing.JFrame {
 
     private void RevenueManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueManageBtnActionPerformed
         // TODO add your handling code here:
+        RevenueManage revenueManage = new RevenueManage(userId);
+        revenueManage.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_RevenueManageBtnActionPerformed
 
     private void EmployeeManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmployeeManageBtnActionPerformed

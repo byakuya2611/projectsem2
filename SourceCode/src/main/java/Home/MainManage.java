@@ -187,32 +187,27 @@ public class MainManage extends javax.swing.JFrame {
 
     private void MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtnActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new MovieManage().setVisible(true);
+
     }//GEN-LAST:event_MovieManageBtnActionPerformed
 
     private void TicketManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtnActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new TicketManage().setVisible(true);
+
     }//GEN-LAST:event_TicketManageBtnActionPerformed
 
     private void EmployeeManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmployeeManageBtnActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new EmployeeManage().setVisible(true);
+
     }//GEN-LAST:event_EmployeeManageBtnActionPerformed
 
     private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new RevenueManage().setVisible(true);
+
     }//GEN-LAST:event_RevenueBtnActionPerformed
 
     private void UserManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManageBtnActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new UserManage().setVisible(true);
+
     }//GEN-LAST:event_UserManageBtnActionPerformed
 
     /**

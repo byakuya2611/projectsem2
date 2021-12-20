@@ -9,6 +9,7 @@ import Model.Ticket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -78,6 +79,38 @@ public class TicketDAO extends BaseDAO{
         return tickets;
     }
     
+    public static List<Ticket> GetListTicket(String dateFrom, String dateTo) {
+        openConn();
+        List<Ticket> tickets = new ArrayList<>();
+        String sql =  "select t.id, t.schedule_id, t.chair_id, t.user_id, t.code, m.name, r.room_name, c.chair_name, ms.schedule_date, ms.start_time, ms.price from ticket as t, movie as m, room as r, chair as c, movie_schedule as ms where t.schedule_id = ms.id and ms.schedule_date >= ? and ms.schedule_date <= ? and ms.movie_id = m.id and ms.room_id = r.id and c.id = t.chair_id" ;
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, dateFrom);
+            statement.setString(2, dateTo);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                Ticket ticket = new Ticket(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("schedule_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("chair_id"),
+                        resultSet.getString("code"),
+                        resultSet.getString("room_name"),
+                        resultSet.getString("chair_name"),
+                        resultSet.getString("schedule_date"),
+                        resultSet.getString("start_time"),
+                        resultSet.getString("name")          
+                );
+                tickets.add(ticket);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TicketDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        closeConn();
+        return tickets;
+    }
+    
     public static String Order(int user_id, int chair_id, int schedule_id) {
        
         openConn();
@@ -102,7 +135,7 @@ public class TicketDAO extends BaseDAO{
         List<Ticket> tickets = new ArrayList<>();
         openConn();
         Ticket ticket = null;
-        String sql = "select t.id, t.schedule_id, t.chair_id, t.user_id, t.code, m.name, r.room_name, c.chair_name, ms.schedule_date, ms.start_time, ms.price from ticket as t, movie as m, room as r, chair as c, movie_schedule as ms where t.schedule_id = ms.id and ms.schedule_date >= CURDATE() and ms.movie_id = m.id and ms.room_id = r.id and c.id = t.chair_id and t.code = ?";
+        String sql = "select t.id, t.schedule_id, t.chair_id, t.user_id, t.code, m.name, r.room_name, c.chair_name, ms.schedule_date, ms.start_time, ms.price from ticket as t, movie as m, room as r, chair as c, movie_schedule as ms where t.schedule_id = ms.id and ms.schedule_date >= CURDATE() and ms.movie_id = m.id and ms.room_id = r.id and c.id = t.chair_id and t.code like ?";
         try {
             statement = conn.prepareStatement(sql);
             statement.setString(1, "%" + code + "%");
@@ -127,6 +160,18 @@ public class TicketDAO extends BaseDAO{
         }
         closeConn();
         return tickets;
+    }
+    
+    public static void Delete(Integer id) {
+        openConn();
+        String sql = "DELETE FROM ticket WHERE id = " + id;
+        try {
+            statement = conn.prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(TicketDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConn();
     }
     
     public static String randomString() {

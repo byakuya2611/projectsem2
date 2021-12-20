@@ -6,8 +6,10 @@
 package Home;
 
 import DAO.MovieDAO;
+import DAO.ScheduleDAO;
 import DAO.TicketDAO;
 import Model.Movie;
+import Model.Schedule;
 import Model.Ticket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,40 +29,59 @@ public class RevenueManage extends javax.swing.JFrame {
     DefaultTableModel tableModel;
     List<Ticket> listTickets = new ArrayList<>();
     List<Movie> listMovies = new ArrayList<>();
+    List<Schedule> listSchedule = new ArrayList<>();
+    List<Ticket> listTicketChoose = new ArrayList<>();
+    private static int userId;
+    
     /**
      * Creates new form RevenueManage
      */
-    public RevenueManage() {
+    public RevenueManage(int userId) {
         initComponents();
+        this.userId = userId;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         tableModel = (DefaultTableModel) MovieRevenueTable.getModel();
-        listTickets = TicketDAO.getListTicket();
+        listTickets = TicketDAO.GetListTicket();
         listMovies = MovieDAO.getListMovie();
         showRevenue();
     }
     
     public Integer countTickets(Integer movieId) {
         Integer count = 0;
-        for (Ticket ticket : listTickets) {
-            if(ticket.getMovieId() == movieId) {
-                count++;
+        for (Movie movie : listMovies) {
+            if(movie.getId() == movieId) {
+                listSchedule = ScheduleDAO.getScheduleList(movieId);
+                for (Schedule schedule : listSchedule) {
+                    for (Ticket ticket : listTickets) {
+                        if(ticket.getSchedule_id() == schedule.getId()) {
+                            count++;
+                        }
+                    }
+                }
             }
         }
-        
         return count;
     }
     
     public Integer totalMovieRevenue(Integer movieId) {
         Integer total = 0;
-        for (Ticket ticket : listTickets) {
-            if(ticket.getMovieId() == movieId) {
-                total = total + ticket.getPrice() - ticket.getDiscount();
+        for (Movie movie : listMovies) {
+            if(movie.getId() == movieId) {
+                listSchedule = ScheduleDAO.getScheduleList(movieId);
+                for (Schedule schedule : listSchedule) {
+                    for (Ticket ticket : listTickets) {
+                        if(ticket.getSchedule_id() == schedule.getId()) {
+                            total += schedule.getPrice();
+                        }
+                    }
+                }
             }
         }
         return total;
     }
     
     public void showRevenue() {
+        int total = 0;
         tableModel.setRowCount(0);
         listMovies.forEach(movie -> {
             tableModel.addRow(new Object[] {
@@ -68,8 +89,62 @@ public class RevenueManage extends javax.swing.JFrame {
                 countTickets(movie.getId()),
                 totalMovieRevenue(movie.getId())
             });
-            
         });
+        for (Movie movie : listMovies) {
+            total += totalMovieRevenue(movie.getId());
+        }
+        TotalRevenueText.setText("Total Revenue: " + total);
+    }
+    
+    public Integer countTicketsByTime(Integer movieId) {
+        Integer count = 0;
+        for (Movie movie : listMovies) {
+            if(movie.getId() == movieId) {
+                listSchedule = ScheduleDAO.getScheduleList(movieId);
+                for (Schedule schedule : listSchedule) {
+                    for (Ticket ticket : listTicketChoose) {
+                        if(ticket.getSchedule_id() == schedule.getId()) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    
+    public Integer totalMovieRevenueByTime(Integer movieId) {
+        Integer total = 0;
+        for (Movie movie : listMovies) {
+            if(movie.getId() == movieId) {
+                listSchedule = ScheduleDAO.getScheduleList(movieId);
+                for (Schedule schedule : listSchedule) {
+                    for (Ticket ticket : listTicketChoose) {
+                        if(ticket.getSchedule_id() == schedule.getId()) {
+                            total += schedule.getPrice();
+                        }
+                    }
+                }
+            }
+        }
+        return total;
+    }
+    
+    public void findRevenueByTime(String dateFrom, String dateTo) {
+        Integer total = 0;
+        listTicketChoose = TicketDAO.GetListTicket(dateFrom, dateTo);
+        tableModel.setRowCount(0);
+        listMovies.forEach(movie -> {
+            tableModel.addRow(new Object[] {
+                movie.getName(),
+                countTicketsByTime(movie.getId()),
+                totalMovieRevenueByTime(movie.getId())
+            });
+        });
+        for (Movie movie : listMovies) {
+            total += totalMovieRevenueByTime(movie.getId());
+        }
+        TotalRevenueText.setText("Total Revenue: " + total);
     }
 
     /**
@@ -81,148 +156,32 @@ public class RevenueManage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        sidepanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        MovieManageBtn = new javax.swing.JButton();
-        TicketManageBtn2 = new javax.swing.JButton();
-        UserManagerBtn = new javax.swing.JButton();
-        RevenueBtn = new javax.swing.JButton();
-        ExitBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         toppanel = new javax.swing.JPanel();
         TitleTxt = new javax.swing.JLabel();
         bottompanel = new javax.swing.JPanel();
+        BackBtn = new javax.swing.JButton();
         bodypanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        MovieRevenueTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         DateFromPicker = new com.toedter.calendar.JDateChooser();
         DateToPicker = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
-        CaculateBtn = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        RevenueTxt = new javax.swing.JTextField();
+        FindBtn = new javax.swing.JButton();
+        ResetBtn = new javax.swing.JButton();
+        TotalRevenueText = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        MovieRevenueTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(825, 74));
 
-        sidepanel.setBackground(new java.awt.Color(54, 33, 88));
-        sidepanel.setPreferredSize(new java.awt.Dimension(300, 760));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Movie Ticket");
-
-        MovieManageBtn.setBackground(new java.awt.Color(54, 33, 88));
-        MovieManageBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        MovieManageBtn.setForeground(new java.awt.Color(255, 255, 255));
-        MovieManageBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/movie-reel.png"))); // NOI18N
-        MovieManageBtn.setText("Movie Manager");
-        MovieManageBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        MovieManageBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MovieManageBtnActionPerformed(evt);
-            }
-        });
-
-        TicketManageBtn2.setBackground(new java.awt.Color(54, 33, 88));
-        TicketManageBtn2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        TicketManageBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        TicketManageBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/ticket.png"))); // NOI18N
-        TicketManageBtn2.setText("Ticket Manager");
-        TicketManageBtn2.setPreferredSize(new java.awt.Dimension(73, 41));
-        TicketManageBtn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TicketManageBtn2ActionPerformed(evt);
-            }
-        });
-
-        UserManagerBtn.setBackground(new java.awt.Color(54, 33, 88));
-        UserManagerBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        UserManagerBtn.setForeground(new java.awt.Color(255, 255, 255));
-        UserManagerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/people.png"))); // NOI18N
-        UserManagerBtn.setText("User Manager");
-        UserManagerBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        UserManagerBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserManagerBtnActionPerformed(evt);
-            }
-        });
-
-        RevenueBtn.setBackground(new java.awt.Color(54, 33, 88));
-        RevenueBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        RevenueBtn.setForeground(new java.awt.Color(255, 255, 255));
-        RevenueBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/money.png"))); // NOI18N
-        RevenueBtn.setText("Revenue");
-        RevenueBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        RevenueBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RevenueBtnActionPerformed(evt);
-            }
-        });
-
-        ExitBtn.setBackground(new java.awt.Color(54, 33, 88));
-        ExitBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        ExitBtn.setForeground(new java.awt.Color(255, 255, 255));
-        ExitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/exit.png"))); // NOI18N
-        ExitBtn.setText("Exit");
-        ExitBtn.setPreferredSize(new java.awt.Dimension(73, 41));
-        ExitBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitBtnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout sidepanelLayout = new javax.swing.GroupLayout(sidepanel);
-        sidepanel.setLayout(sidepanelLayout);
-        sidepanelLayout.setHorizontalGroup(
-            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidepanelLayout.createSequentialGroup()
-                .addContainerGap(71, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69))
-            .addGroup(sidepanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addComponent(MovieManageBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TicketManageBtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RevenueBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ExitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(UserManagerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        sidepanelLayout.setVerticalGroup(
-            sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidepanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(MovieManageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(TicketManageBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(UserManagerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(RevenueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(444, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(sidepanel, java.awt.BorderLayout.LINE_START);
-
         jPanel2.setBackground(new java.awt.Color(153, 0, 204));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        toppanel.setBackground(new java.awt.Color(153, 0, 204));
+        toppanel.setBackground(new java.awt.Color(0, 102, 204));
         toppanel.setPreferredSize(new java.awt.Dimension(1278, 64));
         toppanel.setLayout(new java.awt.BorderLayout());
 
@@ -234,10 +193,114 @@ public class RevenueManage extends javax.swing.JFrame {
 
         jPanel2.add(toppanel, java.awt.BorderLayout.PAGE_START);
 
-        bottompanel.setBackground(new java.awt.Color(153, 0, 204));
+        bottompanel.setBackground(new java.awt.Color(19, 15, 64));
         bottompanel.setPreferredSize(new java.awt.Dimension(1278, 70));
         bottompanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        BackBtn.setBackground(new java.awt.Color(0, 102, 153));
+        BackBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        BackBtn.setForeground(new java.awt.Color(255, 255, 255));
+        BackBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/backburger.png"))); // NOI18N
+        BackBtn.setText("Back");
+        BackBtn.setPreferredSize(new java.awt.Dimension(150, 50));
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackBtnActionPerformed(evt);
+            }
+        });
+        bottompanel.add(BackBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+
         jPanel2.add(bottompanel, java.awt.BorderLayout.PAGE_END);
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1278, 500));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setPreferredSize(new java.awt.Dimension(1278, 100));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("From:");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("To:");
+
+        FindBtn.setBackground(new java.awt.Color(54, 33, 88));
+        FindBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        FindBtn.setForeground(new java.awt.Color(255, 255, 255));
+        FindBtn.setText("Find");
+        FindBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        FindBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FindBtnActionPerformed(evt);
+            }
+        });
+
+        ResetBtn.setBackground(new java.awt.Color(54, 33, 88));
+        ResetBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        ResetBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ResetBtn.setText("Reset");
+        ResetBtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        ResetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap(227, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(DateFromPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(DateToPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76)
+                .addComponent(FindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89)
+                .addComponent(ResetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(264, 264, 264))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(FindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ResetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                        .addComponent(DateFromPicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DateToPicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 40, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
+
+        TotalRevenueText.setText("Total Revenue: ");
+        TotalRevenueText.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         MovieRevenueTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         MovieRevenueTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -250,127 +313,32 @@ public class RevenueManage extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Movie Name", "Total tickets sold", "Total Revenue"
+                "Movie Name", "Tickets sold", "Revenue"
             }
         ));
         jScrollPane1.setViewportView(MovieRevenueTable);
-
-        jPanel1.setPreferredSize(new java.awt.Dimension(1278, 500));
-        jPanel1.setLayout(new java.awt.BorderLayout());
-
-        jPanel3.setPreferredSize(new java.awt.Dimension(1278, 100));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Caculate Revenue");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(466, 466, 466)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(464, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("From:");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("To:");
-
-        CaculateBtn.setBackground(new java.awt.Color(54, 33, 88));
-        CaculateBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        CaculateBtn.setForeground(new java.awt.Color(255, 255, 255));
-        CaculateBtn.setText("Caculate");
-        CaculateBtn.setPreferredSize(new java.awt.Dimension(100, 35));
-        CaculateBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CaculateBtnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(DateToPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(DateFromPicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(209, 209, 209)
-                .addComponent(CaculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(516, Short.MAX_VALUE))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(DateFromPicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(DateToPicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(CaculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(500, Short.MAX_VALUE)
-                .addComponent(RevenueTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(489, 489, 489))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(RevenueTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 44, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel8, java.awt.BorderLayout.PAGE_END);
 
         javax.swing.GroupLayout bodypanelLayout = new javax.swing.GroupLayout(bodypanel);
         bodypanel.setLayout(bodypanelLayout);
         bodypanelLayout.setHorizontalGroup(
             bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1140, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1480, Short.MAX_VALUE)
+            .addGroup(bodypanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1098, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TotalRevenueText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         bodypanelLayout.setVerticalGroup(
             bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodypanelLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(TotalRevenueText, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67))
         );
 
         jPanel2.add(bodypanel, java.awt.BorderLayout.CENTER);
@@ -380,55 +348,32 @@ public class RevenueManage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MovieManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieManageBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new MovieManage().setVisible(true);
-    }//GEN-LAST:event_MovieManageBtnActionPerformed
-
-    private void TicketManageBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketManageBtn2ActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new TicketManage().setVisible(true);
-    }//GEN-LAST:event_TicketManageBtn2ActionPerformed
-
-    private void UserManagerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserManagerBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new UserManage().setVisible(true);
-    }//GEN-LAST:event_UserManagerBtnActionPerformed
-
-    private void RevenueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        new RevenueManage().setVisible(true);
-    }//GEN-LAST:event_RevenueBtnActionPerformed
-
-    private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
-        // TODO add your handling code here:
-        frame = new JFrame("Exit");
-        if (JOptionPane.showConfirmDialog(frame, "Comfirm if you want to exit", "Movie Ticket",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
-            dispose();
-            new LoginForm().setVisible(true);
-        }
-    }//GEN-LAST:event_ExitBtnActionPerformed
-
-    private void CaculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CaculateBtnActionPerformed
+    private void FindBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindBtnActionPerformed
         // TODO add your handling code here
-        Integer total = 0;
-        Date dateFrom = DateFromPicker.getDate();
-        Date dateTo = DateToPicker.getDate();
-        SimpleDateFormat date = new SimpleDateFormat();
-        for (Movie movie : listMovies) {
-            if(date.format(movie.getStartDate()).compareTo(date.format(dateFrom)) >= 0 
-                    && date.format(movie.getStartDate()).compareTo(date.format(dateTo)) <= 0) {
-                total += totalMovieRevenue(movie.getId());
-            }
+        String dateFrom = Utilities.Utility.ConvertDateToString(DateFromPicker.getDate());
+        String dateTo = Utilities.Utility.ConvertDateToString(DateToPicker.getDate());
+        findRevenueByTime(dateFrom, dateTo); 
+    }//GEN-LAST:event_FindBtnActionPerformed
+
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+        if(userId == 1) {
+            AdminHome adHome = new AdminHome(userId);
+            adHome.setExtendedState(MAXIMIZED_BOTH);
+            adHome.setVisible(true);
+            this.setVisible(false);
+        } else {
+            EmployeeHome emHome = new EmployeeHome(userId);
+            emHome.setExtendedState(MAXIMIZED_BOTH);
+            emHome.setVisible(true);
+            this.setVisible(false);
         }
-        RevenueTxt.setText(String.valueOf(total));
-        
-    }//GEN-LAST:event_CaculateBtnActionPerformed
+    }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void ResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetBtnActionPerformed
+        // TODO add your handling code here:
+        showRevenue();
+    }//GEN-LAST:event_ResetBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -460,37 +405,29 @@ public class RevenueManage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RevenueManage().setVisible(true);
+                new RevenueManage(userId).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CaculateBtn;
+    private javax.swing.JButton BackBtn;
     private com.toedter.calendar.JDateChooser DateFromPicker;
     private com.toedter.calendar.JDateChooser DateToPicker;
-    private javax.swing.JButton ExitBtn;
-    private javax.swing.JButton MovieManageBtn;
+    private javax.swing.JButton FindBtn;
     private javax.swing.JTable MovieRevenueTable;
-    private javax.swing.JButton RevenueBtn;
-    private javax.swing.JTextField RevenueTxt;
-    private javax.swing.JButton TicketManageBtn2;
+    private javax.swing.JButton ResetBtn;
     private javax.swing.JLabel TitleTxt;
-    private javax.swing.JButton UserManagerBtn;
+    private javax.swing.JLabel TotalRevenueText;
     private javax.swing.JPanel bodypanel;
     private javax.swing.JPanel bottompanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JPanel sidepanel;
     private javax.swing.JPanel toppanel;
     // End of variables declaration//GEN-END:variables
 }
