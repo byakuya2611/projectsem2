@@ -166,7 +166,7 @@ public class ForgotPass extends javax.swing.JFrame {
 
             Transport.send(message);
             JOptionPane.showMessageDialog(this,"Email Sent!");
-
+            dispose();
         } catch (MessagingException e) {
             e.printStackTrace();
         }

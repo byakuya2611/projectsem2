@@ -29,7 +29,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFormattedTextField.*;
 
-
 /**
  *
  * @author Admin
@@ -43,7 +42,7 @@ public class MovieManage extends javax.swing.JFrame {
     List<Movie> ListMovies = new ArrayList<>();
     List<Schedule> listSchedules = new ArrayList<>();
     private static int userId;
-    
+
     /**
      * Creates new form UserManage
      */
@@ -67,7 +66,7 @@ public class MovieManage extends javax.swing.JFrame {
                 DirectorTxt.setText(movie.getDirector());
                 ActorTxt.setText(movie.getCast());
                 try {
-                    Date releaseDate = new SimpleDateFormat("yyyy-MM-dd").parse((String)tableModel.getValueAt(index, 2));
+                    Date releaseDate = new SimpleDateFormat("yyyy-MM-dd").parse((String) tableModel.getValueAt(index, 2));
                     ReleaseDatePicker.setDate(releaseDate);
                 } catch (ParseException ex) {
                     Logger.getLogger(MovieManage.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,12 +87,12 @@ public class MovieManage extends javax.swing.JFrame {
                         Schedule schedule = listSchedules.get(index1);
                         RoomBox.setSelectedItem(schedule.getRoom_name());
                         try {
-                            Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)tableModel1.getValueAt(index1, 1));
+                            Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String) tableModel1.getValueAt(index1, 1));
                             DatePicker.setDate(date);
                         } catch (ParseException ex) {
                             Logger.getLogger(MovieManage.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
+
                         TimeTxt.setText(schedule.getTime());
                         PriceTxt.setText(String.valueOf(schedule.getPrice()));
                     }
@@ -117,9 +116,10 @@ public class MovieManage extends javax.swing.JFrame {
                     public void mouseExited(MouseEvent e) {
                         //To change body of generated methods, choose Tools | Templates.
                     }
-                    
+
                 });
             }
+
             @Override
             public void mousePressed(MouseEvent e) {
                 //To change body of generated methods, choose Tools | Templates.
@@ -138,7 +138,7 @@ public class MovieManage extends javax.swing.JFrame {
             @Override
             public void mouseExited(MouseEvent e) {
                 //To change body of generated methods, choose Tools | Templates.
-            } 
+            }
         });
     }
 
@@ -146,7 +146,7 @@ public class MovieManage extends javax.swing.JFrame {
     private void showMovie() {
         tableModel.setRowCount(0);
         ListMovies.forEach(movie -> {
-            tableModel.addRow(new Object[] {
+            tableModel.addRow(new Object[]{
                 movie.getName(),
                 movie.getType(),
                 movie.getStart_at(),
@@ -156,13 +156,13 @@ public class MovieManage extends javax.swing.JFrame {
                 movie.getImg(),
                 movie.getDescription()
             });
-        }) ;
+        });
     }
-    
+
     private void showSchedule() {
         tableModel1.setRowCount(0);
         listSchedules.forEach(schedule -> {
-            tableModel1.addRow(new Object[] {
+            tableModel1.addRow(new Object[]{
                 schedule.getRoom_name(),
                 schedule.getDate(),
                 schedule.getTime(),
@@ -170,11 +170,11 @@ public class MovieManage extends javax.swing.JFrame {
             });
         });
     }
-    
+
     public int nameToId(String name) {
         int movieId = 0;
         for (Movie movie : ListMovies) {
-            if(movie.getName() == name) {
+            if (movie.getName() == name) {
                 movieId = movie.getId();
             }
         }
@@ -530,14 +530,11 @@ public class MovieManage extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(RoomBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UpdateScheBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(DatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(DatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UpdateScheBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 18, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TimeTxt)
@@ -714,23 +711,23 @@ public class MovieManage extends javax.swing.JFrame {
                 break;
         }
         Movie movie = new Movie(movieName, desc, img, cast, typeId, director, age, releaseDate, type);
-        if(Validation(movieName, type, age, director, cast, releaseDate, desc, img).length() > 0) {
+        if (Validation(movieName, type, age, director, cast, releaseDate, desc, img).length() > 0) {
             JOptionPane.showMessageDialog(this, Validation(movieName, type, age, director, cast, releaseDate, desc, img).toString(), "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             MovieDAO.Insert(movie);
             JOptionPane.showMessageDialog(this, "DONE!!", "Sucess", JOptionPane.INFORMATION_MESSAGE);
             Reset();
         }
-        
+
         ListMovies = MovieDAO.getListMovie();
         showMovie();
-        
+
     }//GEN-LAST:event_AddBtnActionPerformed
 
     private void UpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateBtnActionPerformed
         // TODO add your handling code here:
         int selectIndex = MovieTable.getSelectedRow();
-        if(selectIndex >= 0) {
+        if (selectIndex >= 0) {
             Movie movie = ListMovies.get(selectIndex);
             String movieName = MovieNameTxt.getText();
             String age = AgeTxt.getText();
@@ -761,11 +758,11 @@ public class MovieManage extends javax.swing.JFrame {
                     typeId = 6;
                     break;
             }
-            if(Validation(movieName, type, age, director, cast, releaseDate, desc, img).length() > 0) {
-            JOptionPane.showMessageDialog(this, Validation(movieName, type, age, director, cast, releaseDate, desc, img).toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            if (Validation(movieName, type, age, director, cast, releaseDate, desc, img).length() > 0) {
+                JOptionPane.showMessageDialog(this, Validation(movieName, type, age, director, cast, releaseDate, desc, img).toString(), "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 int option = JOptionPane.showConfirmDialog(this, "Do you want update this movie?");
-                if(option == 0) {
+                if (option == 0) {
                     movie.setName(movieName);
                     movie.setAge(age);
                     movie.setDirector(director);
@@ -779,7 +776,7 @@ public class MovieManage extends javax.swing.JFrame {
                     Reset();
                 }
             }
-            
+
             ListMovies = MovieDAO.getListMovie();
             showMovie();
         }
@@ -787,42 +784,212 @@ public class MovieManage extends javax.swing.JFrame {
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         // TODO add your handling code here
-        List<Movie> movies = new ArrayList<>();
         String input = JOptionPane.showInputDialog(this, "Enter movie name:");
-        if(input != null && input.length() > 0) {
-            movies = MovieDAO.Find(input);
+        if (input != null && input.length() > 0) {
+            List<Movie> movies = MovieDAO.Find(input);
             tableModel.setRowCount(0);
             movies.forEach(movie -> {
-            tableModel.addRow(new Object[] {
-                movie.getName(),
-                movie.getType(),
-                movie.getStart_at(),
-                movie.getDirector(),
-                movie.getCast(),
-                movie.getAge(),
-                movie.getImg(),
-                movie.getDescription()
+                tableModel.addRow(new Object[]{
+                    movie.getName(),
+                    movie.getType(),
+                    movie.getStart_at(),
+                    movie.getDirector(),
+                    movie.getCast(),
+                    movie.getAge(),
+                    movie.getImg(),
+                    movie.getDescription()
+                });
+                MovieTable.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                        int index = MovieTable.getSelectedRow();
+                        Movie movie = movies.get(index);
+                        MovieNameTxt.setText(movie.getName());
+                        TypeBox.setSelectedItem(movie.getType());
+                        AgeTxt.setText(movie.getAge());
+                        DirectorTxt.setText(movie.getDirector());
+                        ActorTxt.setText(movie.getCast());
+                        try {
+                            Date releaseDate = new SimpleDateFormat("yyyy-MM-dd").parse((String) tableModel.getValueAt(index, 2));
+                            ReleaseDatePicker.setDate(releaseDate);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(MovieManage.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        DescTxt.setText(movie.getDescription());
+                        ImgTxt.setText(movie.getImg());
+                        ImageIcon img = new ImageIcon(getClass().getResource("/img/" + movie.getImg()));
+                        Image imgScale = img.getImage().getScaledInstance(200, 300, Image.SCALE_SMOOTH);
+                        ImgLabel.setIcon(new ImageIcon(imgScale));
+                        Integer movieId = movie.getId();
+                        listSchedules = ScheduleDAO.getScheduleList(movie.getId());
+                        showSchedule();
+                        ScheduleTable.addMouseListener(new MouseListener() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                //To change body of generated methods, choose Tools | Templates.
+                                int index1 = ScheduleTable.getSelectedRow();
+                                Schedule schedule = listSchedules.get(index1);
+                                RoomBox.setSelectedItem(schedule.getRoom_name());
+                                try {
+                                    Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String) tableModel1.getValueAt(index1, 1));
+                                    DatePicker.setDate(date);
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(MovieManage.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                TimeTxt.setText(schedule.getTime());
+                                PriceTxt.setText(String.valueOf(schedule.getPrice()));
+                            }
+
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+                                //To change body of generated methods, choose Tools | Templates.
+                            }
+
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
+                                //To change body of generated methods, choose Tools | Templates.
+                            }
+
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
+                                //To change body of generated methods, choose Tools | Templates.
+                            }
+
+                            @Override
+                            public void mouseExited(MouseEvent e) {
+                                //To change body of generated methods, choose Tools | Templates.
+                            }
+
+                        });
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
             });
-        });   
         } else {
             showMovie();
+            MovieTable.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+                int index = MovieTable.getSelectedRow();
+                Movie movie = ListMovies.get(index);
+                MovieNameTxt.setText(movie.getName());
+                TypeBox.setSelectedItem(movie.getType());
+                AgeTxt.setText(movie.getAge());
+                DirectorTxt.setText(movie.getDirector());
+                ActorTxt.setText(movie.getCast());
+                try {
+                    Date releaseDate = new SimpleDateFormat("yyyy-MM-dd").parse((String)tableModel.getValueAt(index, 2));
+                    ReleaseDatePicker.setDate(releaseDate);
+                } catch (ParseException ex) {
+                    Logger.getLogger(MovieManage.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DescTxt.setText(movie.getDescription());
+                ImgTxt.setText(movie.getImg());
+                ImageIcon img = new ImageIcon(getClass().getResource("/img/" + movie.getImg()));
+                Image imgScale = img.getImage().getScaledInstance(200, 300, Image.SCALE_SMOOTH);
+                ImgLabel.setIcon(new ImageIcon(imgScale));
+                Integer movieId = movie.getId();
+                listSchedules = ScheduleDAO.getScheduleList(movie.getId());
+                showSchedule();
+                ScheduleTable.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                        int index1 = ScheduleTable.getSelectedRow();
+                        Schedule schedule = listSchedules.get(index1);
+                        RoomBox.setSelectedItem(schedule.getRoom_name());
+                        try {
+                            Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)tableModel1.getValueAt(index1, 1));
+                            DatePicker.setDate(date);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(MovieManage.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        TimeTxt.setText(schedule.getTime());
+                        PriceTxt.setText(String.valueOf(schedule.getPrice()));
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        //To change body of generated methods, choose Tools | Templates.
+                    }
+                    
+                });
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //To change body of generated methods, choose Tools | Templates.
+            } 
+        });
         }
     }//GEN-LAST:event_SearchBtnActionPerformed
 
     private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
         // TODO add your handling code here:
         int selectIndex = MovieTable.getSelectedRow();
-        if(selectIndex >= 0) {
+        if (selectIndex >= 0) {
             Movie movie = ListMovies.get(selectIndex);
             int option = JOptionPane.showConfirmDialog(this, "Do you want delete this movie?");
-            if(option == 0) {
+            if (option == 0) {
                 MovieDAO.Delete(movie.getId());
                 Reset();
             }
             ListMovies = MovieDAO.getListMovie();
             showMovie();
         }
-            
+
     }//GEN-LAST:event_DeleteBtnActionPerformed
 
     private void ResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetBtnActionPerformed
@@ -833,7 +1000,7 @@ public class MovieManage extends javax.swing.JFrame {
     private void AddScheBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddScheBtnActionPerformed
         // TODO add your handling code here:
         int selectedIndex = MovieTable.getSelectedRow();
-        if(selectedIndex >= 0) {
+        if (selectedIndex >= 0) {
             Movie movie = ListMovies.get(selectedIndex);
             String room = RoomBox.getSelectedItem().toString();
             String scheDate = Utilities.Utility.ConvertDateToString(DatePicker.getDate());
@@ -860,8 +1027,8 @@ public class MovieManage extends javax.swing.JFrame {
                     roomId = 6;
                     break;
             }
-            Schedule schedule = new Schedule(movie.getId(),roomId,scheDate,time,room,price);
-            if(Validation(room, scheDate, time, price).length() > 0) {
+            Schedule schedule = new Schedule(movie.getId(), roomId, scheDate, time, room, price);
+            if (Validation(room, scheDate, time, price).length() > 0) {
                 JOptionPane.showMessageDialog(this, Validation(room, scheDate, time, price), "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 ScheduleDAO.Insert(schedule);
@@ -880,10 +1047,10 @@ public class MovieManage extends javax.swing.JFrame {
     private void UpdateScheBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateScheBtnActionPerformed
         // TODO add your handling code here:
         int selectedIndex = MovieTable.getSelectedRow();
-        if(selectedIndex >= 0) {
+        if (selectedIndex >= 0) {
             Movie movie = ListMovies.get(selectedIndex);
             int selectedIndex1 = ScheduleTable.getSelectedRow();
-            if(selectedIndex1 >= 0) {
+            if (selectedIndex1 >= 0) {
                 Schedule schedule = listSchedules.get(selectedIndex1);
                 String room = RoomBox.getSelectedItem().toString();
                 String scheDate = Utilities.Utility.ConvertDateToString(DatePicker.getDate());
@@ -910,11 +1077,11 @@ public class MovieManage extends javax.swing.JFrame {
                         roomId = 6;
                         break;
                 }
-                if(Validation(room, scheDate, time, price).length() > 0) {
+                if (Validation(room, scheDate, time, price).length() > 0) {
                     JOptionPane.showMessageDialog(this, Validation(room, scheDate, time, price), "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     int option = JOptionPane.showConfirmDialog(this, "Do you want update this schedule?");
-                    if(option == 0) {
+                    if (option == 0) {
                         schedule.setRoom_name(room);
                         schedule.setDate(scheDate);
                         schedule.setMovie_id(movie.getId());
@@ -946,18 +1113,18 @@ public class MovieManage extends javax.swing.JFrame {
     private void DeleteScheBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteScheBtnActionPerformed
         // TODO add your handling code here:
         int selectedIndex = MovieTable.getSelectedRow();
-        if(selectedIndex >= 0) {
+        if (selectedIndex >= 0) {
             Movie movie = ListMovies.get(selectedIndex);
             int selectedIndex1 = ScheduleTable.getSelectedRow();
-            if(selectedIndex1 >= 0) {
+            if (selectedIndex1 >= 0) {
                 Schedule schedule = listSchedules.get(selectedIndex1);
                 int option = JOptionPane.showConfirmDialog(this, "Do you want delete this schedule?");
-                if(option == 0) {
-                ScheduleDAO.Delete(schedule.getId());
-                RoomBox.setSelectedIndex(0);
-                DatePicker.setDate(null);
-                TimeTxt.setText("");
-                PriceTxt.setText("");
+                if (option == 0) {
+                    ScheduleDAO.Delete(schedule.getId());
+                    RoomBox.setSelectedIndex(0);
+                    DatePicker.setDate(null);
+                    TimeTxt.setText("");
+                    PriceTxt.setText("");
                 }
                 listSchedules = ScheduleDAO.getScheduleList(movie.getId());
                 showSchedule();
@@ -978,7 +1145,7 @@ public class MovieManage extends javax.swing.JFrame {
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-        if(userId == 1) {
+        if (userId == 1) {
             AdminHome adHome = new AdminHome(userId);
             adHome.setExtendedState(MAXIMIZED_BOTH);
             adHome.setVisible(true);
@@ -1015,47 +1182,48 @@ public class MovieManage extends javax.swing.JFrame {
         PriceTxt.setText("");
         tableModel1.setNumRows(0);
     }
-    
+
     private StringBuilder Validation(String name, String type, String age, String director, String cast, String releaseDate, String desc, String img) {
         StringBuilder sb = new StringBuilder();
-        if(name.equals("")) {
+        if (name.equals("")) {
             sb.append("Movie name is empty!!!\n");
         }
-        if(type.equals("")) {
+        if (type.equals("")) {
             sb.append("Type is empty!!!\n");
         }
-        if(age.equals("")) {
+        if (age.equals("")) {
             sb.append("Age is empty!!!\n");
         }
-        if(director.equals("")) {
+        if (director.equals("")) {
             sb.append("Director is empty!!!\n");
         }
-        if(cast.equals("")) {
+        if (cast.equals("")) {
             sb.append("Cast is empty!!!\n");
         }
-        if(releaseDate.equals("")) {
+        if (releaseDate.equals("")) {
             sb.append("Release date is empty!!!\n");
         }
-        if(desc.equals("")) {
+        if (desc.equals("")) {
             sb.append("Description is empty!!!\n");
-        }if(img.equals("")) {
+        }
+        if (img.equals("")) {
             sb.append("Image is empty!!!\n");
         }
         return sb;
     }
-    
+
     private StringBuilder Validation(String room, String date, String time, Integer price) {
         StringBuilder sb = new StringBuilder();
-        if(room.equals("")) {
+        if (room.equals("")) {
             sb.append("Room is empty!!!\n");
         }
-        if(date.equals("")) {
+        if (date.equals("")) {
             sb.append("Date is empty!!!\n");
         }
-        if(time.equals("")) {
+        if (time.equals("")) {
             sb.append("Time is empty!!!\n");
         }
-        if(price.equals("")) {
+        if (price.equals("")) {
             sb.append("Price is empty!!!\n");
         }
         return sb;
@@ -1090,7 +1258,7 @@ public class MovieManage extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

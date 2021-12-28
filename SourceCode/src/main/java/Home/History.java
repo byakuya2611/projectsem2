@@ -52,7 +52,7 @@ public class History {
         for(int i = 0; i< list.size(); i++) {
             Ticket ticket = list.get(i);
             JPanel panel_ticket = new JPanel(new BorderLayout());
-            panel_ticket.setBackground(new Color(66, 245, 135));
+            panel_ticket.setBackground(new Color(0,102,153));
             
             
             

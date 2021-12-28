@@ -127,6 +127,9 @@ public class LoginForm extends javax.swing.JFrame {
         forgotPassword.setText("Forgot Password?");
         forgotPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         forgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                forgotPasswordMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 forgotPasswordMouseEntered(evt);
             }
@@ -211,7 +214,7 @@ public class LoginForm extends javax.swing.JFrame {
         remember.setText("Remeber Me");
         jPanel2.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 140, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 540));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 480, 540));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1210, 540));
 
@@ -363,6 +366,11 @@ public class LoginForm extends javax.swing.JFrame {
     private void emailTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTxtFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTxtFocusLost
+
+    private void forgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordMouseClicked
+        // TODO add your handling code here:
+        new ForgotPass().setVisible(true);
+    }//GEN-LAST:event_forgotPasswordMouseClicked
     
     public void changeColor(JPanel hover, Color rand) {
         hover.setBackground(rand);
